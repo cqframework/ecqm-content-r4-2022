@@ -1,0 +1,9 @@
+.DS_Store
+input-cache/
+output/
+temp/
+template/
+/bundles/measure/BreastCancerScreeningsFHIR/BreastCancerScreeningsFHIR-files
+input/tests/*-bundle.json
+input/tests/*/*-bundle.json
+input/tests/*/*/*-bundle.json
