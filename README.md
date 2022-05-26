@@ -18,14 +18,15 @@ The following table provides an index to the currently available library content
 |[AdultOutpatientEncountersFHIR4](input/cql/AdultOutpatientEncountersFHIR4.cql)|3.0.000|Active|
 |[AdvancedIllnessandFrailtyExclusionECQMFHIR4](input/cql/AdvancedIllnessandFrailtyExclusionECQMFHIR4.cql)|7.0.000|Active|
 |[CumulativeMedicationDurationFHIR4](input/cql/CumulativeMedicationDurationFHIR4.cql)|2.0.000|Active|
+|[FHIRCommon](input/cql/FHIRCommon.cql)|4.0.002|Active|
 |[FHIRHelpers](input/cql/FHIRHelpers.cql)|4.0.002|Active|
-|TODO: [HospiceFHIR4](input/cql/HospiceFHIR4.cql)|2.3.000|Active|
+|[HospiceFHIR4](input/cql/HospiceFHIR4.cql)|4.0.000|Active|
 |[MATGlobalCommonFunctionsFHIR4](input/cql/MATGlobalCommonFunctionsFHIR4.cql)|7.0.000|Active|
-|TODO: [PalliativeCareFHIR](input/cql/PalliativeCareFHIR.cql)|0.6.000|Active|
-|[QICoreCommon](input/cql/QICoreCommon.cql)|4.1.2|Active|
+|[PalliativeCareExclusionFHIR4](input/cql/PalliativeCareExclusionFHIR4.cql)|2.0.000|Active|
+|[QICoreCommon](input/cql/QICoreCommon.cql)|4.1.002|Active|
 |[SupplementalDataElementsFHIR4](input/cql/SupplementalDataElementsFHIR4.cql)|3.0.000|Active|
-|TODO: [TJCOverallFHIR](input/cql/TJCOverallFHIR.cql)|1.8.000|Active|
-|TODO: [VTEFHIR4](input/cql/VTEFHIR4.cql)|4.8.000|Active|
+|[TJCOverallFHIR](input/cql/TJCOverallFHIR.cql)|6.0.000|Active|
+|[VTEFHIR4](input/cql/VTEFHIR4.cql)|6.0.000|Active|
 
 ### Measure Libraries
 

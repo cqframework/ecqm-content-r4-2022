@@ -1,11 +1,14 @@
-library SupplementalDataElementsFHIR4 version '3.0.000'
-
-/*@update: @@BTR 2020-03-31 ->
+/*
+@update: BTR 2020-03-31 ->
 Incremented version to 2.0.0
+
+@update: BTR 2022-05-26 ->
 Updated FHIR version to 4.0.1
 Updated FHIRHelpers version to 4.0.002
 Updated for AU 2022 Content
-@@@*/
+*/
+
+library SupplementalDataElementsFHIR4 version '3.0.000'
 
 using FHIR version '4.0.1'
 

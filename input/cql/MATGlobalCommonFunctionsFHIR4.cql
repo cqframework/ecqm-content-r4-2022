@@ -19,22 +19,14 @@ Added GetBaseExtension overloads for Element
 
 @update: BTR 2022-05-24 ->
 Update for 2022 AU content
+Refactor to use CQF.FHIRCommon
 */
 library MATGlobalCommonFunctionsFHIR4 version '7.0.000'
 
 using FHIR version '4.0.1'
 
 include FHIRHelpers version '4.0.002' called FHIRHelpers
-
-codesystem "ConditionClinicalStatusCodes": 'http://terminology.hl7.org/CodeSystem/condition-clinical'
-codesystem "AllergyIntoleranceClinicalStatusCodes": 'http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical'
-codesystem "AllergyIntoleranceVerificationStatusCodes": 'http://terminology.hl7.org/CodeSystem/allergyintolerance-verification'
-codesystem "Diagnosis Role": 'http://terminology.hl7.org/CodeSystem/diagnosis-role'
-codesystem "LOINC": 'http://loinc.org'
-codesystem "MedicationRequestCategory": 'http://terminology.hl7.org/CodeSystem/medicationrequest-category'
-codesystem "ConditionVerificationStatusCodes": 'http://terminology.hl7.org/CodeSystem/condition-ver-status'
-codesystem "SNOMEDCT": 'http://snomed.info/sct'
-codesystem "RoleCode": 'http://terminology.hl7.org/CodeSystem/v3-RoleCode'
+include FHIRCommon version '4.0.002' called FHIRCommon
 
 valueset "Emergency Department Visit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.117.1.7.1.292'
 valueset "Encounter Inpatient": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.666.5.307'
@@ -42,32 +34,6 @@ valueset "Intensive Care Unit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1
 valueset "Observation Services": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1111.143'
 valueset "Outpatient Surgery Service": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1110.38'
 valueset "Present on Admission or Clinically Undetermined": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1147.197'
-
-code "active": 'active' from "ConditionClinicalStatusCodes" display 'active'
-code "allergy-active": 'active' from "AllergyIntoleranceClinicalStatusCodes" display 'allergy-active'
-code "allergy-confirmed": 'confirmed' from "AllergyIntoleranceVerificationStatusCodes" display 'allergy-confirmed'
-code "allergy-inactive": 'inactive' from "AllergyIntoleranceClinicalStatusCodes" display 'allergy-inactive'
-code "allergy-refuted": 'refuted' from "AllergyIntoleranceVerificationStatusCodes" display 'allergy-refuted'
-code "allergy-resolved": 'resolved' from "AllergyIntoleranceClinicalStatusCodes" display 'allergy-resolved'
-code "allergy-unconfirmed": 'unconfirmed' from "AllergyIntoleranceVerificationStatusCodes" display 'allergy-unconfirmed'
-code "Billing": 'billing' from "Diagnosis Role" display 'Billing'
-code "Birthdate": '21112-8' from "LOINC" display 'Birth date'
-code "Community": 'community' from "MedicationRequestCategory" display 'Community'
-code "confirmed": 'confirmed' from "ConditionVerificationStatusCodes" display 'confirmed'
-code "Dead": '419099009' from "SNOMEDCT" display 'Dead'
-code "differential": 'differential' from "ConditionVerificationStatusCodes" display 'differential'
-code "Discharge": 'discharge' from "MedicationRequestCategory" display 'Discharge'
-code "entered-in-error": 'entered-in-error' from "ConditionVerificationStatusCodes" display 'entered-in-error'
-code "ER": 'ER' from "RoleCode" display 'Emergency room'
-code "ICU": 'ICU' from "RoleCode" display 'Intensive care unit'
-code "inactive": 'inactive' from "ConditionClinicalStatusCodes" display 'inactive'
-code "provisional": 'provisional' from "ConditionVerificationStatusCodes" display 'provisional'
-code "recurrence": 'recurrence' from "ConditionClinicalStatusCodes" display 'recurrence'
-code "refuted": 'refuted' from "ConditionVerificationStatusCodes" display 'refuted'
-code "relapse": 'relapse' from "ConditionClinicalStatusCodes" display 'relapse'
-code "remission": 'remission' from "ConditionClinicalStatusCodes" display 'remission'
-code "resolved": 'resolved' from "ConditionClinicalStatusCodes" display 'resolved'
-code "unconfirmed": 'unconfirmed' from "ConditionVerificationStatusCodes" display 'unconfirmed'
 
 parameter "Measurement Period" Interval<DateTime>
   default Interval[@2022-01-01T00:00:00.0, @2023-01-01T00:00:00.0)
@@ -201,6 +167,13 @@ define function "HospitalizationWithObservation"(TheEncounter FHIR.Encounter ):
   			)
   		return Interval[Coalesce(start of EDVisit.period, VisitStart), end of Visit.period]
 
+define function "FirstInpatientIntensiveCareUnit"(Encounter FHIR.Encounter ):
+  First((Encounter.location)HospitalLocation
+  			where GetLocation(HospitalLocation.location).type in "Intensive Care Unit"
+  				and HospitalLocation.period during Encounter.period
+  			sort by start of period
+  	)
+
 /**
 * Normalizes the input argument to an interval representation.
 * The input can be provided as a dateTime, Period, Timing, instant, string, Age, or Range.
@@ -220,26 +193,7 @@ and ending immediately prior to when the patient was the given Age plus one year
 by the low end of the Range, and ending immediately prior to when the patient was the Age given by the
 high end of the Range plus one year.*/
 define function "Normalize Interval"(choice Choice<FHIR.dateTime, FHIR.Period, FHIR.Timing, FHIR.instant, FHIR.string, FHIR.Age, FHIR.Range> ):
-  case
-  	  when choice is FHIR.dateTime then
-  	Interval[FHIRHelpers.ToDateTime(choice as FHIR.dateTime), FHIRHelpers.ToDateTime(choice as FHIR.dateTime)]
-  		when choice is FHIR.Period then
-  		FHIRHelpers.ToInterval(choice as FHIR.Period)
-  		when choice is FHIR.instant then
-  			Interval[FHIRHelpers.ToDateTime(choice as FHIR.instant), FHIRHelpers.ToDateTime(choice as FHIR.instant)]
-  		when choice is FHIR.Age then
-  		  Interval[FHIRHelpers.ToDate(Patient.birthDate) + FHIRHelpers.ToQuantity(choice as FHIR.Age),
-  			  FHIRHelpers.ToDate(Patient.birthDate) + FHIRHelpers.ToQuantity(choice as FHIR.Age) + 1 year)
-  		when choice is FHIR.Range then
-  		  Interval[FHIRHelpers.ToDate(Patient.birthDate) + FHIRHelpers.ToQuantity((choice as FHIR.Range).low),
-  			  FHIRHelpers.ToDate(Patient.birthDate) + FHIRHelpers.ToQuantity((choice as FHIR.Range).high) + 1 year)
-  		when choice is FHIR.Timing then
-  		  Message(null as Interval<DateTime>, true, '1', 'Error', 'Cannot compute a single interval from a Timing type')
-    when choice is FHIR.string then
-      Message(null as Interval<DateTime>, true, '1', 'Error', 'Cannot compute an interval from a String value')
-  		else
-  			null as Interval<DateTime>
-  	end
+  FHIRCommon.ToInterval(choice)
 
 /**
 * Returns an interval representing the abatement of the given condition, if an
@@ -247,21 +201,7 @@ abatement element is present, null otherwise.
 This function uses the semantics of Normalize Interval to interpret the abatement
 element.*/
 define function "Normalize Abatement"(condition Condition ):
-  if condition.abatement is FHIR.dateTime then
-  	  Interval[FHIRHelpers.ToDateTime(condition.abatement as FHIR.dateTime), FHIRHelpers.ToDateTime(condition.abatement as FHIR.dateTime)]
-  	else if condition.abatement is FHIR.Period then
-  	  FHIRHelpers.ToInterval(condition.abatement as FHIR.Period)
-  	else if condition.abatement is FHIR.string then
-  Message(null as Interval<DateTime>, true, '1', 'Error', 'Cannot compute an interval from a String value')
-  	else if condition.abatement is FHIR.Age then
-  		Interval[FHIRHelpers.ToDate(Patient.birthDate) + FHIRHelpers.ToQuantity(condition.abatement as FHIR.Age),
-  			FHIRHelpers.ToDate(Patient.birthDate) + FHIRHelpers.ToQuantity(condition.abatement as FHIR.Age) + 1 year)
-  	else if condition.abatement is FHIR.Range then
-  	  Interval[FHIRHelpers.ToDate(Patient.birthDate) + FHIRHelpers.ToQuantity((condition.abatement as FHIR.Range).low),
-  		  FHIRHelpers.ToDate(Patient.birthDate) + FHIRHelpers.ToQuantity((condition.abatement as FHIR.Range).high) + 1 year)
-  	else if condition.abatement is FHIR.boolean then
-  	  Interval[end of "Normalize Interval"(condition.onset), condition.recordedDate)
-  	else null
+  FHIRCommon.ToAbatementInterval(condition)
 
 /*Returns an interval representing the period during which the condition was prevalent (i.e. onset to abatement)
 If the condition is "active", then abatement being unknown
@@ -272,12 +212,7 @@ Note that when using this function it should be noted that many clinical systems
 do not actually capture abatement, so care should be taken when using this function
 to meet clinical intent.*/
 define function "Prevalence Period"(condition Condition ):
-  if condition.clinicalStatus ~ "active"
-    or condition.clinicalStatus ~ "recurrence"
-    or condition.clinicalStatus ~ "relapse" then
-    Interval[start of "Normalize Interval"(condition.onset), end of "Normalize Abatement"(condition)]
-  else
-    Interval[start of "Normalize Interval"(condition.onset), end of "Normalize Abatement"(condition))
+  FHIRCommon.ToPrevalenceInterval(condition)
 
 /*Returns the tail of the given uri (i.e. everything after the last slash in the URI).*/
 define function "GetId"(uri String ):
@@ -291,68 +226,16 @@ define function "EncounterDiagnosis"(Encounter Encounter ):
 define function "GetCondition"(reference Reference):
   singleton from ([Condition] C where C.id = "GetId"(reference.reference))
 
-define function "PresentOnAdmissionIndicator"(element Element):
-  GetExtension(element, 'http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter-diagnosisPresentOnAdmission').value as FHIR.CodeableConcept
-
 // Returns the condition that is specified as the principal diagnosis for the encounter
-// TODO: BTR 2019-07-30: Shouldn't need the FHIRHelpers reference here, investigate
 define function "PrincipalDiagnosis"(Encounter Encounter ):
-  (singleton from (Encounter.diagnosis D where FHIRHelpers.ToInteger(D.rank) = 1)) PD
+  (singleton from (Encounter.diagnosis D where D.rank = 1)) PD
   		return singleton from ([Condition] C where C.id = "GetId"(PD.condition.reference))
-  // Returns the location for the given location reference
 
 /*Returns the Location resource specified by the given reference*/
 define function "GetLocation"(reference Reference ):
   singleton from (
     [Location] L where L.id = GetId(reference.reference)
   )
-
-/*NOTE: Extensions are not the preferred approach, but are used as a way to access
-content that is defined by extensions but not yet surfaced in the
-CQL model info.*/
-define function "GetExtensions"(domainResource DomainResource, url String ):
-  domainResource.extension E
-  	  where E.url = ('http://hl7.org/fhir/us/qicore/StructureDefinition/' + url)
-  		return E
-
-define function "GetExtension"(domainResource DomainResource, url String ):
-  singleton from "GetExtensions"(domainResource, url)
-
-/*NOTE: Extensions are not the preferred approach, but are used as a way to access
-content that is defined by extensions but not yet surfaced in the
-CQL model info.*/
-define function "GetExtensions"(element Element, url String ):
-  element.extension E
-  	  where E.url = (url)
-  		return E
-
-define function "GetExtension"(element Element, url String ):
-  singleton from "GetExtensions"(element, url)
-
-/*NOTE: Extensions are not the preferred approach, but are used as a way to access
-content that is defined by extensions but not yet surfaced in the
-CQL model info.*/
-define function "GetBaseExtensions"(domainResource DomainResource, url String ):
-  domainResource.extension E
-  	  where E.url = ('http://hl7.org/fhir/StructureDefinition/' + url)
-  		return E
-
-define function "GetBaseExtension"(domainResource DomainResource, url String ):
-  singleton from "GetBaseExtensions"(domainResource, url)
-
-/*@description: Returns any base-FHIR extensions defined on the given element with the specified id.
-@comment: NOTE: Extensions are not the preferred approach, but are used as a way to access
-content that is defined by extensions but not yet surfaced in the CQL model info.*/
-define function "BaseExtensions"(element Element, id String ):
-  element.extension E
-  	  where E.url = ('http://hl7.org/fhir/StructureDefinition/' + id)
-  		return E
-
-/*@description: Returns the single base-FHIR extension (if present) on the given element with the specified id.
-@comment: This function uses singleton from to ensure that a run-time exception is thrown if there
-is more than one extension on the given resource with the specified url.*/
-define function "BaseExtension"(element Element, id String ):
-  singleton from BaseExtensions(element, id)
 
 /*NOTE: Provenance is not the preferred approach, this is provided only as an illustration
 for what using Provenance could look like, and is not a tested pattern*/

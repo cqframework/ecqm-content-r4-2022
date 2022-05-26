@@ -6,6 +6,7 @@ library AdvancedIllnessandFrailtyExclusionECQMFHIR4 version '7.0.000'
 using FHIR version '4.0.1'
 
 include FHIRHelpers version '4.0.002' called FHIRHelpers
+include FHIRCommon version '4.0.002' called FHIRCommon
 include MATGlobalCommonFunctionsFHIR4 version '7.0.000' called Global
 include CumulativeMedicationDurationFHIR4 version '2.0.000' called CMD
 
@@ -23,9 +24,9 @@ valueset "Nursing Facility Visit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.84
 valueset "Observation": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1086'
 valueset "Outpatient": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1087'
 
-code "Housing status": '71802-3' from Global."LOINC" display 'Housing status'
-code "Lives in a nursing home (finding)": '160734000' from Global."SNOMEDCT" display 'Lives in a nursing home (finding)'
-code "Medical equipment used": '98181-1' from Global."LOINC" display 'Medical equipment used'
+code "Housing status": '71802-3' from FHIRCommon."LOINC" display 'Housing status'
+code "Lives in a nursing home (finding)": '160734000' from FHIRCommon."SNOMEDCT" display 'Lives in a nursing home (finding)'
+code "Medical equipment used": '98181-1' from FHIRCommon."LOINC" display 'Medical equipment used'
 
 parameter "Measurement Period" Interval<DateTime>
 
