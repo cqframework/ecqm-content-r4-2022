@@ -11,7 +11,7 @@ include MATGlobalCommonFunctionsFHIR4 version '7.0.000' called Global
 
 valueset "Encounter Inpatient": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.666.5.307'
 valueset "Hospice care ambulatory": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1108.15'
-valueset "Hospice Encounter": 'urn:oid:2.16.840.1.113883.3.464.1003.1003'
+valueset "Hospice Encounter": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.1003'
 
 code "Discharge to healthcare facility for hospice care (procedure)": '428371000124100' from FHIRCommon."SNOMEDCT" display 'Discharge to healthcare facility for hospice care (procedure)'
 code "Discharge to home for hospice care (procedure)": '428361000124107' from FHIRCommon."SNOMEDCT" display 'Discharge to home for hospice care (procedure)'

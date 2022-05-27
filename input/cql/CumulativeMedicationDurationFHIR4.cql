@@ -5,7 +5,7 @@ resources. The logic here follows the guidance provided as part of the 5.6
 version of Quality Data Model.
 @comment: Note that the logic here assumes single-instruction dosing information.
 Split-dosing, tapering, and other more complex dosing instructions are not handled.
-@changelog:
+@update:
 v0.2.000
 Fixed Quantity handling in duration calculations
 Fixed authorDatetime null handling
