@@ -24,13 +24,13 @@ context Patient
 
 define "Has Hospice Services":
   exists (
-    [Encounter: "Encounter Inpatient"] DischargeHospice
-			where DischargeHospice.status = 'finished'
+    [Encounter: "Encounter Inpatient"] InpatientEncounter
+			where InpatientEncounter.status = 'finished'
 		    and (
-	        DischargeHospice.hospitalization.dischargeDisposition ~ "Discharge to home for hospice care (procedure)"
-				    or DischargeHospice.hospitalization.dischargeDisposition ~ "Discharge to healthcare facility for hospice care (procedure)"
+	        InpatientEncounter.hospitalization.dischargeDisposition ~ "Discharge to home for hospice care (procedure)"
+				    or InpatientEncounter.hospitalization.dischargeDisposition ~ "Discharge to healthcare facility for hospice care (procedure)"
 	    	)
-				and DischargeHospice.period ends during day of "Measurement Period"
+				and InpatientEncounter.period ends during day of "Measurement Period"
 	)
     or exists (
       [Encounter: "Hospice Encounter"] HospiceEncounter
