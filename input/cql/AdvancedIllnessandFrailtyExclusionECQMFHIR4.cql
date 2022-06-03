@@ -95,10 +95,10 @@ define "Has Criteria Indicating Frailty":
       and FrailtyDeviceOrder.intent = 'order'
       and Global."Normalize Interval"(FrailtyDeviceOrder.authoredOn) during day of "Measurement Period"
   )
-    or exists ([Observation: "Medical equipment used"] FrailtyDeviceApplied
-        where FrailtyDeviceApplied.value in "Frailty Device"
-          and FrailtyDeviceApplied.status in { 'final', 'amended', 'corrected' }
-          and Global."Normalize Interval"(FrailtyDeviceApplied.effective) ends during day of "Measurement Period"
+    or exists ([Observation: "Medical equipment used"] EquipmentUsed
+        where EquipmentUsed.value in "Frailty Device"
+          and EquipmentUsed.status in { 'final', 'amended', 'corrected' }
+          and Global."Normalize Interval"(EquipmentUsed.effective) ends during day of "Measurement Period"
     )
     or exists  ([Condition: "Frailty Diagnosis"] FrailtyDiagnosis
         where Global."Prevalence Period"(FrailtyDiagnosis) overlaps "Measurement Period"
