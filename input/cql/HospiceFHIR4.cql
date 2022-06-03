@@ -10,7 +10,7 @@ include FHIRCommon version '4.0.002' called FHIRCommon
 include MATGlobalCommonFunctionsFHIR4 version '7.0.000' called Global
 
 valueset "Encounter Inpatient": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.666.5.307'
-valueset "Hospice care ambulatory": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1108.15'
+valueset "Hospice Care Ambulatory": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.526.3.1584'
 valueset "Hospice Encounter": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.1003'
 
 code "Discharge to healthcare facility for hospice care (procedure)": '428371000124100' from FHIRCommon."SNOMEDCT" display 'Discharge to healthcare facility for hospice care (procedure)'
@@ -22,7 +22,7 @@ parameter "Measurement Period" Interval<DateTime>
 
 context Patient
 
-define "Has Hospice":
+define "Has Hospice Services":
   exists (
     [Encounter: "Encounter Inpatient"] DischargeHospice
 			where DischargeHospice.status = 'finished'
@@ -30,7 +30,7 @@ define "Has Hospice":
 	        DischargeHospice.hospitalization.dischargeDisposition ~ "Discharge to home for hospice care (procedure)"
 				    or DischargeHospice.hospitalization.dischargeDisposition ~ "Discharge to healthcare facility for hospice care (procedure)"
 	    	)
-				and DischargeHospice.period ends during "Measurement Period"
+				and DischargeHospice.period ends during day of "Measurement Period"
 	)
     or exists (
       [Encounter: "Hospice Encounter"] HospiceEncounter
@@ -43,13 +43,13 @@ define "Has Hospice":
           and Global."Normalize Interval"(HospiceAssessment.effective) overlaps "Measurement Period"
     )
     or exists (
-      [ServiceRequest: "Hospice care ambulatory"] HospiceOrder
+      [ServiceRequest: "Hospice Care Ambulatory"] HospiceOrder
         where HospiceOrder.status in {'active', 'completed'}
           and HospiceOrder.intent = 'order'
-          and Global."Normalize Interval"(HospiceOrder.authoredOn) during "Measurement Period"
+          and Global."Normalize Interval"(HospiceOrder.authoredOn) during day of "Measurement Period"
     )
     or exists (
-      [Procedure: "Hospice care ambulatory"] HospicePerformed
+      [Procedure: "Hospice Care Ambulatory"] HospicePerformed
         where HospicePerformed.status = 'completed'
           and Global."Normalize Interval"(HospicePerformed.performed) overlaps "Measurement Period"
     )
