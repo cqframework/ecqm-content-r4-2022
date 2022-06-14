@@ -2,6 +2,7 @@
   "options":[
     "EnableAnnotations",
     "EnableLocators",
+    "EnableResultTypes",
     "DisableListDemotion",
     "DisableListPromotion"
   ],

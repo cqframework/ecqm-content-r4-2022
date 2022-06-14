@@ -2,6 +2,7 @@
 @author: Bryn Rhodes
 @description: Common terminologies and functions used in FHIR-based CQL artifacts
 @update: Version 4.0.002 for use in ecqm-content-r4-2022 repository
+@source: http://fhir.org/guides/cqf/common/Library/FHIRCommon
 */
 library FHIRCommon version '4.0.002'
 
