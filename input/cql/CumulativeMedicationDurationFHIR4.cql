@@ -453,7 +453,7 @@ First, we define a function that simply calculates CumulativeDuration of a set o
 intervals:
 */
 define function CumulativeDuration(Intervals List<Interval<DateTime>>):
-  Sum((collapse Intervals per day) X return all difference in days between start of X and end of X) + 1
+  Sum((collapse Intervals per day) X return all (difference in days between start of X and end of X) + 1)
 
 /*
 Next, we define a function that rolls out intervals:
