@@ -12,8 +12,8 @@ valueset "Annual Wellness Visit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840
 valueset "Home Healthcare Services": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1016'
 valueset "Office Visit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1001'
 valueset "Online Assessments": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1089'
-valueset "Preventive Care Services - Established Office Visit, 18 and Up": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1025'
-valueset "Preventive Care Services-Initial Office Visit, 18 and Up": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1023'
+valueset "Preventive Care Services Established Office Visit, 18 and Up": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1025' 
+valueset "Preventive Care Services Initial Office Visit, 18 and Up": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1023' 
 valueset "Telephone Visits": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1080'
 
 parameter "Measurement Period" Interval<DateTime>
@@ -23,11 +23,11 @@ context Patient
 define "Qualifying Encounters":
   ([Encounter: "Office Visit"]
 		union [Encounter: "Annual Wellness Visit"]
-		union [Encounter: "Preventive Care Services - Established Office Visit, 18 and Up"]
-		union [Encounter: "Preventive Care Services-Initial Office Visit, 18 and Up"]
+		union [Encounter: "Preventive Care Services Established Office Visit, 18 and Up"]
+		union [Encounter: "Preventive Care Services Initial Office Visit, 18 and Up"]
 		union [Encounter: "Home Healthcare Services"]
     union [Encounter: "Online Assessments"]
     union [Encounter: "Telephone Visits"]
   ) ValidEncounter
 		where ValidEncounter.status  = 'finished'
-		  and Global."Normalize Interval"(ValidEncounter.period) during "Measurement Period"
+		  and Global."Normalize Interval"(ValidEncounter.period) during day of "Measurement Period"
