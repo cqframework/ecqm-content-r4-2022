@@ -44,7 +44,7 @@ define "Inpatient Encounter":
   [Encounter: "Encounter Inpatient"] EncounterInpatient
 		where EncounterInpatient.status = 'finished'
 	    and "LengthInDays"(EncounterInpatient.period) <= 120
-			and EncounterInpatient.period ends during "Measurement Period"
+			and EncounterInpatient.period ends during day of "Measurement Period"
 
 /*
 @description: Returns an interval of date values extracted from the input interval of date-time values
@@ -118,9 +118,9 @@ define function "Hospital Arrival Time"(TheEncounter FHIR.Encounter ):
   			sort by start of FHIRHelpers.ToInterval(period)
   	).period)
 
-// TODO - fix these (must fetch Location resources and compare id to reference)
-/*Returns the latest departure time for encounter including any prior ED visit. */
 /*
+Returns the latest departure time for encounter including any prior ED visit. 
+*/
 define function "Hospital Departure Time"(TheEncounter FHIR.Encounter):
 	end of FHIRHelpers.ToInterval(Last(
 	    ( "Hospitalization Locations"(TheEncounter) ) HospitalLocation
@@ -131,43 +131,32 @@ define function "Emergency Department Arrival Time"(TheEncounter FHIR.Encounter)
 	start of FHIRHelpers.ToInterval((
 	    singleton from (
 	        ( "Hospitalization Locations"(TheEncounter) ) HospitalLocation
-				where HospitalLocation.type ~ "ER"
+				where GetLocation(HospitalLocation.location).type in "Emergency Department Visit"
 		)
 	).period)
 
-define function "First Inpatient Intensive Care Unit"(TheEncounter FHIR.Encounter):
-	First(
-	    ( TheEncounter.location ) HospitalLocation
-			where HospitalLocation.type ~ "ICU"
-				and HospitalLocation.period during TheEncounter.period
-			sort by start of FHIRHelpers.ToInterval(period)
-	)
+/*
+Hospitalization with Observation and Outpatient Surgery Service returns the total interval from the start of any immediately prior emergency department visit, outpatient surgery visit or observation visit to the discharge of the given encounter.
 */
-
-/*Hospitalization with Observation and Outpatient Surgery Service returns the total interval from the start of any immediately prior emergency department visit, outpatient surgery visit or observation visit to the discharge of the given encounter.*/
-/* TODO:
-define function "HospitalizationWithObservationAndOutpatientSurgeryService"(Encounter "Encounter, Performed" ):
-Encounter Visit
-	let ObsVisit: Last(["Encounter, Performed": "Observation Services"] LastObs
-			where LastObs.relevantPeriod ends 1 hour or less on or before start of Visit.relevantPeriod
-			sort by
-			end of relevantPeriod
-	),
-	VisitStart: Coalesce(start of ObsVisit.relevantPeriod, start of Visit.relevantPeriod),
-	EDVisit: Last(["Encounter, Performed": "Emergency Department Visit"] LastED
-			where LastED.relevantPeriod ends 1 hour or less on or before VisitStart
-			sort by
-			end of relevantPeriod
-	),
-	VisitStartWithED: Coalesce(start of EDVisit.relevantPeriod, VisitStart),
-	OutpatientSurgeryVisit: Last(["Encounter, Performed": "Outpatient Surgery Service"] LastSurgeryOP
-			where LastSurgeryOP.relevantPeriod ends 1 hour or less on or before VisitStartWithED
-			sort by
-			end of relevantPeriod
-	)
-	return Interval[Coalesce(start of OutpatientSurgeryVisit.relevantPeriod, VisitStartWithED),
-	end of Visit.relevantPeriod]
-*/
+define function "HospitalizationWithObservationAndOutpatientSurgeryService"(TheEncounter "Encounter" ):
+  TheEncounter Visit
+	  let ObsVisit: Last([Encounter: "Observation Services"] LastObs
+		  	where LastObs.status = 'finished'
+          and LastObs.period ends 1 hour or less on or before start of Visit.period
+			  sort by	end of period
+    	),
+    	VisitStart: Coalesce(start of ObsVisit.period, start of Visit.period),
+    	EDVisit: Last([Encounter: "Emergency Department Visit"] LastED
+			  where LastED.status = 'finished'
+          and LastED.period ends 1 hour or less on or before VisitStart
+			  sort by	end of period
+    	),
+    	VisitStartWithED: Coalesce(start of EDVisit.period, VisitStart),
+    	OutpatientSurgeryVisit: Last([Encounter: "Outpatient Surgery Service"] LastSurgeryOP
+			  where LastSurgeryOP.period ends 1 hour or less on or before VisitStartWithED
+			  sort by	end of period
+    	)
+  	return Interval[Coalesce(start of OutpatientSurgeryVisit.period, VisitStartWithED), end of Visit.period]
 
 /*
 Hospitalization with Observation returns the total interval from the start of any immediately prior emergency department visit through the observation visit to the discharge of the given encounter
@@ -175,16 +164,27 @@ Hospitalization with Observation returns the total interval from the start of an
 define function "HospitalizationWithObservation"(TheEncounter FHIR.Encounter ):
   TheEncounter Visit
   		let ObsVisit: Last([Encounter: "Observation Services"] LastObs
-  				where LastObs.period ends 1 hour or less on or before start of Visit.period
+  				where LastObs.status = 'finished'
+            and LastObs.period ends 1 hour or less on or before start of Visit.period
   				sort by end of period
   			),
   			VisitStart: Coalesce(start of ObsVisit.period, start of Visit.period),
   			EDVisit: Last([Encounter: "Emergency Department Visit"] LastED
-  				where LastED.period ends 1 hour or less on or before VisitStart
+  				where LastED.status = 'finished'
+            and LastED.period ends 1 hour or less on or before VisitStart
   				sort by end of period
   			)
   		return Interval[Coalesce(start of EDVisit.period, VisitStart), end of Visit.period]
 
+/*
+Hospitalization with Observation Length of Stay returns the length in days from the start of any immediately prior emergency department visit through the observation visit to the discharge of the given encounter
+*/
+define function "HospitalizationWithObservationLengthofStay"(TheEncounter "Encounter" ):
+  "LengthInDays"("HospitalizationWithObservation"(TheEncounter))
+
+/*
+First Inpatient Intensive Care Unit returns the first intensive care unit for the given encounter, without considering any immediately prior emergency department visit.
+*/
 define function "FirstInpatientIntensiveCareUnit"(Encounter FHIR.Encounter ):
   First((Encounter.location)HospitalLocation
   			where GetLocation(HospitalLocation.location).type in "Intensive Care Unit"
@@ -248,14 +248,17 @@ define function "EncounterDiagnosis"(Encounter Encounter ):
   Encounter.diagnosis D
     return singleton from ([Condition] C where C.id = "GetId"(D.condition.reference))
 
+/*
+Returns the Condition resource for the given reference
+*/
 define function "GetCondition"(reference Reference):
   singleton from ([Condition] C where C.id = "GetId"(reference.reference))
 
 /*
 Returns the condition that is specified as the principal diagnosis for the encounter
 */
-define function "PrincipalDiagnosis"(Encounter Encounter ):
-  (singleton from (Encounter.diagnosis D where D.rank = 1)) PD
+define function "PrincipalDiagnosis"(TheEncounter Encounter ):
+  (singleton from (TheEncounter.diagnosis D where D.rank = 1)) PD
   		return singleton from ([Condition] C where C.id = "GetId"(PD.condition.reference))
 
 /*
@@ -267,12 +270,8 @@ define function "GetLocation"(reference Reference ):
   )
 
 /*
-NOTE: Provenance is not the preferred approach, this is provided only as an illustration
-for what using Provenance could look like, and is not a tested pattern
+Returns the medication code for the given MedicationRequest
 */
-define function "GetProvenance"(resource Resource ):
-  singleton from ([Provenance: target in resource.id])
-
 define function "GetMedicationCode"(request MedicationRequest ):
   if request.medication is CodeableConcept then
   	  request.medication as CodeableConcept
