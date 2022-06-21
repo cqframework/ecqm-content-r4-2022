@@ -6,7 +6,7 @@
 */
 library FHIRCommon version '4.0.002'
 
-using FHIR version '4.0.1'
+using FHIR version '4.0.2'
 
 include FHIRHelpers version '4.0.002'
 
