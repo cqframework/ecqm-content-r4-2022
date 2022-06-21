@@ -12,8 +12,8 @@ library SupplementalDataElementsFHIR4 version '3.0.000'
 
 using FHIR version '4.0.1'
 
-include FHIRHelpers version '4.0.002' called FHIRHelpers
-include QICoreCommon version '4.1.002' called QICore
+include FHIRHelpers version '4.1.000' called FHIRHelpers
+include QICoreCommon version '1.0.000' called QICore
 
 valueset "Ethnicity": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.837'
 valueset "ONC Administrative Sex": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1'

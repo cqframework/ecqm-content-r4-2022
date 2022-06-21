@@ -3,12 +3,13 @@
 @description: Common terminologies and functions used in FHIR-based CQL artifacts
 @update: Version 4.0.002 for use in ecqm-content-r4-2022 repository
 @source: http://fhir.org/guides/cqf/common/Library/FHIRCommon
+@update: Version 1.1.000, based on MAT versioning
 */
-library FHIRCommon version '4.0.002'
+library FHIRCommon version '1.1.000'
 
 using FHIR version '4.0.1'
 
-include FHIRHelpers version '4.0.002'
+include FHIRHelpers version '4.1.000'
 
 codesystem "LOINC": 'http://loinc.org'
 codesystem "SNOMEDCT": 'http://snomed.info/sct'
@@ -24,8 +25,9 @@ codesystem "AllergyIntoleranceVerificationStatusCodes": 'http://terminology.hl7.
 codesystem "ConditionCategoryCodes": 'http://terminology.hl7.org/CodeSystem/condition-category'
 codesystem "ObservationCategoryCodes": 'http://terminology.hl7.org/CodeSystem/observation-category'
 
-valueset "Active Condition": 'http://fhir.org/guides/cqf/common/ValueSet/active-condition'
-valueset "Inactive Condition": 'http://fhir.org/guides/cqf/common/ValueSet/inactive-condition'
+// NOT in VSAC so can't be included in the MAT
+//valueset "Active Condition": 'http://fhir.org/guides/cqf/common/ValueSet/active-condition'
+//valueset "Inactive Condition": 'http://fhir.org/guides/cqf/common/ValueSet/inactive-condition'
 
 code "Birthdate": '21112-8' from "LOINC" display 'Birth date'
 code "Dead": '419099009' from "SNOMEDCT" display 'Dead'

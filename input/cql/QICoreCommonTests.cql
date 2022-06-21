@@ -2,10 +2,10 @@ library QICoreCommonTests
 
 using FHIR version '4.0.1'
 
-include FHIRHelpers version '4.0.002'
+include FHIRHelpers version '4.1.000'
 
-include FHIRCommon version '4.0.002' called FHIRCommon
-include QICoreCommon version '4.1.002' called Common
+include FHIRCommon version '1.1.000' called FHIRCommon
+include QICoreCommon version '1.0.000' called Common
 
 codesystem "Marital Status Codes": 'http://terminology.hl7.org/CodeSystem/v3-MaritalStatus'
 codesystem "CDC Race and Ethnicity Codes": 'urn:oid:2.16.840.1.113883.6.238'

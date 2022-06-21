@@ -8,7 +8,7 @@
 
 @update: Refresh based on AU 2022 content
 */
-library FHIRHelpers version '4.0.002' // TODO: Work with the SB team to get this uploaded to the MAT-FHIR with the right version number here
+library FHIRHelpers version '4.1.000'
 
 using FHIR version '4.0.1'
 

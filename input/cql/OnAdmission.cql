@@ -2,10 +2,10 @@ library OnAdmission
 
 using FHIR version '4.0.1'
 
-include FHIRHelpers version '4.0.001'
+include FHIRHelpers version '4.1.000'
 
-include MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global
-include CumulativeMedicationDurationFHIR4 version '1.0.000' called CMD
+include MATGlobalCommonFunctionsFHIR4 version '7.0.000' called Global
+include CumulativeMedicationDurationFHIR4 version '2.0.000' called CMD
 
 valueset "Diabetes": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.103.12.1001'
 valueset "Present on Admission or Clinically Undetermined": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1147.197'

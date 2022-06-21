@@ -10,12 +10,12 @@ specified here are non-fluent versions.
 
 @update: Refactored to use FHIRCommon
 */
-library QICoreCommon version '4.1.002'
+library QICoreCommon version '1.0.000'
 
 using FHIR version '4.0.1'
 
-include FHIRHelpers version '4.0.002'
-include FHIRCommon version '4.0.002' called FHIRCommon
+include FHIRHelpers version '4.1.000' called FHIRHelpers
+include FHIRCommon version '1.1.000' called FHIRCommon
 
 context Patient
 
