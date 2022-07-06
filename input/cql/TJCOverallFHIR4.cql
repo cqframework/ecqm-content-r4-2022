@@ -76,6 +76,7 @@ define "Encounter with Comfort Measures during Hospitalization":
 define "Intervention Comfort Measures":
   ( ["ServiceRequest": "Comfort Measures"] P
       where P.intent = 'order'
+       and P.status in { 'active', 'on-hold', 'completed'}
   )
     union ( ["Procedure": "Comfort Measures"] InterventionPerformed
         where InterventionPerformed.status in { 'completed', 'in-progress' }
