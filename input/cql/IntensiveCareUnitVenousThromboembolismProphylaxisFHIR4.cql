@@ -9,6 +9,8 @@ added value set Application of Graduated Compression Stockings (GCS)
 added value set Application of Intermittent Pneumatic Compression Devices 
 added value set Application of Venous Foot Pumps (VFP)
 added value set Comfort Measures
+Updated Low risk Indicate for VTE and 2 assocatie definitions by using Earliest()
+Updated requestStatusReason by using qicore-doNOTperformReason for ServiceRequest and removed Function "GetStatusReason"
 */
 library IntensiveCareUnitVenousThromboembolismProphylaxisFHIR4 version '0.0.013'
 
@@ -22,9 +24,10 @@ include MATGlobalCommonFunctionsFHIR4 version '7.0.000' called Global
 
 codesystem "LOINC": 'http://loinc.org' 
 
-valueset "Application of Graduated Compression Stockings (GCS)":'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1110.66'
-valueset "Application of Intermittent Pneumatic Compression Devices (IPC)": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1110.65'
-valueset "Application of Venous Foot Pumps (VFP)": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1110.64'
+/*commented out the following vs due to unavalibilities in 2022 version of valuesets*/
+//valueset "Application of Graduated Compression Stockings (GCS)":'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1110.66'
+//valueset "Application of Intermittent Pneumatic Compression Devices (IPC)": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1110.65'
+//valueset "Application of Venous Foot Pumps (VFP)": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1110.64'
 valueset "Atrial Fibrillation/Flutter": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.117.1.7.1.202' 
 valueset "Comfort Measures": 'http://cts.nlm.nih.gov/fhir/ValueSet/1.3.6.1.4.1.33895.1.3.0.45'
 valueset "Direct Thrombin Inhibitor": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.117.1.7.1.205' 
@@ -141,7 +144,7 @@ define "Encounter with First ICU Stay with Principal Procedure of SCIP VTE Selec
         ) during VTE."CalendarDayOfOrDayAfter" ( VTE."StartOfFirstICU" ( QualifyingEncounterICU ) )
       return QualifyingEncounterICU
 
-// error msg - Comfort Measures. 
+
 define "Encounter with Intervention Comfort Measures From Day Of Start of Hospitalization To Day After First ICU Stay":
   "Encounter with ICU Location" QualifyingEncounterICU
               with "Intervention Comfort Measures" ComfortMeasure
@@ -190,24 +193,26 @@ define "Pharmacological or Mechanical VTE Prophylaxis Received":
             union (["MedicationAdministration":  "Injectable Factor Xa Inhibitor for VTE Prophylaxis"] FactorXa where FactorXa.status = 'completed')
              union (["MedicationAdministration":  "Warfarin"] Warfarin where Warfarin.status = 'completed')
              union (["MedicationAdministration": "Rivaroxaban for VTE Prophylaxis"] Rivaroxaban where Rivaroxaban.status = 'completed')
-              union (
+              /*union (
                   (["Procedure": "Application of Intermittent Pneumatic Compression Devices (IPC)"] 
                   union ["Procedure": "Application of Venous Foot Pumps (VFP)"] 
                   union ["Procedure": "Application of Graduated Compression Stockings (GCS)"] ) DeviceApplied
                   where DeviceApplied.status = 'completed'
-                            ) 
+                            ) */
 
 define "Encounter with VTE Prophylaxis Received on Day of or Day After First ICU Stay or Procedure":
   ( "Encounter with ICU Location" QualifyingEncounterICU
       with	"Pharmacological or Mechanical VTE Prophylaxis Received" VTEProphylaxis
-        such that date from(start of Coalesce(Global."Normalize Interval"(VTEProphylaxis.effective), Global."Normalize Interval"(VTEProphylaxis.performed))) during VTE."CalendarDayOfOrDayAfter"(VTE."StartOfFirstICU"(QualifyingEncounterICU))
+        such that date from(start of Global."Normalize Interval"(VTEProphylaxis.effective)) during VTE."CalendarDayOfOrDayAfter"(VTE."StartOfFirstICU"(QualifyingEncounterICU))
+        //such that date from(start of Coalesce(Global."Normalize Interval"(VTEProphylaxis.effective), Global."Normalize Interval"(VTEProphylaxis.performed))) during VTE."CalendarDayOfOrDayAfter"(VTE."StartOfFirstICU"(QualifyingEncounterICU))
         	)
         	union ( from
         				"Encounter with ICU Location" QualifyingEncounterICU,
         				["Procedure": "General or Neuraxial Anesthesia"] AnesthesiaProcedure,
         				"Pharmacological or Mechanical VTE Prophylaxis Received" VTEProphylaxis
         				where Global."Normalize Interval"(AnesthesiaProcedure.performed) ends 1 day after day of VTE."StartOfFirstICU"(QualifyingEncounterICU)
-        					and date from(start of Coalesce(Global."Normalize Interval"(VTEProphylaxis.effective), Global."Normalize Interval"(VTEProphylaxis.performed))) during VTE."CalendarDayOfOrDayAfter"(
+        					and date from(start of Global."Normalize Interval"(VTEProphylaxis.effective)) during VTE."CalendarDayOfOrDayAfter"(
+        					//and date from(start of Coalesce(Global."Normalize Interval"(VTEProphylaxis.effective), Global."Normalize Interval"(VTEProphylaxis.performed))) during VTE."CalendarDayOfOrDayAfter"(
           				end of Global."Normalize Interval"(AnesthesiaProcedure.performed))
                     return QualifyingEncounterICU
                 )
@@ -229,7 +234,7 @@ define "Encounter with Medication Oral Factor Xa Inhibitor Administered on Day o
             					and date from(start of Global."Normalize Interval"(FactorXaMedication.effective)) during VTE."CalendarDayOfOrDayAfter"(
               				end of Global."Normalize Interval"(AnesthesiaProcedure.performed))
             			return QualifyingEncounterICU
-                	)
+                )
 
 
 define "Encounter with Prior or Present Diagnosis of Atrial Fibrillation or Prior Diagnosis of VTE":
@@ -278,6 +283,10 @@ define "Low Risk Indicator For VTE":
         and */
         FHIRHelpers.ToConcept ( VTERiskAssessment.value ) in "Low Risk"
         and VTERiskAssessment.status in { 'final', 'amended', 'corrected' }
+      return {
+        id: VTERiskAssessment.id,
+        LowRiskDatetime: Global.Earliest(VTERiskAssessment.effective)
+      }
   )
     union ( ["Observation": "INR"] INRLabTest
         where /* exists (INRLabTest.category C
@@ -285,7 +294,9 @@ define "Low Risk Indicator For VTE":
         and */
         INRLabTest.value as Quantity > 3.0
           and INRLabTest.status in { 'final', 'amended', 'corrected' }
-        return "Observation" { id: INRLabTest.id, effective: INRLabTest.issued }
+        return  { 
+          id: INRLabTest.id, 
+          LowRiskDatetime: INRLabTest.issued }
     )
     union ( ( ( ["MedicationAdministration": "Unfractionated Heparin"] UnfractionatedHeparin
           where UnfractionatedHeparin.dosage.route in "Intravenous route"
@@ -293,22 +304,25 @@ define "Low Risk Indicator For VTE":
         union ["MedicationAdministration": "Direct Thrombin Inhibitor"]
         union ["MedicationAdministration": "Glycoprotein IIb/IIIa Inhibitors"] ) AnticoagulantMedication
         where AnticoagulantMedication.status = 'completed'
-        return "Observation" { id: AnticoagulantMedication.id, effective: AnticoagulantMedication.effective }
+        return { 
+          id: AnticoagulantMedication.id, 
+          LowRiskDatetime: start of Global."Normalize Interval"(AnticoagulantMedication.effective) }
     )
 
 
 define "Low Risk for VTE or Anticoagulant Administered From Day of Start of Hospitalization To Day After First ICU Stay":
   "Encounter with ICU Location" QualifyingEncounterICU
           with "Low Risk Indicator For VTE" LowRiskForVTE
-          such that Global."Normalize Interval"(LowRiskForVTE.effective) during day of VTE."FromDayOfStartOfHospitalizationToDayAfterFirstICU"(QualifyingEncounterICU)
+          such that LowRiskForVTE.LowRiskDatetime during day of VTE."FromDayOfStartOfHospitalizationToDayAfterFirstICU"(QualifyingEncounterICU)
 
 define "Low Risk for VTE or Anticoagulant Administered on Day of or Day After Procedure":
   from
           	"Encounter with ICU Location" QualifyingEncounterICU,
           	["Procedure": "General or Neuraxial Anesthesia"] AnesthesiaProcedure,
           	"Low Risk Indicator For VTE" LowRiskForVTE
-          where Global."Normalize Interval"(AnesthesiaProcedure.performed) ends 1 day after day of VTE."StartOfFirstICU"(QualifyingEncounterICU)
-          	and Global."Normalize Interval"(LowRiskForVTE.effective) during day of VTE."CalendarDayOfOrDayAfter"(end of Global."Normalize Interval"(AnesthesiaProcedure.performed))
+          where AnesthesiaProcedure.status = 'completed'
+            and Global."Normalize Interval"(AnesthesiaProcedure.performed) ends 1 day after day of VTE."StartOfFirstICU"(QualifyingEncounterICU)
+          	and LowRiskForVTE.LowRiskDatetime during day of VTE."CalendarDayOfOrDayAfter"(end of Global."Normalize Interval"(AnesthesiaProcedure.performed))
           return QualifyingEncounterICU
 
 
@@ -373,11 +387,11 @@ define "No Mechanical VTE Prophylaxis Performed or Ordered":
         and DeviceOrder.doNotPerform is true
       return {
         id: DeviceOrder.id,
-        requestStatusReason: GetStatusReason(DeviceOrder),
+        requestStatusReason: FHIRHelpers.ToConcept(FHIRCommon.Extension (DeviceOrder, 'qicore-doNotPerformReason').value),
         authoredOn: DeviceOrder.authoredOn
       }
   )
-    union ( (["Procedure": "Application of Intermittent Pneumatic Compression Devices (IPC)"] 
+   /* union ( (["Procedure": "Application of Intermittent Pneumatic Compression Devices (IPC)"] 
                   union ["Procedure": "Application of Venous Foot Pumps (VFP)"] 
                   union ["Procedure": "Application of Graduated Compression Stockings (GCS)"]) DeviceApplied
         let DeviceNotDoneTiming: FHIRCommon.Extension ( DeviceApplied, 'qicore-recorded' ).value
@@ -387,7 +401,7 @@ define "No Mechanical VTE Prophylaxis Performed or Ordered":
           requestStatusReason: DeviceApplied.statusReason,
           authoredOn: DeviceNotDoneTiming
         }
-    )  
+    )  */
 
 
 define "No VTE Prophylaxis Medication Due to Medical Reason on Day of or Day After Procedure":
@@ -408,7 +422,7 @@ define "No Mechanical VTE Prophylaxis Due to Medical Reason on Day of or Day Aft
         		"Encounter with ICU Location" QualifyingEncounterICU,
         		["Procedure": "General or Neuraxial Anesthesia"] AnesthesiaProcedure,
         		"No Mechanical VTE Prophylaxis Performed or Ordered" NoVTEDevice
-        		where  NoVTEDevice.requestStatusReason in "Medical Reason"
+        		where NoVTEDevice.requestStatusReason in "Medical Reason"
                 and AnesthesiaProcedure.status = 'completed'
                 and Global."Normalize Interval"(AnesthesiaProcedure.performed ) ends 1 day after day of VTE."StartOfFirstICU"(QualifyingEncounterICU)
                 and date from (NoVTEDevice.authoredOn) during VTE."CalendarDayOfOrDayAfter"(
@@ -454,7 +468,7 @@ define "Encounter with First ICU Location Stay Less Than 1 day":
         	 where Global."LengthInDays"(VTE."FirstICULocationPeriod"(QualifyingEncounterICU)) < 1
 
 
-
-
+/* no longer useful due to qicore profile changes
 define function "GetStatusReason"(requestReason ServiceRequest ):
   FHIRCommon.Extension ( requestReason, 'request-statusReason' )
+*/
