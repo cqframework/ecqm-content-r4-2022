@@ -1,0 +1,19 @@
+{
+	"code": {
+	  "coding": [
+		{
+		  "code": "111297002",
+		  "display": "Nonparalytic stroke (disorder)",
+		  "system": "http://snomed.info/sct",
+		  "userSelected": true,
+		  "version": "2020-09"
+		}
+	  ]
+	},
+	"subject": {
+    "reference": "Patient/numer-EXM104-AntithromboticTMeqIPAdmTMnotBundle"
+    },
+	"id": "ischemic-stroke-7f36",
+	"recordedDate": "2022-07-15T08:00:00.000+00:00",
+	"resourceType": "Condition"
+}

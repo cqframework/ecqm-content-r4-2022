@@ -33,8 +33,8 @@ valueset "Patient Expired": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113
 valueset "Ticagrelor Therapy": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1110.39'
 
 parameter "Measurement Period" Interval<DateTime>
-  default Interval[@2019-01-01T00:00:00.0, @2020-01-01T00:00:00.0)
-
+  default Interval[@2022-01-01T00:00:00.0, @2023-01-01T00:00:00.0)
+  
 context Patient
 
 define "All Stroke Encounter":
