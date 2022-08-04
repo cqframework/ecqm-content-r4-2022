@@ -17,9 +17,107 @@ using FHIR version '4.0.1'
 include FHIRHelpers version '4.1.000' called FHIRHelpers
 include FHIRCommon version '1.1.000' called FHIRCommon
 
+codesystem "USCoreConditionCategory": 'http://hl7.org/fhir/us/core/CodeSystem/condition-category'
+// NOTE: Introduced in USCore 5
+codesystem "USCoreObservationCategory": 'http://hl7.org/fhir/us/core/CodeSystem/us-core-observation-category'
+
+// Condition Category Codes
+code "problem-list-item": 'problem-list-item' from FHIRCommon."ConditionCategoryCodes" display 'Problem List Item'
+code "encounter-diagnosis": 'encounter-diagnosis' from FHIRCommon."ConditionCategoryCodes" display 'Encounter Diagnosis'
+code "health-concern": 'health-concern' from "USCoreConditionCategory" display 'Health Concern'
+
+// Observation Category Codes
+code "social-history": 'social-history' from FHIRCommon."ObservationCategoryCodes" display 'Social History'
+code "vital-signs": 'vital-signs' from FHIRCommon."ObservationCategoryCodes" display 'Vital Signs'
+code "imaging": 'imaging' from FHIRCommon."ObservationCategoryCodes" display 'Imaging'
+code "laboratory": 'laboratory' from FHIRCommon."ObservationCategoryCodes" display 'Laboratory'
+code "procedure": 'procedure' from FHIRCommon."ObservationCategoryCodes" display 'Procedure'
+code "survey": 'survey' from FHIRCommon."ObservationCategoryCodes" display 'Survey'
+code "exam": 'exam' from FHIRCommon."ObservationCategoryCodes" display 'Exam'
+code "therapy": 'therapy' from FHIRCommon."ObservationCategoryCodes" display 'Therapy'
+code "activity": 'activity' from FHIRCommon."ObservationCategoryCodes" display 'Activity'
+// NOTE: Introduced in USCore 5
+code "clinical-test": 'clinical-test' from "USCoreObservationCategory" display 'Clinical Test'
+
 context Patient
 
 /* Candidates for FHIRCommon */
+
+define function HasCategory(condition Condition, category Code):
+  exists (condition.category C
+    where C ~ category
+  )
+
+define function IsProblemListItem(condition Condition):
+  exists (condition.category C
+    where C ~ "problem-list-item"
+  )
+
+define function IsEncounterDiagnosis(condition Condition):
+  exists (condition.category C
+    where C ~ "encounter-diagnosis"
+  )
+
+define function IsHealthConcern(condition Condition):
+  exists (condition.category C
+    where C ~ "health-concern"
+  )
+
+define function HasCategory(observation Observation, category Code):
+  exists (observation.category C
+    where C ~ category
+  )
+
+define function IsSocialHistory(observation Observation):
+  exists (observation.category C
+    where C ~ "social-history"
+  )
+
+define function IsVitalSign(observation Observation):
+  exists (observation.category C
+    where C ~ "vital-signs"
+  )
+
+define function IsImaging(observation Observation):
+  exists (observation.category C
+    where C ~ "imaging"
+  )
+
+define function IsLaboratory(observation Observation):
+  exists (observation.category C
+    where C ~ "laboratory"
+  )
+
+define function IsProcedure(observation Observation):
+  exists (observation.category C
+    where C ~ "procedure"
+  )
+
+define function IsSurvey(observation Observation):
+  exists (observation.category C
+    where C ~ "survey"
+  )
+
+define function IsExam(observation Observation):
+  exists (observation.category C
+    where C ~ "exam"
+  )
+
+define function IsTherapy(observation Observation):
+  exists (observation.category C
+    where C ~ "therapy"
+  )
+
+define function IsActivity(observation Observation):
+  exists (observation.category C
+    where C ~ "activity"
+  )
+
+// NOTE: Introduced in USCore 5
+define function IsClinicalTest(observation Observation):
+  exists (observation.category C
+    where C ~ "clinical-test"
+  )
 
 /*
 @description: Returns true if the given MedicationRequest has a category of Community
