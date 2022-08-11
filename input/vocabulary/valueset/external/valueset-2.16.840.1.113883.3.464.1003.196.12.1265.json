@@ -13,21 +13,21 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:05-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-10T14:39:43-06:00",
     "contains": [ {
       "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-      "version": "2021-01",
+      "version": "2022-01",
       "code": "199224",
       "display": "anastrozole 1 MG Oral Tablet"
     }, {
       "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-      "version": "2021-01",
+      "version": "2022-01",
       "code": "200064",
       "display": "letrozole 2.5 MG Oral Tablet"
     }, {
       "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-      "version": "2021-01",
+      "version": "2022-01",
       "code": "310261",
       "display": "exemestane 25 MG Oral Tablet"
     } ]

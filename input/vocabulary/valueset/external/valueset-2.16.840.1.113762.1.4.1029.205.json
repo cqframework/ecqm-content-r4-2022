@@ -13,21 +13,26 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-10T14:39:40-06:00",
     "contains": [ {
-      "system": "http://terminology.hl7.org/CodeSystem/hsloc",
+      "system": "https://www.cdc.gov/nhsn/cdaportal/terminology/codesystem/hsloc.html",
       "version": "2020",
       "code": "1039-7",
       "display": "Neonatal Critical Care (Level II/III)"
     }, {
-      "system": "http://terminology.hl7.org/CodeSystem/hsloc",
+      "system": "https://www.cdc.gov/nhsn/cdaportal/terminology/codesystem/hsloc.html",
       "version": "2020",
       "code": "1040-5",
       "display": "Neonatal Critical Care (Level III)"
     }, {
+      "system": "https://www.cdc.gov/nhsn/cdaportal/terminology/codesystem/hsloc.html",
+      "version": "2020",
+      "code": "1269-0",
+      "display": "Neonatal Critical Care (Level IV)"
+    }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "405269005",
       "display": "Neonatal intensive care unit (environment)"
     } ]

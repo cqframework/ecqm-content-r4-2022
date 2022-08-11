@@ -13,26 +13,26 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:05-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-10T14:39:41-06:00",
     "contains": [ {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "10378005",
       "display": "Hospital admission, emergency, from emergency room, accidental injury (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "19951005",
       "display": "Hospital admission, emergency, from emergency room, medical nature (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "432661000124104",
       "display": "Hospital admission, transfer from emergency department (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "73607007",
       "display": "Hospital admission, emergency, from emergency room (procedure)"
     } ]

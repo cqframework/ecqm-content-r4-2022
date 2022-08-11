@@ -13,8 +13,8 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-10T14:39:43-06:00",
     "contains": [ {
       "system": "http://www.ama-assn.org/go/cpt",
       "version": "2021",
@@ -22,22 +22,22 @@
       "display": "Group psychotherapy (other than of a multiple-family group)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "1555005",
       "display": "Brief group psychotherapy (regime/therapy)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "27591006",
       "display": "Group analytical psychotherapy (regime/therapy)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "28868002",
       "display": "Interactive group medical psychotherapy (regime/therapy)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "76168009",
       "display": "Group psychotherapy (regime/therapy)"
     } ]

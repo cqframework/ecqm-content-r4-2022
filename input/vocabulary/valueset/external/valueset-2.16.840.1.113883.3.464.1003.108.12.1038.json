@@ -13,36 +13,36 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:05-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-10T14:39:41-06:00",
     "contains": [ {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "60515-4",
       "display": "CT Colon and Rectum W air contrast PR"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "72531-7",
       "display": "CT Colon and Rectum W contrast IV and W air contrast PR"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "79069-1",
       "display": "CT Colon and Rectum for screening WO contrast IV and W air contrast PR"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "79071-7",
       "display": "CT Colon and Rectum WO contrast IV and W air contrast PR"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "79101-2",
       "display": "CT Colon and Rectum for screening W air contrast PR"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "82688-3",
       "display": "CT Colon and Rectum WO and W contrast IV and W air contrast PR"
     } ]

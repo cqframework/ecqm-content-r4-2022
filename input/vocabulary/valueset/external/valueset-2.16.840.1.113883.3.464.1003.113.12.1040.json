@@ -13,26 +13,26 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-10T14:39:43-06:00",
     "contains": [ {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "391096007",
       "display": "Family history: Maternal hip fracture (situation)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "416072008",
       "display": "Family history: maternal hip fracture before age 75 (situation)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "445121000124105",
       "display": "Family history of paternal hip fracture (situation)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "445501000124107",
       "display": "Family history of hip fracture in parent (situation)"
     } ]

@@ -7,14 +7,14 @@
     "value": "2.16.840.1.113883.3.526.3.1018"
   } ],
   "version": "20210220",
-  "name": "PsychVisit-FamilyPsychotherapy",
-  "title": "Psych Visit - Family Psychotherapy",
+  "name": "PsychVisitforFamilyPsychotherapy",
+  "title": "Psych Visit for Family Psychotherapy",
   "status": "active",
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-10T14:39:43-06:00",
     "contains": [ {
       "system": "http://www.ama-assn.org/go/cpt",
       "version": "2021",
@@ -27,17 +27,17 @@
       "display": "Family psychotherapy (conjoint psychotherapy) (with patient present), 50 minutes"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "108313002",
       "display": "Family psychotherapy procedure (regime/therapy)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "302247005",
       "display": "Narrative family psychotherapy (regime/therapy)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "361229007",
       "display": "Structural family psychotherapy (regime/therapy)"
     } ]

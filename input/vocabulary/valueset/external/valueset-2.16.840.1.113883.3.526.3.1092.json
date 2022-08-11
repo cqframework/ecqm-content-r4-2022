@@ -13,16 +13,36 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-10T14:39:41-06:00",
     "contains": [ {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "24484000",
       "display": "Severe (severity modifier) (qualifier value)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
+      "code": "6736007",
+      "display": "Moderate (severity modifier) (qualifier value)"
+    }, {
+      "system": "http://snomed.info/sct",
+      "version": "2021-09",
+      "code": "24484000",
+      "display": "Severe (severity modifier) (qualifier value)"
+    }, {
+      "system": "http://snomed.info/sct",
+      "version": "2021-09",
+      "code": "6736007",
+      "display": "Moderate (severity modifier) (qualifier value)"
+    }, {
+      "system": "http://snomed.info/sct",
+      "version": "2021-09",
+      "code": "24484000",
+      "display": "Severe (severity modifier) (qualifier value)"
+    }, {
+      "system": "http://snomed.info/sct",
+      "version": "2021-09",
       "code": "6736007",
       "display": "Moderate (severity modifier) (qualifier value)"
     } ]

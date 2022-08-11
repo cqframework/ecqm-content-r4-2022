@@ -13,8 +13,8 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:05-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-10T14:39:42-06:00",
     "contains": [ {
       "system": "http://www.ama-assn.org/go/cpt",
       "version": "2021",

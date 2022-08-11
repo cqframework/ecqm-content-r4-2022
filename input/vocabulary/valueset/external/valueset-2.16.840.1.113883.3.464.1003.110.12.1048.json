@@ -13,8 +13,8 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-10T14:39:41-06:00",
     "contains": [ {
       "system": "http://www.ama-assn.org/go/cpt",
       "version": "2021",
@@ -22,7 +22,7 @@
       "display": "Rotavirus vaccine, human, attenuated (RV1), 2 dose schedule, live, for oral use"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "434741000124104",
       "display": "Rotavirus vaccination, 2 dose schedule (procedure)"
     } ]

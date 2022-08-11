@@ -13,8 +13,8 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-10T14:39:41-06:00",
     "contains": [ {
       "system": "http://www.ama-assn.org/go/cpt",
       "version": "2021",
@@ -43,6 +43,11 @@
     }, {
       "system": "http://www.ama-assn.org/go/cpt",
       "version": "2021",
+      "code": "90674",
+      "display": "Influenza virus vaccine, quadrivalent (ccIIV4), derived from cell cultures, subunit, preservative and antibiotic free, 0.5 mL dosage, for intramuscular use"
+    }, {
+      "system": "http://www.ama-assn.org/go/cpt",
+      "version": "2021",
       "code": "90685",
       "display": "Influenza virus vaccine, quadrivalent (IIV4), split virus, preservative free, 0.25 mL dosage, for intramuscular use"
     }, {
@@ -61,8 +66,18 @@
       "code": "90688",
       "display": "Influenza virus vaccine, quadrivalent (IIV4), split virus, 0.5 mL dosage, for intramuscular use"
     }, {
+      "system": "http://www.ama-assn.org/go/cpt",
+      "version": "2021",
+      "code": "90756",
+      "display": "Influenza virus vaccine, quadrivalent (ccIIV4), derived from cell cultures, subunit, antibiotic free, 0.5 mL dosage, for intramuscular use"
+    }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
+      "code": "786847005",
+      "display": "Administration of vaccine product containing only Influenza A virus subtype H5N1 antigen (procedure)"
+    }, {
+      "system": "http://snomed.info/sct",
+      "version": "2021-09",
       "code": "86198006",
       "display": "Administration of vaccine product containing only Influenza virus antigen (procedure)"
     } ]

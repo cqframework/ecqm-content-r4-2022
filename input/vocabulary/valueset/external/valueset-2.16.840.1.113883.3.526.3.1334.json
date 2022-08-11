@@ -13,16 +13,16 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-10T14:39:42-06:00",
     "contains": [ {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "71486-5",
       "display": "Left eye Optic disc or retinal nerve fiber layer structural abnormalities by Ophthalmoscopy"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "71487-3",
       "display": "Right eye Optic disc or retinal nerve fiber layer structural abnormalities by Ophthalmoscopy"
     } ]
