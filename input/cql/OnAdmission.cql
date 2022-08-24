@@ -91,3 +91,134 @@ define "Encounter With Immune Modifier Active on Admission (2)":
         and (ImmunoMeds.intent = 'order' or (ImmunoMeds.intent = 'plan' and (ImmunoMeds.reported is true or ImmunoMeds.reported is not null)))
         and exists (ImmunoMeds.category C where C ~ Global."Community")
         and CMD.MedicationRequestPeriod(ImmunoMeds) overlaps before IPEncounter.period
+
+
+define "Risk Variable Encounter With Stroke Present on Admission":
+  "Qualifying Encounter" Inpatient Encounter
+    where exists ( InpatientEncounter.diagnosis Dx
+        where Global."GetCondition" ( Dx.condition ).code in "Stroke"
+          and QICoreCommon."PresentOnAdmission" ( Dx ) in "Present on Admission or Clinically Undetermined"
+    )
+
+define "Risk Variable All Encounter Diagnoses With POA Indication":
+  flatten (
+    "Qualifying Encounter" QualifyingEncounter
+      where exists QualifyingEncounter.diagnosis AllDiagnosis
+        return (
+          QualifyingEncounter.diagnosis Dx
+            return {
+              encounterId: QualifyingEncounter.id,
+              period: QualifyingEncounter.period,
+              diagnosisCode: Global.GetCondition(Dx.condition).code,
+              use: Dx.use,
+              rank: Dx.rank,
+              POA: QICoreCommon.PresentOnAdmission(Dx)
+            }
+        )
+  )
+
+define "Test4":
+    "Qualifying Encounter" QualifyingEncounter
+      where exists QualifyingEncounter.diagnosis AllDiagnosis
+        return {
+          encounterId: QualifyingEncounter.id,
+          period: QualifyingEncounter.period,
+          diagnosis:
+            QualifyingEncounter.diagnosis Dx
+              return {
+                diagnosisCode: Global.GetCondition(Dx.condition).code,
+                use: Dx.use,
+                rank: Dx.rank,
+                POA: QICoreCommon.PresentOnAdmission(Dx)
+              }
+        }
+
+
+define Test1:
+  "Qualifying Encounter" QualifyingEncounter
+
+{
+  Encounter { id: 1, period: 1231, ..., diagnosis: { { condition: 'Condition/123', use: 'AD', rank: 1 }, { condition: 'Condition/234', use: 'BI', rank: 1 } } }
+  Encounter { id: 2, period: 1231, ..., diagnosis: { { condition: 'Condition/345', use: 'AD', rank: 1 }, { condition: 'Condition/678', use: 'BI', rank: 1 } } }
+}
+
+define Test2:
+  "Qualifying Encounter" QualifyingEncounter
+    return QualifyingEncounter.diagnosis
+
+{
+  { { condition: 'Condition/123', use: 'AD', rank: 1 }, { condition: 'Condition/234', use: 'BI', rank: 1 } },
+  { { condition: 'Condition/345', use: 'AD', rank: 1 }, { condition: 'Condition/678', use: 'BI', rank: 1 } }
+}
+
+define Test3:
+  flatten (
+    "Qualifying Encounter" QualifyingEncounter
+      return QualifyingEncounter.diagnosis
+  )
+
+{
+  { condition: 'Condition/123', use: 'AD', rank: 1 }, { condition: 'Condition/234', use: 'BI', rank: 1 },
+  { condition: 'Condition/345', use: 'AD', rank: 1 }, { condition: 'Condition/678', use: 'BI', rank: 1 }
+}
+
+
+// Without flatten
+{
+  {
+    { encounterId: 1, period: [@..., @...], diagnosisCode: 'XYZ', use: 'AD', rank: 1, POA: 'Y' },
+    { encounterId: 1, period: [@..., @...], diagnosisCode: 'ABC', use: 'BI', rank: 2, POA: 'U' }
+  },
+  {
+    { encounterId: 2, period: [@..., @...], diagnosisCode: 'XYZ', use: 'AD', rank: 1, POA: 'Y' },
+    { encounterId: 2, period: [@..., @...], diagnosisCode: 'ABC', use: 'BI', rank: 2, POA: 'U' }
+  },
+  {
+    { encounterId: 3, period: [@..., @...], diagnosisCode: 'XYZ', use: 'AD', rank: 1, POA: 'Y' },
+    { encounterId: 3, period: [@..., @...], diagnosisCode: 'ABC', use: 'BI', rank: 2, POA: 'U' }
+  }
+}
+
+// With flatten
+{
+  { encounterId: 1, period: [@..., @...], diagnosisCode: 'XYZ', use: 'AD', rank: 1, POA: 'Y' },
+  { encounterId: 1, period: [@..., @...], diagnosisCode: 'ABC', use: 'BI', rank: 2, POA: 'U' }.
+  { encounterId: 2, period: [@..., @...], diagnosisCode: 'XYZ', use: 'AD', rank: 1, POA: 'Y' },
+  { encounterId: 2, period: [@..., @...], diagnosisCode: 'ABC', use: 'BI', rank: 2, POA: 'U' }.
+  { encounterId: 3, period: [@..., @...], diagnosisCode: 'XYZ', use: 'AD', rank: 1, POA: 'Y' },
+  { encounterId: 3, period: [@..., @...], diagnosisCode: 'ABC', use: 'BI', rank: 2, POA: 'U' }
+}
+
+// Without flatten, but using nested diagnosis
+define "Test4":
+  "Qualifying Encounter" QualifyingEncounter
+    where exists QualifyingEncounter.diagnosis AllDiagnosis
+      return {
+        encounterId: QualifyingEncounter.id,
+        period: QualifyingEncounter.period,
+        diagnosis:
+          QualifyingEncounter.diagnosis Dx
+            return {
+              diagnosisCode: Global.GetCondition(Dx.condition).code,
+              use: Dx.use,
+              rank: Dx.rank,
+              POA: QICoreCommon.PresentOnAdmission(Dx)
+            }
+      }
+
+
+{
+  { encounterId: 1, period: [@..., @...], diagnosis: { { diagnosisCode: 'XYZ', use: 'AD', rank: 1, POA: 'Y' } } },
+  { encounterId: 1, period: [@..., @...], diagnosis: { { diagnosisCode: 'ABC', use: 'BI', rank: 2, POA: 'U' } } }
+  { encounterId: 2, period: [@..., @...], diagnosis: { { diagnosisCode: 'XYZ', use: 'AD', rank: 1, POA: 'Y' } } },
+  { encounterId: 2, period: [@..., @...], diagnosis: { { diagnosisCode: 'ABC', use: 'BI', rank: 2, POA: 'U' } } }
+  { encounterId: 3, period: [@..., @...], diagnosis: { { diagnosisCode: 'XYZ', use: 'AD', rank: 1, POA: 'Y' } } },
+  { encounterId: 3, period: [@..., @...], diagnosis: { { diagnosisCode: 'ABC', use: 'BI', rank: 2, POA: 'U' } } }
+}
+
+
+define "Test5":
+  "Qualifying Encounter" QualifyingEncounter
+    where exists QualifyingEncounter.diagnosis AllDiagnosis
+
+
