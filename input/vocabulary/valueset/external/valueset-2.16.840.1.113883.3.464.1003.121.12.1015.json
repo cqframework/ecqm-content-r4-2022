@@ -13,46 +13,46 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:50-06:00",
     "contains": [ {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "18833-4",
       "display": "First Body weight"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "29463-7",
       "display": "Body weight"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "3141-9",
       "display": "Body weight Measured"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "3142-7",
       "display": "Body weight Stated"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "8341-0",
       "display": "Dry body weight Measured"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "8349-3",
       "display": "Body weight Measured --preoperative"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "8350-1",
       "display": "Body weight Measured --with clothes"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "8351-9",
       "display": "Body weight Measured --without clothes"
     } ]

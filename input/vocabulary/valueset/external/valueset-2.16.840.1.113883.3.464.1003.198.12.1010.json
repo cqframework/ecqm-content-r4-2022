@@ -13,8 +13,8 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:05-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:49-06:00",
     "contains": [ {
       "system": "http://www.ama-assn.org/go/cpt",
       "version": "2014",
@@ -107,27 +107,27 @@
       "display": "Sigmoidoscopy, flexible; with band ligation(s) (eg, hemorrhoids)"
     }, {
       "system": "https://www.cms.gov/Medicare/Coding/HCPCSReleaseCodeSets",
-      "version": "2021",
+      "version": "2022",
       "code": "G0104",
       "display": "Colorectal cancer screening; flexible sigmoidoscopy"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "396226005",
       "display": "Flexible fiberoptic sigmoidoscopy with biopsy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "425634007",
       "display": "Diagnostic endoscopic examination of lower bowel and sampling for bacterial overgrowth using fiberoptic sigmoidoscope (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "44441009",
       "display": "Flexible fiberoptic sigmoidoscopy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "841000119107",
       "display": "History of flexible sigmoidoscopy (situation)"
     } ]

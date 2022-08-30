@@ -13,31 +13,31 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:50-06:00",
     "contains": [ {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "38208-5",
       "display": "Pain severity - Reported"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "38214-3",
       "display": "Pain severity [Score] Visual analog score"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "38221-8",
       "display": "Pain severity Wong-Baker FACES pain rating scale"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "72514-3",
       "display": "Pain severity - 0-10 verbal numeric rating [Score] - Reported"
     }, {
       "system": "http://loinc.org",
-      "version": "2.69",
+      "version": "2.71",
       "code": "77565-0",
       "display": "Pain interference score [BPI Short Form]"
     } ]

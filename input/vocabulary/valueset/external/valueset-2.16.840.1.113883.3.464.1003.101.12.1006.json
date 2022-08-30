@@ -7,14 +7,14 @@
     "value": "2.16.840.1.113883.3.464.1003.101.12.1006"
   } ],
   "version": "20170504",
-  "name": "DischargeServices-HospitalInpatientSameDayDischarge",
-  "title": "Discharge Services - Hospital Inpatient Same Day Discharge",
+  "name": "DischargeServicesHospitalInpatientSameDayDischarge",
+  "title": "Discharge Services Hospital Inpatient Same Day Discharge",
   "status": "active",
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:05-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:49-06:00",
     "contains": [ {
       "system": "http://www.ama-assn.org/go/cpt",
       "version": "2021",

@@ -13,21 +13,21 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:48-06:00",
     "contains": [ {
       "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-      "version": "2021-01",
+      "version": "2022-01",
       "code": "1804799",
       "display": "alteplase 100 MG Injection"
     }, {
       "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-      "version": "2021-01",
+      "version": "2022-01",
       "code": "1804804",
       "display": "alteplase 50 MG Injection"
     }, {
       "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-      "version": "2021-01",
+      "version": "2022-01",
       "code": "313212",
       "display": "tenecteplase 50 MG Injection"
     } ]

@@ -13,16 +13,16 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:05-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:50-06:00",
     "contains": [ {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "113024001",
       "display": "Assessment and interpretation of higher cerebral function, cognitive testing (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "4719001",
       "display": "Psychologic cognitive testing and assessment (procedure)"
     } ]

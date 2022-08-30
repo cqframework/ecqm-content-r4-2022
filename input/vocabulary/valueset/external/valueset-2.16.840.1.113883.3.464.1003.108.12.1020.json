@@ -13,8 +13,8 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:05-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:49-06:00",
     "contains": [ {
       "system": "http://www.ama-assn.org/go/cpt",
       "version": "2014",
@@ -187,127 +187,127 @@
       "display": "Colonoscopy, flexible; with band ligation(s) (eg, hemorrhoids)"
     }, {
       "system": "https://www.cms.gov/Medicare/Coding/HCPCSReleaseCodeSets",
-      "version": "2021",
+      "version": "2022",
       "code": "G0105",
       "display": "Colorectal cancer screening; colonoscopy on individual at high risk"
     }, {
       "system": "https://www.cms.gov/Medicare/Coding/HCPCSReleaseCodeSets",
-      "version": "2021",
+      "version": "2022",
       "code": "G0121",
       "display": "Colorectal cancer screening; colonoscopy on individual not meeting criteria for high risk"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "12350003",
       "display": "Colonoscopy with rigid sigmoidoscope through colotomy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "174158000",
       "display": "Open colonoscopy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "235150006",
       "display": "Total colonoscopy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "235151005",
       "display": "Limited colonoscopy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "25732003",
       "display": "Fiberoptic colonoscopy with biopsy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "310634005",
       "display": "Check colonoscopy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "34264006",
       "display": "Intraoperative colonoscopy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "367535003",
       "display": "Fiberoptic colonoscopy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "425672002",
       "display": "Diagnostic endoscopic examination of ileoanal pouch and biopsy of ileoanal pouch using colonoscope (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "425937002",
       "display": "Diagnostic endoscopic examination of enteric pouch using colonoscope (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "427459009",
       "display": "Diagnostic endoscopic examination of colonic pouch and biopsy of colonic pouch using colonoscope (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "443998000",
       "display": "Colonoscopy through colostomy with endoscopic biopsy of colon (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "444783004",
       "display": "Screening colonoscopy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "446521004",
       "display": "Colonoscopy and excision of mucosa of colon (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "446745002",
       "display": "Colonoscopy and biopsy of colon (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "447021001",
       "display": "Colonoscopy and tattooing (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "709421007",
       "display": "Colonoscopy and dilatation of stricture of colon (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "710293001",
       "display": "Colonoscopy using fluoroscopic guidance (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "711307001",
       "display": "Colonoscopy using X-ray guidance (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "713154003",
       "display": "Endoscopic submucosal dissection of rectum using colonoscope (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "73761001",
       "display": "Colonoscopy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "8180007",
       "display": "Fiberoptic colonoscopy through colostomy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "851000119109",
       "display": "History of colonoscopy (situation)"
     } ]

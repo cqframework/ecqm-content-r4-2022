@@ -13,31 +13,31 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:51-06:00",
     "contains": [ {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "128639004",
       "display": "Transitional cell carcinoma, micropapillary (morphologic abnormality)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "255111004",
       "display": "Squamous cell carcinoma of bladder (disorder)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "278046008",
       "display": "Sarcoma of bladder (disorder)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "35917007",
       "display": "Adenocarcinoma, no subtype (morphologic abnormality)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "59509005",
       "display": "Plasmacytoid cell (morphologic abnormality)"
     } ]
