@@ -1,0 +1,93 @@
+{
+  "resourceType": "ValueSet",
+  "id": "2.16.840.1.113762.1.4.1248.119",
+  "meta": {
+    "lastUpdated": "2021-05-05T17:07:12.930-04:00"
+  },
+  "url": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1248.119",
+  "version": "Latest",
+  "name": "Opioid_Antagonist",
+  "title": "Opioid Antagonist",
+  "purpose": "(Clinical Focus: The purpose of this value set is to represent concepts for the opioid antagonist medication naloxone administered to reverse over-administration of opioids in the hospital setting.),(Data Element Scope: This value set may use a model element related to Medication.),(Inclusion Criteria: Includes concepts that represent intranasal, intramuscular, and intravenous forms of naloxone medications.),(Exclusion Criteria: Excludes all other types of opioid antagonists such as naltrexone. Excludes combination medications that contain both naloxone and an opioid.)",
+  "publisher": "American Institutes for Research",
+  "status": "active",
+  "expansion": {
+    "timestamp": "2022-03-30T17:26:08-04:00",
+    "total": 12,
+    "offset": 0,
+    "contains": [
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "version": "2022-08",
+        "code": "1191212",
+        "display": "naloxone hydrochloride 0.02 MG/ML Injectable Solution"
+      },
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "version": "2022-08",
+        "code": "1191222",
+        "display": "naloxone hydrochloride 0.4 MG/ML Injectable Solution"
+      },
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "version": "2022-08",
+        "code": "1191228",
+        "display": "naloxone hydrochloride 1 MG/ML Injectable Solution"
+      },
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "version": "2022-08",
+        "code": "1191234",
+        "display": "1 ML naloxone hydrochloride 0.4 MG/ML Cartridge"
+      },
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "version": "2022-08",
+        "code": "1191250",
+        "display": "2 ML naloxone hydrochloride 1 MG/ML Prefilled Syringe"
+      },
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "version": "2022-08",
+        "code": "1495293",
+        "display": "0.4 ML naloxone hydrochloride 1 MG/ML Auto-Injector"
+      },
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "version": "2022-08",
+        "code": "1659929",
+        "display": "1 ML naloxone hydrochloride 0.4 MG/ML Injection"
+      },
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "version": "2022-08",
+        "code": "1725059",
+        "display": "naloxone hydrochloride 40 MG/ML Nasal Spray"
+      },
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "version": "2022-08",
+        "code": "1855730",
+        "display": "0.4 ML naloxone hydrochloride 5 MG/ML Auto-Injector"
+      },
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "version": "2022-08",
+        "code": "1870933",
+        "display": "naloxone hydrochloride 20 MG/ML Nasal Spray"
+      },
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "version": "2022-08",
+        "code": "2540703",
+        "display": "naloxone hydrochloride 80 MG/ML Nasal Spray"
+      },
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "version": "2022-08",
+        "code": "2589612",
+        "display": "0.5 ML naloxone hydrochloride 10 MG/ML Prefilled Syringe"
+      }
+    ]
+  }
+}

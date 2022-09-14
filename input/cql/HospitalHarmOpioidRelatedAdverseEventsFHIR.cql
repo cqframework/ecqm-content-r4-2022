@@ -2,12 +2,12 @@ library HospitalHarmOpioidRelatedAdverseEventsFHIR version '0.0.002'
 
 using FHIR version '4.0.1'
 
-include FHIRHelpers version '4.0.001' called FHIRHelpers
-include SupplementalDataElementsFHIR4 version '2.0.000' called SDE
-include MATGlobalCommonFunctionsFHIR4 version '5.0.000' called Global
+include FHIRHelpers version '4.1.000' called FHIRHelpers
+include SupplementalDataElementsFHIR4 version '3.0.000' called SDE
+include MATGlobalCommonFunctionsFHIR4 version '7.0.000' called Global
 
 codesystem "SNOMEDCT": 'http://snomed.info/sct' 
-codesystem "HSLOC": 'http://cts.nlm.nih.gov/fhir/cs/hsloc' 
+codesystem "HSLOC": 'http://cts.nlm.nih.gov/fhir/cs/hsloc'
 
 valueset "Emergency Department Visit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.117.1.7.1.292' 
 valueset "Encounter Inpatient": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.666.5.307' 
