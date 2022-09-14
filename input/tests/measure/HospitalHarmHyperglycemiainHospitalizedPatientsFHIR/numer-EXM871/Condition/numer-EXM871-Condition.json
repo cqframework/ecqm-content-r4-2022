@@ -26,7 +26,7 @@
     "text": "Type 1 diabetes"
   },
   "subject": {
-    "reference": "Patient/numer-EXM871-Patient"
+    "reference": "Patient/numer-EXM871"
   },
   "encounter": {
     "reference": "Encounter/numer-EXM871-Encounter"

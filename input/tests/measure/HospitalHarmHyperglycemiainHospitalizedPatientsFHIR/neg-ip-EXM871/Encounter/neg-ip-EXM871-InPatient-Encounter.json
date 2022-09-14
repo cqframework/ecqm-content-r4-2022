@@ -20,7 +20,7 @@
     "text": "Inpatient Admission"
   } ],
   "subject": {
-    "reference": "Patient/neg-ip-EXM871-Patient"
+    "reference": "Patient/neg-ip-EXM871"
   },
   "period": {
     "start": "2019-01-16T08:30:00",

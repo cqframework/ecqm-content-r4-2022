@@ -1,6 +1,6 @@
 {
   "resourceType": "Patient",
-  "id": "numer-EXM871-Patient",
+  "id": "numer-EXM871",
   "meta": {
     "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient" ]
   },

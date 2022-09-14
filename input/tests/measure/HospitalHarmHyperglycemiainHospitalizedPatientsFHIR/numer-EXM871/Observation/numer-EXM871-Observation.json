@@ -29,7 +29,7 @@
     "system": "http://unitsofmeasure.org",
     "code": "mg/dL"
   },  "subject": {
-    "reference": "Patient/numer-EXM871-Patient"
+    "reference": "Patient/numer-EXM871"
   },
   "effectiveDateTime": "2019-01-19T00:00:00"
 }
