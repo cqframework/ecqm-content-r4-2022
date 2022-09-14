@@ -1,6 +1,9 @@
 {
   "resourceType": "Encounter",
-  "id": "denom-EXM871-Encounter",
+  "id": "excl-EXM871-Encounter",
+  "text": {
+    "status": "generated"
+  },
   "status": "finished",
   "type": [ {
     "coding": [ {
@@ -11,7 +14,7 @@
     "text": "Office Visit"
   } ],
   "subject": {
-    "reference": "Patient/denom-EXM871"
+    "reference": "Patient/excl-EXM871"
   },
   "period": {
     "start": "2022-01-16T08:30:00",

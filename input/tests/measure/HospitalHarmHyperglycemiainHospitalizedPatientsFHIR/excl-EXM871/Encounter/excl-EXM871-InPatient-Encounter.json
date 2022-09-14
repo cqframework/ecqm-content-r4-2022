@@ -1,6 +1,6 @@
 {
   "resourceType": "Encounter",
-  "id": "numer-EXM871-InPatient-Encounter",
+  "id": "excl-EXM871-InPatient-Encounter",
   "text": {
     "status": "generated"
   },
@@ -20,7 +20,7 @@
     "text": "Inpatient Admission"
   } ],
   "subject": {
-    "reference": "Patient/numer-EXM871"
+    "reference": "Patient/excl-EXM871"
   },
   "period": {
     "start": "2022-07-11T08:00:00",

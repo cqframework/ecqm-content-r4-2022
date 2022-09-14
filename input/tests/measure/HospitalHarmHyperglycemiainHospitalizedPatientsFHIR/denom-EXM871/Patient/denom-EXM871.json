@@ -28,10 +28,10 @@
   "active": true,
   "name": [ {
     "use": "official",
-    "text": "BECK,TOM",
-    "family": "BECK",
-    "given": [ "TOM" ]
+    "text": "Phil Hyper_Denom",
+    "family": "Hyper_Denom",
+    "given": [ "Phil" ]
   } ],
   "gender": "male",
-  "birthDate": "1965-06-30"
+  "birthDate": "1961-07-31"
 }

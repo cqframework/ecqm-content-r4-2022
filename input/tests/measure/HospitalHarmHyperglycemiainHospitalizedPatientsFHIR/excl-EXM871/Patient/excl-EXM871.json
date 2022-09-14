@@ -1,6 +1,6 @@
 {
   "resourceType": "Patient",
-  "id": "numer-EXM871",
+  "id": "excl-EXM871",
   "meta": {
     "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient" ]
   },
@@ -31,8 +31,8 @@
   "active": true,
   "name": [ {
     "use": "official",
-    "text": "Phil Hyper_Num",
-    "family": "Hyper_Num",
+    "text": "Phil Hyper_Exclude",
+    "family": "Hyper_Exclude",
     "given": [ "Phil" ]
   } ],
   "gender": "male",
