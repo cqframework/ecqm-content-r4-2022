@@ -1,6 +1,6 @@
 {
   "resourceType": "Encounter",
-  "id": "neg-ip-EXM871-InPatient-Encounter",
+  "id": "excl-EXM871-InPatient-Encounter",
   "text": {
     "status": "generated"
   },
@@ -20,11 +20,11 @@
     "text": "Inpatient Admission"
   } ],
   "subject": {
-    "reference": "Patient/neg-ip-EXM871"
+    "reference": "Patient/excl-EXM871"
   },
   "period": {
-    "start": "2019-01-16T08:30:00",
-    "end": "2019-01-20T08:30:00"
+    "start": "2022-07-11T08:00:00",
+    "end": "2022-07-18T08:15:00"
   },
   "diagnosis": [ {
     "condition": {

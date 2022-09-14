@@ -1,6 +1,6 @@
 {
   "resourceType": "Condition",
-  "id": "numer-EXM871-Condition",
+  "id": "excl-EXM871-Condition",
   "clinicalStatus": {
     "coding": [ {
       "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
@@ -26,10 +26,10 @@
     "text": "Type 1 diabetes"
   },
   "subject": {
-    "reference": "Patient/numer-EXM871"
+    "reference": "Patient/excl-EXM871"
   },
   "encounter": {
-    "reference": "Encounter/numer-EXM871-Encounter"
+    "reference": "Encounter/excl-EXM871-Encounter"
   },
   "onsetPeriod": {
     "start": "2019-11-19T06:00:00"
