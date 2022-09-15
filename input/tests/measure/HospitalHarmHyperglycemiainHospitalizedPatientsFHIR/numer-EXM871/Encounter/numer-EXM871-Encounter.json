@@ -14,10 +14,10 @@
     "text": "Office Visit"
   } ],
   "subject": {
-    "reference": "Patient/numer-EXM871-Patient"
+    "reference": "Patient/numer-EXM871"
   },
   "period": {
-    "start": "2019-01-16T08:30:00",
-    "end": "2019-01-20T08:30:00"
+    "start": "2022-01-16T08:30:00",
+    "end": "2022-01-20T08:30:00"
   }
 }

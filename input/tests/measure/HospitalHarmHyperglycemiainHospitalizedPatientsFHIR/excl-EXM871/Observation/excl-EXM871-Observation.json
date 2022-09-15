@@ -1,6 +1,6 @@
 {
     "resourceType": "Observation",
-    "id": "numer-EXM871-Observation",
+    "id": "excl-EXM871-Observation",
     "meta": {
       "profile": [
         "http://hl7.org/fhir/observation"
@@ -24,12 +24,12 @@
     ]
   },
   "valueQuantity": {
-    "value": 301,
+    "value": 1050,
     "unit": "mg/dL",
     "system": "http://unitsofmeasure.org",
     "code": "mg/dL"
   },  "subject": {
-    "reference": "Patient/numer-EXM871"
+    "reference": "Patient/excl-EXM871"
   },
-  "effectiveDateTime": "2022-07-13T08:00:00"
+  "effectiveDateTime": "2022-07-11T07:30:00"
 }

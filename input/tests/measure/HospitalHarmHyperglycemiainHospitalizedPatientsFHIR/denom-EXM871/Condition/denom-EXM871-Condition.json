@@ -20,18 +20,18 @@
   "code": {
     "coding": [ {
       "system": "http://hl7.org/fhir/sid/icd-10-cm",
-      "code": "E10.10",
-      "display": "Type 1 diabetes mellitus with ketoacidosis without coma"
+      "code": "E11.3412",
+      "display": "Type 1 diabetes mellitus with severe nonproliferative diabetic retinopathy with macular edema, left eye"
     } ],
     "text": "Type 1 diabetes"
   },
   "subject": {
-    "reference": "Patient/denom-EXM871-Patient"
+    "reference": "Patient/denom-EXM871"
   },
   "encounter": {
     "reference": "Encounter/denom-EXM871-Encounter"
   },
   "onsetPeriod": {
-    "start": "2009-01-16T08:30:00"
+    "start": "2019-11-19T06:00:00"
   }
 }

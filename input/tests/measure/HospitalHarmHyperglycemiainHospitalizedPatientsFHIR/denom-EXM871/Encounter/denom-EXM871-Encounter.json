@@ -1,9 +1,6 @@
 {
   "resourceType": "Encounter",
   "id": "denom-EXM871-Encounter",
-  "text": {
-    "status": "generated"
-  },
   "status": "finished",
   "type": [ {
     "coding": [ {
@@ -14,10 +11,10 @@
     "text": "Office Visit"
   } ],
   "subject": {
-    "reference": "Patient/denom-EXM871-Patient"
+    "reference": "Patient/denom-EXM871"
   },
   "period": {
-    "start": "2019-01-16T08:30:00",
-    "end": "2019-01-20T08:30:00"
+    "start": "2022-01-16T08:30:00",
+    "end": "2022-01-20T08:30:00"
   }
 }
