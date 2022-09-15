@@ -2,9 +2,9 @@ library HospitalHarmSevereHypoglycemiaFHIR version '0.0.016'
 
 using FHIR version '4.0.1'
 
-include FHIRHelpers version '4.0.001' called FHIRHelpers
-include SupplementalDataElementsFHIR4 version '2.0.000' called SDE
-include MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global
+include FHIRHelpers version '4.1.000' called FHIRHelpers
+include SupplementalDataElementsFHIR4 version '3.0.000' called SDE
+include MATGlobalCommonFunctionsFHIR4 version '7.0.000' called Global
 
 valueset "birth date": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.560.100.4' 
 valueset "Emergency Department Visit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.117.1.7.1.292' 
