@@ -1,0 +1,52 @@
+{
+  "resourceType": "MedicationAdministration",
+  "id": "numer1-CMS819v0R4-naloxone",
+  "authoredOn": "2020-11-11T21:15:00.000+00:00",
+  "category": [
+    {
+      "coding": [
+        {
+          "code": "inpatient",
+          "display": "Inpatient",
+          "system": "http://terminology.hl7.org/CodeSystem/medication-admin-category"
+        }
+      ]
+    }
+  ],
+  "medicationCodeableConcept": {
+    "coding": [
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "version": "2022-01",
+        "code": "1191222",
+        "display": "naloxone hydrochloride 0.4 MG/ML Injectable Solution"
+      }
+    ]
+  },
+  "effectivePeriod": {
+    "start": "2020-11-11T21:15:00+01:00",
+    "end": "2020-11-11T21:15:00+01:00"
+  },
+  "status": "completed",
+  "subject": {
+    "reference": "Patient/numer1-CMS819v0R4"
+  },
+  "dosage": {
+    "text": "naloxone hydrochloride 0.4 MG/ML Injectable Solution",
+    "route": {
+      "coding": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "47625008",
+          "display": "Intravenous route (qualifier value)"
+        }
+      ]
+    },
+    "dose": {
+      "value": 1,
+      "unit": "mL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mL"
+    }
+  }
+}

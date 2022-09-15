@@ -1,0 +1,669 @@
+{
+  "resourceType": "Measure",
+  "id": "HospitalHarmOpioidRelatedAdverseEventsFHIR",
+  "meta": {
+    "versionId": "4",
+    "lastUpdated": "2022-05-10T10:07:04.000-06:00",
+    "source": "#5xiPTddXNwytmfWA",
+    "profile": [ "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/proportion-measure-cqfm", "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/computable-measure-cqfm" ]
+  },
+  "language": "en",
+  "contained": [ {
+    "resourceType": "Library",
+    "id": "effective-data-requirements",
+    "extension": [ {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "SupplementalDataElementsFHIR4"
+      }, {
+        "url": "name",
+        "valueString": "SDE Sex"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Sex\":\n  case\n      when Patient.gender = 'male' then Code { code: 'M', system: 'http://hl7.org/fhir/v3/AdministrativeGender', display: 'Male' }\n      when Patient.gender = 'female' then Code { code: 'F', system: 'http://hl7.org/fhir/v3/AdministrativeGender', display: 'Female' }\n      else null\n    end"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 0
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HospitalHarmOpioidRelatedAdverseEventsFHIR"
+      }, {
+        "url": "name",
+        "valueString": "SDE Sex"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Sex\":\n  SDE.\"SDE Sex\""
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 1
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HospitalHarmOpioidRelatedAdverseEventsFHIR"
+      }, {
+        "url": "name",
+        "valueString": "Opioid Antagonist Administration"
+      }, {
+        "url": "statement",
+        "valueString": "define \"Opioid Antagonist Administration\":\n  [\"MedicationAdministration\": \"Opioid Antagonist\"] AntagonistGiven\n    where AntagonistGiven.status = 'completed'\n      and AntagonistGiven.status != 'not-done'"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 2
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HospitalHarmOpioidRelatedAdverseEventsFHIR"
+      }, {
+        "url": "name",
+        "valueString": "Opioid Administration"
+      }, {
+        "url": "statement",
+        "valueString": "define \"Opioid Administration\":\n  [\"MedicationAdministration\": \"Opioids, All\"] Opioids\n    where Opioids.status = 'completed'\n      and Opioids.status != 'not-done'"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 3
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HospitalHarmOpioidRelatedAdverseEventsFHIR"
+      }, {
+        "url": "name",
+        "valueString": "Inpatient Encounter During Measurement Period"
+      }, {
+        "url": "statement",
+        "valueString": "define \"Inpatient Encounter During Measurement Period\":\n  [Encounter: \"Encounter Inpatient\"] EncounterInpatient\n    where EncounterInpatient.status = 'finished'\n      and EncounterInpatient.period ends during day of \"Measurement Period\""
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 4
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HospitalHarmOpioidRelatedAdverseEventsFHIR"
+      }, {
+        "url": "name",
+        "valueString": "Qualifying Encounter"
+      }, {
+        "url": "statement",
+        "valueString": "define \"Qualifying Encounter\":\n  \"Inpatient Encounter During Measurement Period\" InpatientEncounter\n    where AgeInYearsAt(date from start of Global.\"HospitalizationWithObservation\"(InpatientEncounter))>= 18"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 5
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HospitalHarmOpioidRelatedAdverseEventsFHIR"
+      }, {
+        "url": "name",
+        "valueString": "Encounter With Opioid Administration"
+      }, {
+        "url": "statement",
+        "valueString": "define \"Encounter With Opioid Administration\":\n  \"Qualifying Encounter\" InpatientEncounter\n    with \"Opioid Administration\" OpioidGiven\n      such that Global.\"Normalize Interval\" ( OpioidGiven.effective ) starts during Global.HospitalizationWithObservation ( InpatientEncounter )"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 6
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HospitalHarmOpioidRelatedAdverseEventsFHIR"
+      }, {
+        "url": "name",
+        "valueString": "Initial Population"
+      }, {
+        "url": "statement",
+        "valueString": "define \"Initial Population\":\n  \"Encounter With Opioid Administration\""
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 7
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HospitalHarmOpioidRelatedAdverseEventsFHIR"
+      }, {
+        "url": "name",
+        "valueString": "Denominator"
+      }, {
+        "url": "statement",
+        "valueString": "define \"Denominator\":\n  \"Initial Population\""
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 8
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HospitalHarmOpioidRelatedAdverseEventsFHIR"
+      }, {
+        "url": "name",
+        "valueString": "Encounter With Opioid Antagonist Administration Outside of Operating Room and Within 12 Hrs After Opioid"
+      }, {
+        "url": "statement",
+        "valueString": "define \"Encounter With Opioid Antagonist Administration Outside of Operating Room and Within 12 Hrs After Opioid\":\n  // Opioids administered before opioid antagonist AND excludes opioid antagonist administered in operating room \n  from\n    \"Opioid Antagonist Administration\" OpioidAntagonistGiven,\n    \"Opioid Administration\" OpioidGiven,\n    \"Denominator\" EncounterWithQualifyingAge\n    where not exists ( EncounterWithQualifyingAge.location EncounterLocation\n        where Global.GetLocation ( EncounterLocation.location ).type in \"Operating Room Suite\"\n          and Global.\"Normalize Interval\" ( OpioidAntagonistGiven.effective ) starts during EncounterLocation.period\n    )\n      and ( Global.\"Normalize Interval\" ( OpioidAntagonistGiven.effective ) starts during Global.\"HospitalizationWithObservation\" ( EncounterWithQualifyingAge )\n          and Global.\"Normalize Interval\" ( OpioidGiven.effective ) starts during Global.\"HospitalizationWithObservation\" ( EncounterWithQualifyingAge )\n          and Global.\"Normalize Interval\" ( OpioidGiven.effective ) ends 12 hours or less before start of Global.\"Normalize Interval\" ( OpioidAntagonistGiven.effective )\n      )\n    return EncounterWithQualifyingAge"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 9
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HospitalHarmOpioidRelatedAdverseEventsFHIR"
+      }, {
+        "url": "name",
+        "valueString": "Numerator"
+      }, {
+        "url": "statement",
+        "valueString": "define \"Numerator\":\n  \"Encounter With Opioid Antagonist Administration Outside of Operating Room and Within 12 Hrs After Opioid\""
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 10
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "SupplementalDataElementsFHIR4"
+      }, {
+        "url": "name",
+        "valueString": "SDE Payer"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Payer\":\n  [Coverage: type in \"Payer\"] Payer\n    return {\n      code: Payer.type,\n      period: Payer.period\n    }"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 11
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HospitalHarmOpioidRelatedAdverseEventsFHIR"
+      }, {
+        "url": "name",
+        "valueString": "SDE Payer"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Payer\":\n  SDE.\"SDE Payer\""
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 12
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "SupplementalDataElementsFHIR4"
+      }, {
+        "url": "name",
+        "valueString": "SDE Ethnicity"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Ethnicity\":\n  (QICore.Ethnicity(Patient)) E\n    return FHIR.CodeableConcept {\n      coding: { E.ombCategory } union E.detailed,\n      text: E.text\n    }"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 13
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HospitalHarmOpioidRelatedAdverseEventsFHIR"
+      }, {
+        "url": "name",
+        "valueString": "SDE Ethnicity"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Ethnicity\":\n  SDE.\"SDE Ethnicity\""
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 14
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "SupplementalDataElementsFHIR4"
+      }, {
+        "url": "name",
+        "valueString": "SDE Race"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Race\":\n  (QICore.Race(Patient)) R\n    return FHIR.CodeableConcept {\n      coding: R.ombCategory union R.detailed,\n      text: R.text\n    }"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 15
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HospitalHarmOpioidRelatedAdverseEventsFHIR"
+      }, {
+        "url": "name",
+        "valueString": "SDE Race"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Race\":\n  SDE.\"SDE Race\""
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 16
+      } ]
+    } ],
+    "status": "active",
+    "type": {
+      "coding": [ {
+        "system": "http://terminology.hl7.org/CodeSystem/library-type",
+        "code": "module-definition"
+      } ]
+    },
+    "relatedArtifact": [ {
+      "type": "depends-on",
+      "display": "Library SDE",
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/SupplementalDataElementsFHIR4|3.0.000"
+    }, {
+      "type": "depends-on",
+      "display": "Library FHIRHelpers",
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/FHIRHelpers|4.1.000"
+    }, {
+      "type": "depends-on",
+      "display": "Library Global",
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/MATGlobalCommonFunctionsFHIR4|7.0.000"
+    }, {
+      "type": "depends-on",
+      "display": "Library QICore",
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/QICoreCommon|1.0.000"
+    }, {
+      "type": "depends-on",
+      "display": "Library FHIRCommon",
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/FHIRCommon|1.1.000"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Opioid Antagonist",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1248.119"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Opioids, All",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1196.226"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Encounter Inpatient",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.666.5.307"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Observation Services",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1111.143"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Emergency Department Visit",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.117.1.7.1.292"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Operating Room Suite",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1248.141"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Payer",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.3591"
+    } ],
+    "parameter": [ {
+      "name": "Measurement Period",
+      "use": "in",
+      "min": 0,
+      "max": "1",
+      "type": "Period"
+    }, {
+      "name": "SDE Sex",
+      "use": "out",
+      "min": 0,
+      "max": "1",
+      "type": "Coding"
+    }, {
+      "name": "Numerator",
+      "use": "out",
+      "min": 0,
+      "max": "*",
+      "type": "Encounter"
+    }, {
+      "name": "Denominator",
+      "use": "out",
+      "min": 0,
+      "max": "*",
+      "type": "Encounter"
+    }, {
+      "name": "SDE Payer",
+      "use": "out",
+      "min": 0,
+      "max": "*",
+      "type": "Any"
+    }, {
+      "name": "Initial Population",
+      "use": "out",
+      "min": 0,
+      "max": "*",
+      "type": "Encounter"
+    }, {
+      "name": "SDE Ethnicity",
+      "use": "out",
+      "min": 0,
+      "max": "1",
+      "type": "CodeableConcept"
+    }, {
+      "name": "SDE Race",
+      "use": "out",
+      "min": 0,
+      "max": "1",
+      "type": "CodeableConcept"
+    } ],
+    "dataRequirement": [ {
+      "profile": [ "http://hl7.org/fhir/AdministrativeGender" ],
+      "mustSupport": [ "value" ]
+    }, {
+      "type": "Patient",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Patient" ],
+      "mustSupport": [ "ombCategory", "detailed", "text" ]
+    }, {
+      "type": "Patient",
+      "profile": [ "http://hl7.org/fhir/Patient" ],
+      "mustSupport": [ "gender" ]
+    }, {
+      "profile": [ "http://hl7.org/fhir/MedicationAdministrationStatus" ],
+      "mustSupport": [ "value" ]
+    }, {
+      "type": "MedicationAdministration",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/MedicationAdministration" ],
+      "mustSupport": [ "medication", "status", "effective" ],
+      "codeFilter": [ {
+        "path": "medication",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1248.119"
+      } ]
+    }, {
+      "type": "MedicationAdministration",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/MedicationAdministration" ],
+      "mustSupport": [ "medication", "status", "effective" ],
+      "codeFilter": [ {
+        "path": "medication",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1196.226"
+      } ]
+    }, {
+      "profile": [ "http://hl7.org/fhir/EncounterStatus" ],
+      "mustSupport": [ "value" ]
+    }, {
+      "type": "Encounter",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Encounter" ],
+      "mustSupport": [ "type", "status", "period" ],
+      "codeFilter": [ {
+        "path": "type",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1111.143"
+      } ]
+    }, {
+      "type": "Encounter",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Encounter" ],
+      "mustSupport": [ "type", "status", "period" ],
+      "codeFilter": [ {
+        "path": "type",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.117.1.7.1.292"
+      } ]
+    }, {
+      "type": "Encounter",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Encounter" ],
+      "mustSupport": [ "type", "status", "period" ],
+      "codeFilter": [ {
+        "path": "type",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.666.5.307"
+      } ]
+    }, {
+      "type": "string",
+      "profile": [ "http://hl7.org/fhir/string" ],
+      "mustSupport": [ "value" ]
+    }, {
+      "type": "Location",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Location" ],
+      "mustSupport": [ "id" ]
+    }, {
+      "type": "Reference",
+      "profile": [ "http://hl7.org/fhir/Reference" ],
+      "mustSupport": [ "reference" ]
+    }, {
+      "type": "Coverage",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Coverage" ],
+      "mustSupport": [ "type", "period" ],
+      "codeFilter": [ {
+        "path": "type",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.3591"
+      } ]
+    }, {
+      "type": "uri",
+      "profile": [ "http://hl7.org/fhir/uri" ],
+      "mustSupport": [ "value" ]
+    }, {
+      "type": "Extension",
+      "profile": [ "http://hl7.org/fhir/Extension" ],
+      "mustSupport": [ "value" ]
+    } ]
+  } ],
+  "extension": [ {
+    "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis",
+    "valueCode": "Encounter"
+  }, {
+    "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-softwaresystem",
+    "valueReference": {
+      "reference": "Device/cqf-tooling"
+    }
+  }, {
+    "id": "effective-data-requirements",
+    "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-effectiveDataRequirements",
+    "valueReference": {
+      "reference": "#effective-data-requirements"
+    }
+  } ],
+  "url": "http://ecqi.healthit.gov/ecqms/Measure/HospitalHarmOpioidRelatedAdverseEventsFHIR",
+  "identifier": [ {
+    "use": "official",
+    "system": "http://hl7.org/fhir/cqi/ecqm/Measure/Identifier/guid",
+    "value": "30256069-ee4f-45b8-895a-5452cf8e9e4e"
+  }, {
+    "use": "official",
+    "system": "http://hl7.org/fhir/cqi/ecqm/Measure/Identifier/cms",
+    "value": "819FHIR"
+  }, {
+    "use": "official",
+    "system": "http://hl7.org/fhir/cqi/ecqm/Measure/Identifier/nqf",
+    "value": "3501e"
+  } ],
+  "version": "0.0.002",
+  "name": "HospitalHarmOpioidRelatedAdverseEventsFHIR",
+  "title": "Hospital Harm - Opioid-Related Adverse EventsFHIR",
+  "status": "draft",
+  "experimental": false,
+  "date": "2022-09-14T13:33:01-06:00",
+  "publisher": "Centers for Medicare & Medicaid Services (CMS)",
+  "contact": [ {
+    "telecom": [ {
+      "system": "url",
+      "value": "https://cms.gov"
+    } ]
+  } ],
+  "description": "This measure assesses the proportion of inpatient hospital encounters where patients ages 18 years of age or older have been administered an opioid medication and are subsequently administered an opioid antagonist (naloxone) within 12 hours, an indication of an opioid-related adverse event. This measure excludes opioid antagonist (naloxone) administration occurring in the operating room setting.",
+  "purpose": "Unknown",
+  "copyright": "Limited proprietary coding is contained in the Measure specifications for user convenience. Users of proprietary code sets should obtain all necessary licenses from the owners of the code sets. American Institutes for Research(R), formerly IMPAQ International, disclaims all liability for use or accuracy of any third party codes contained in the specifications.\n\nLOINC(R) copyright 2004-2021 Regenstrief Institute, Inc. This material contains SNOMED Clinical Terms(R) (SNOMED CT[R]) copyright 2004-2021 International Health Terminology Standards Development Organisation. ICD-10 copyright 2021 World Health Organization. All Rights Reserved.",
+  "effectivePeriod": {
+    "start": "2023-01-01",
+    "end": "2023-12-31"
+  },
+  "relatedArtifact": [ {
+    "type": "citation",
+    "citation": "AHRQ National Scorecard on Hospital-Acquired Conditions Final Results for 2014 Through 2017. Retrieved from https://www.ahrq.gov/sites/default/files/wysiwyg/professionals/quality-patient-safety/pfp/Updated-hacreportFInal2017data.pdf"
+  }, {
+    "type": "citation",
+    "citation": "Agency for Healthcare Research and Quality. Medication errors and adverse drug events. Rockville: US Department of Health & Human Services; 2019. Retrieved from https://psnet.ahrq.gov/primer/medication-errors-andadverse-drug-events"
+  }, {
+    "type": "citation",
+    "citation": "Baker J, Brovman EY, Rao N, Beutler SS, Urman RD. Potential Opioid-Related Adverse Drug Events Are Associated With Decreased Revenue in Hip Replacement Surgery in the Older Population. Geriatric Orthopaedic Surgery & Rehabilitation. January 2020. doi:10.1177/2151459320915328"
+  }, {
+    "type": "citation",
+    "citation": "Eckstrand, J. A., Habib, A. S., Williamson, A., Horvath, M. M., Gattis, K. G., Cozart, H., & Ferranti, J. (2009). Computerized surveillance of opioid-related adverse drug events in perioperative care: a cross-sectional study. Patient Saf Surg, 3(1), 18. doi: 10.1186/1754-9493-3-18"
+  }, {
+    "type": "citation",
+    "citation": "Garrett J, Vanston A, Ogola G, da Graca B, Cassity C, Kouznetsova MA, Hall LR, Qiu T. Predicting opioid-induced oversedation in hospitalised patients: a multicentre observational study. BMJ Open. 2021 Nov 24;11(11):e051663. doi: 10.1136/bmjopen-2021-051663. PMID: 34819283; PMCID: PMC8614135."
+  }, {
+    "type": "citation",
+    "citation": "Highlights of the 2020 AHA guidelines update for CPR and ECC. American Heart Association.  Retrieved from https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines"
+  }, {
+    "type": "citation",
+    "citation": "Kessler, E. R., Shah, M., Gruschkus, S. K., & Raju, A. (2013). Cost and quality implications of opioid-based postsurgical pain control using administrative claims data from a large health system: opioid-related adverse events and their impact on clinical and economic outcomes. Pharmacotherapy, 33(4), 383-391. doi: 10.1002/phar.1223"
+  }, {
+    "type": "citation",
+    "citation": "Lavonas, E. J., Drennan, I. R., Gabrielli, A., Heffner, A. C., Hoyte, C. O., Orkin, A. M., Donnino, M. W. (2015). Part 10: Special Circumstances of Resuscitation. 2015 American Heart Association Guidelines Update for Cardiopulmonary Resuscitation and Emergency Cardiovascular Care, 132(18 suppl 2), S501-S518. doi: 10.1161/cir.0000000000000264"
+  }, {
+    "type": "citation",
+    "citation": "Lynn, R. R., & Galinkin, J. (2017). Naloxone dosage for opioid reversal: Current evidence and clinical implications. Therapeutic Advances in Drug Safety, 9(1), 63-88. doi:10.1177/204209861774416"
+  }, {
+    "type": "citation",
+    "citation": "Lee, L. A., Caplan, R. A., Stephens, L. S., Posner, K. L., Terman, G. W., Voepel-Lewis, T., & Domino, K. B. (2015). Postoperative opioid-induced respiratory depression: a closed claims analysis. Anesthesiology, 122(3), 659-665"
+  }, {
+    "type": "citation",
+    "citation": "Musy SN, Ausserhofer D, Schwendimann R, Rothen HU, Jeitziner MM, Rutjes AW, Simon M. Trigger Tool-Based Automated Adverse Event Detection in Electronic Health Records: Systematic Review. J Med Internet Res. 2018 May 30;20(5):e198. doi: 10.2196/jmir.9901. PMID: 29848467; PMCID: PMC6000482."
+  }, {
+    "type": "citation",
+    "citation": "Naloxone in CPR/AED Training and Public Access to Defibrillation. American Heart Association and American Society of Anesthesiologists. Retrieved from https://www.heart.org/-/media/Files/About-Us/Policy-Research/Policy-Positions/CPR-and-AED/Naloxone-Position-Statement.pdf"
+  }, {
+    "type": "citation",
+    "citation": "Nwulu, U., Nirantharakumar, K., Odesanya, R., McDowell, S. E., & Coleman, J. J. (2013). Improvement in the detection of adverse drug events by the use of electronic health and prescription records: an evaluation of two trigger tools. Eur J Clin Pharmacol, 69(2), 255-259. doi: 10.1007/s00228-012-1327-1"
+  }, {
+    "type": "citation",
+    "citation": "Shafi S, Collinsworth AW, Copeland LA, Ogola GO, Qiu T, Kouznetsova M, Liao IC, Mears N, Pham AT, Wan GJ, Masica AL. Association of Opioid-Related Adverse Drug Events With Clinical and Cost Outcomes Among Surgical Patients in a Large Integrated Health Care Delivery System. JAMA Surg. 2018 Aug 1;153(8):757-763. doi: 10.1001/jamasurg.2018.1039. PMID: 29799927; PMCID: PMC6142954."
+  } ],
+  "library": [ "http://ecqi.healthit.gov/ecqms/Library/HospitalHarmOpioidRelatedAdverseEventsFHIR" ],
+  "disclaimer": "This measure and specifications are subject to further revisions. This performance measure is not a clinical guideline, does not establish a standard of medical care and has not been tested for all potential applications.\n\nTHE MEASURES AND SPECIFICATIONS ARE PROVIDED \"AS IS\" WITHOUT WARRANTY OF ANY KIND.\n\nDue to technical limitations, registered trademarks are indicated by (R) or [R] and unregistered trademarks are indicated by (TM) or [TM].",
+  "scoring": {
+    "coding": [ {
+      "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+      "code": "proportion",
+      "display": "Proportion"
+    } ]
+  },
+  "type": [ {
+    "coding": [ {
+      "system": "http://terminology.hl7.org/CodeSystem/measure-type",
+      "code": "outcome"
+    } ]
+  } ],
+  "rationale": "Opioids are often the foundation for sedation and pain relief. Opioid-based analgesia continues to be the most commonly used treatment in postoperative pain management, with more than 95% of surgical patients receiving opioids during their hospitalization (Baker et al., 2020). However, use of opioids can also lead to serious adverse events, including constipation, over sedation, delirium, and respiratory depression. Opioid-related adverse events have both patient-level and financial implications. Patients who experience this event have been noted to have 55% longer lengths of stay (LOS), 47% higher costs, 36% higher risk of 30-day readmission, and 3.4 times higher payments than patients without these adverse events (Kessler et al., 2013). For surgical patients, occurrence of opioid-related adverse events was associated with an increase of 1.6 days in LOS and $8225 more in cost for the index hospitalization (Shafi et al., 2018).\n\nMost opioid-related adverse events are preventable. Each year, adverse drug events (ADE) account for nearly 700,000 emergency department visits and 100,000 hospitalizations. Nearly 5% of hospitalized patients experience an ADE, making them one of the most common types of inpatient errors (https://psnet.ahrq.gov/primer/medication-errors-and-adverse-drug-events). Additionally, in a closed-claims analysis, 97% of adverse events were judged preventable with better monitoring and response (Lee et al., 2015). Naloxone administration is often used as an indicator of a severe opioid-related adverse event, and implementation of this measure can advance safe use of opioids in hospitals and prevent these serious and potentially lethal adverse drug events.",
+  "clinicalRecommendationStatement": "Naloxone is an opioid reversal agent typically used for severe opioid-related adverse events. Naloxone administration has been used in a number of studies as an indicator of opioid-related adverse events (Lynn et al., 2017, Nwulu et al., 2013; Eckstrand et al., 2009).\n\nFrom Section 10 of the 2015 American Heart Association Guidelines Update for Cardiopulmonary Resuscitation and Emergency Cardiovascular Care (Lavonas et al., 2015), the following recommendation is listed for use of Naloxone:\n\nNaloxone is a potent opioid receptor antagonist in the brain, spinal cord, and gastrointestinal system. Naloxone has an excellent safety profile and can rapidly reverse central nervous system (CNS) and respiratory depression in a patient with an opioid-associated resuscitative emergency.\n\n2020 American Heart Association guidelines update for cardiopulmonary resuscitation continue to recommend Naloxone for a patient with suspected opioid overdose who has a definite pulse but no normal breathing or only gasping (ie, a respiratory arrest), in addition to providing standard PBLS or PALS, it is reasonable for responders to administer intramuscular or intranasal naloxone (https://cpr.heart.org/-/media/cpr-files/cpr-guidelines-files/highlights/hghlghts_2020_ecc_guidelines_english.pdf).",
+  "improvementNotation": {
+    "coding": [ {
+      "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+      "code": "increase"
+    } ]
+  },
+  "guidance": "To calculate the hospital-level measure result, divide the total numerator events by the total number of qualifying encounters (denominator). \n\nQualifying encounters (denominator) include all patients 18 years of age or older at the start of the encounter with at least one opioid medication administered during the encounter.\n\nTo create the numerator:\n \n1.  First, start with those encounters meeting denominator criteria\n\n2.  Next, remove all events where an opioid antagonist (naloxone) was only administered in the operating \n     room. \n\nOpioid antagonist administrations in the operating room are excluded   because they could be part of the sedation plan as administered by an anesthesiologist. Encounters that include use of opioid antagonists for procedures and recovery outside of the operating room (e.g., bone marrow biopsy and PACU) are included in the numerator, as it would indicate the patient was over-sedated.  Note that should a facility not utilize temporary patient locations, alternative times may be used to determine whether a patient is in the operating room during opioid antagonist administration. Since anesthesia end time could represent the time the anesthesiologist signed off, and thus may include the patient’s time in the PACU, this should be avoided. \n\n3.  Finally, remove all administrations of naloxone that were given greater than 12 hours following \n     hospital administration of an opioid medication.\n\nThis eCQM is an episode-based measure. An episode is defined as each inpatient hospitalization or encounter that ends during the measurement period.\n\nThis FHIR-based measure has been derived from the QDM-based measure: CMS819v1.0",
+  "group": [ {
+    "population": [ {
+      "id": "86005093-6F2A-4A7D-AA2C-C03FBEC8C548",
+      "code": {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code": "initial-population",
+          "display": "Initial Population"
+        } ]
+      },
+      "criteria": {
+        "language": "text/cql.identifier",
+        "expression": "Initial Population"
+      }
+    }, {
+      "id": "0765B714-25B8-45FC-883C-91F24AA7ADED",
+      "code": {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code": "denominator",
+          "display": "Denominator"
+        } ]
+      },
+      "criteria": {
+        "language": "text/cql.identifier",
+        "expression": "Denominator"
+      }
+    }, {
+      "id": "B7DA7BA9-D5CB-42DA-B652-F07F660E1A27",
+      "code": {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code": "numerator",
+          "display": "Numerator"
+        } ]
+      },
+      "criteria": {
+        "language": "text/cql.identifier",
+        "expression": "Numerator"
+      }
+    } ]
+  } ],
+  "supplementalData": [ {
+    "id": "932efad8-7a21-4358-94da-63c67a9e9d97",
+    "usage": [ {
+      "coding": [ {
+        "system": "http://terminology.hl7.org/CodeSystem/measure-data-usage",
+        "code": "supplemental-data"
+      } ]
+    } ],
+    "criteria": {
+      "language": "text/cql.identifier",
+      "expression": "SDE Ethnicity"
+    }
+  }, {
+    "id": "04d74d32-7114-488a-b38c-d81630e9be55",
+    "usage": [ {
+      "coding": [ {
+        "system": "http://terminology.hl7.org/CodeSystem/measure-data-usage",
+        "code": "supplemental-data"
+      } ]
+    } ],
+    "criteria": {
+      "language": "text/cql.identifier",
+      "expression": "SDE Payer"
+    }
+  }, {
+    "id": "a75bc86b-84a5-4fac-8709-ee30e5115a93",
+    "usage": [ {
+      "coding": [ {
+        "system": "http://terminology.hl7.org/CodeSystem/measure-data-usage",
+        "code": "supplemental-data"
+      } ]
+    } ],
+    "criteria": {
+      "language": "text/cql.identifier",
+      "expression": "SDE Race"
+    }
+  }, {
+    "id": "51b39afb-0fd7-4e26-9aeb-0fd1488ac066",
+    "usage": [ {
+      "coding": [ {
+        "system": "http://terminology.hl7.org/CodeSystem/measure-data-usage",
+        "code": "supplemental-data"
+      } ]
+    } ],
+    "criteria": {
+      "language": "text/cql.identifier",
+      "expression": "SDE Sex"
+    }
+  } ]
+}
