@@ -33,7 +33,7 @@
   "diagnosis": [
     {
       "condition": {
-        "reference": "Condition/denomexcl-EXM104-1"
+        "reference": "Condition/denomexcl-EXM104-3"
       },
       "use": {
         "coding": [
