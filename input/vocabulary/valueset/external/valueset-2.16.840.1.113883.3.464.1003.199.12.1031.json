@@ -13,26 +13,16 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:05-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:48-06:00",
     "contains": [ {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
-      "code": "219084006",
-      "display": "Adverse reaction to vaccine product containing Clostridium tetani antigen (disorder)"
-    }, {
-      "system": "http://snomed.info/sct",
-      "version": "2020-09",
-      "code": "293108006",
-      "display": "Adverse reaction to vaccine product containing Clostridium tetani and Corynebacterium diphtheriae antigens (disorder)"
-    }, {
-      "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "428281000124107",
       "display": "Anaphylaxis due to diphtheria and tetanus vaccine (disorder)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "428291000124105",
       "display": "Anaphylaxis due to tetanus, diphtheria and acellular pertussis vaccine (disorder)"
     } ]

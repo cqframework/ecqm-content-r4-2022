@@ -13,16 +13,21 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:48-06:00",
     "contains": [ {
       "system": "http://hl7.org/fhir/sid/cvx",
-      "version": "2020-12-22",
+      "version": "2021-11-09",
+      "code": "109",
+      "display": "pneumococcal vaccine, unspecified formulation"
+    }, {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "version": "2021-11-09",
       "code": "133",
       "display": "pneumococcal conjugate vaccine, 13 valent"
     }, {
       "system": "http://hl7.org/fhir/sid/cvx",
-      "version": "2020-12-22",
+      "version": "2021-11-09",
       "code": "152",
       "display": "Pneumococcal Conjugate, unspecified formulation"
     } ]

@@ -13,21 +13,21 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:50-06:00",
     "contains": [ {
       "system": "http://hl7.org/fhir/sid/icd-10-cm",
-      "version": "2021",
+      "version": "2022",
       "code": "G47.52",
       "display": "REM sleep behavior disorder"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "415238003",
       "display": "Rapid eye movement sleep behavior disorder (disorder)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "69020003",
       "display": "Abnormal rapid eye movement sleep (finding)"
     } ]

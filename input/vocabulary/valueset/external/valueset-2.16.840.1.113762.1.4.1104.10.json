@@ -13,9 +13,44 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:51-06:00",
     "contains": [ {
+      "system": "urn:oid:2.16.840.1.113883.3.221.5",
+      "version": "9.2",
+      "code": "1",
+      "display": "MEDICARE"
+    }, {
+      "system": "urn:oid:2.16.840.1.113883.3.221.5",
+      "version": "9.2",
+      "code": "12",
+      "display": "Medicare (Non-managed Care)"
+    }, {
+      "system": "urn:oid:2.16.840.1.113883.3.221.5",
+      "version": "9.2",
+      "code": "121",
+      "display": "Medicare FFS"
+    }, {
+      "system": "urn:oid:2.16.840.1.113883.3.221.5",
+      "version": "9.2",
+      "code": "122",
+      "display": "Medicare Drug Benefit"
+    }, {
+      "system": "urn:oid:2.16.840.1.113883.3.221.5",
+      "version": "9.2",
+      "code": "123",
+      "display": "Medicare Medical Savings Account (MSA)"
+    }, {
+      "system": "urn:oid:2.16.840.1.113883.3.221.5",
+      "version": "9.2",
+      "code": "129",
+      "display": "Medicare Non-managed Care Other"
+    }, {
+      "system": "urn:oid:2.16.840.1.113883.3.221.5",
+      "version": "9.2",
+      "code": "14",
+      "display": "Dual Eligibility Medicare/Medicaid Organization"
+    }, {
       "system": "urn:oid:2.16.840.1.113883.3.221.5",
       "version": "9.2",
       "code": "1",

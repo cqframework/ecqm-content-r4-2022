@@ -18,8 +18,8 @@
       "coding": [
         {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-          "code": "1010600",
-          "display": "Buprenorphine 2 MG / Naloxone 0.5 MG Oral Strip"
+          "code": "1014599",
+        "display": "acetaminophen 300 MG / oxycodone hydrochloride 10 MG Oral Tablet"
         }
       ]
     },
@@ -29,5 +29,5 @@
     "encounter": {
       "reference": "Encounter/denom-EXM506-1"
     },
-    "authoredOn": "2019-01-17T08:00:00"
+    "authoredOn": "2022-01-17T08:00:00-07:00"
   }

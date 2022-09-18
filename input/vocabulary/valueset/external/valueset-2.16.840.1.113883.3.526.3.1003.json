@@ -13,61 +13,61 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:06-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:49-06:00",
     "contains": [ {
       "system": "http://hl7.org/fhir/sid/icd-10-cm",
-      "version": "2021",
+      "version": "2022",
       "code": "R80.1",
       "display": "Persistent proteinuria, unspecified"
     }, {
       "system": "http://hl7.org/fhir/sid/icd-10-cm",
-      "version": "2021",
+      "version": "2022",
       "code": "R80.8",
       "display": "Other proteinuria"
     }, {
       "system": "http://hl7.org/fhir/sid/icd-10-cm",
-      "version": "2021",
+      "version": "2022",
       "code": "R80.9",
       "display": "Proteinuria, unspecified"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "12178007",
       "display": "Nephrogenous proteinuria (finding)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "167582007",
       "display": "Urine microalbumin positive (finding)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "263808002",
       "display": "Microproteinuria (finding)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "264867001",
       "display": "Nephrotic range proteinuria (finding)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "274769005",
       "display": "Albuminuria (finding)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "29738008",
       "display": "Proteinuria (finding)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "312975006",
       "display": "Microalbuminuria (finding)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "34993002",
       "display": "Mixed proteinuria (finding)"
     } ]

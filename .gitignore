@@ -7,3 +7,4 @@ template/
 input/tests/*-bundle.json
 input/tests/*/*-bundle.json
 input/tests/*/*/*-bundle.json
+.idea/

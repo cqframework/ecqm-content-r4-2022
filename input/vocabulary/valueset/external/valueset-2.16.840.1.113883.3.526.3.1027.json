@@ -13,8 +13,8 @@
   "experimental": false,
   "publisher": "NLM",
   "expansion": {
-    "identifier": "20210506",
-    "timestamp": "2021-07-19T17:22:05-06:00",
+    "identifier": "20220505",
+    "timestamp": "2022-08-16T11:47:50-06:00",
     "contains": [ {
       "system": "http://www.ama-assn.org/go/cpt",
       "version": "2021",
@@ -107,92 +107,92 @@
       "display": "Unlisted chemotherapy procedure"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "169396008",
       "display": "Radiomimetic chemotherapy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "265760000",
       "display": "Intravenous chemotherapy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "265761001",
       "display": "Intramuscular chemotherapy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "265762008",
       "display": "Subcutaneous chemotherapy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "266719004",
       "display": "Oral chemotherapy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "268500004",
       "display": "Prophylactic chemotherapy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "315601005",
       "display": "Ambulatory chemotherapy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "31652009",
       "display": "Intracavitary chemotherapy for malignant neoplasm (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "367336001",
       "display": "Chemotherapy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "38216008",
       "display": "Infusion chemotherapy for malignant neoplasm (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "394894008",
       "display": "Pre-operative chemotherapy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "394895009",
       "display": "Postoperative chemotherapy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "394935005",
       "display": "Combined post-operative chemotherapy and radiotherapy (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "4114003",
       "display": "Parenteral chemotherapy for malignant neoplasm (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "51534007",
       "display": "Oral chemotherapy for malignant neoplasm (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "6872008",
       "display": "Perfusion chemotherapy for malignant neoplasm (procedure)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "716872004",
       "display": "Antineoplastic chemotherapy regimen (regime/therapy)"
     }, {
       "system": "http://snomed.info/sct",
-      "version": "2020-09",
+      "version": "2021-09",
       "code": "77738002",
       "display": "Local chemotherapy for malignant neoplasm (procedure)"
     } ]

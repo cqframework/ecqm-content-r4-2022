@@ -1,0 +1,24 @@
+{
+    "resourceType": "ValueSet",
+    "id": "2.16.840.1.113762.1.4.1248.141",
+    "url": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1248.141",
+    "version": "Latest",
+    "name": "Operating_Room_Suite",
+    "title": "Operating Room Suite",
+    "purpose": "(Clinical Focus: This value set contains concepts that are used to identify outpatient surgery encounter types.),(Data Element Scope: This value set may use Quality Data Model (QDM) category related to Encounter, Performed. The intent of this data element is to identify patients who have had an outpatient surgery encounter.),(Inclusion Criteria: Includes only relevant concepts associated with SNOMED codes identifying outpatient surgery encounters.),(Exclusion Criteria: No exclusions.)",
+    "publisher": "American Institutes for Research<",
+    "status": "active",
+    "expansion": {
+        "timestamp": "2019-04-26T17:26:08-04:00",
+        "total": 3,
+        "offset": 0,
+        "contains": [
+            {
+                "system": "urn:oid:2.16.840.1.113883.6.259",
+                "version": "2022",
+                "code": "1096-7",
+                "display": "Operating Room/Suite"
+            }
+        ]
+    }
+}

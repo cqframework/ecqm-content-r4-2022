@@ -1,0 +1,153 @@
+{
+  "resourceType": "Measure",
+  "id": "HybridHospitalWideReadmissionFHIR",
+  "meta": {
+    "versionId": "2",
+    "lastUpdated": "2022-09-02T01:24:39.000+00:00",
+    "source": "#2iTYBhKLlNvFPOL4",
+    "profile": [ "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cohort-measure-cqfm" ]
+  },
+  "language": "en",
+  "extension": [ {
+    "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis",
+    "valueCode": "Encounter"
+  } ],
+  "url": "http://ecqi.healthit.gov/ecqms/Measure/HybridHospitalWideReadmissionFHIR",
+  "identifier": [ {
+    "use": "official",
+    "system": "http://hl7.org/fhir/cqi/ecqm/Measure/Identifier/guid",
+    "value": "66842e26-2256-4a2d-8dac-dd014c425748"
+  }, {
+    "use": "official",
+    "system": "http://hl7.org/fhir/cqi/ecqm/Measure/Identifier/cms",
+    "value": "529FHIR"
+  }, {
+    "use": "official",
+    "system": "http://hl7.org/fhir/cqi/ecqm/Measure/Identifier/nqf",
+    "value": "2879"
+  } ],
+  "version": "0.0.001",
+  "name": "HybridHospitalWideReadmissionFHIR",
+  "title": "Core Clinical Data Elements for the Hybrid Hospital-Wide Readmission (HWR) Measure with Claims and Electronic Health Record Data FHIR",
+  "status": "draft",
+  "experimental": false,
+  "publisher": "Centers for Medicare & Medicaid Services (CMS)",
+  "contact": [ {
+    "telecom": [ {
+      "system": "url",
+      "value": "https://cms.gov"
+    } ]
+  } ],
+  "description": "This logic is intended to extract electronic clinical data. This is not an electronic clinical quality measure and this logic will not produce measure results. Instead, it will produce a file containing the data that CMS will link with administrative claims to risk adjust the Hybrid HWR outcome measure. It is designed to extract the first resulted set of vital signs and basic laboratory results obtained from encounters for adult Medicare Fee-For-Service patients admitted to acute care short stay hospitals.",
+  "purpose": "Unknown",
+  "copyright": "Limited proprietary coding is contained in these specifications for user convenience. Users of proprietary code sets should obtain all necessary licenses from the owners of the code sets.\n\nThis material contains SNOMED Clinical Terms(R) (SNOMED CT[R]) copyright 2004-2021 International Health Terminology Standards Development Organisation. All rights reserved.\n\nLOINC(R) copyright 2004-2021 Regenstrief Institute, Inc.",
+  "effectivePeriod": {
+    "start": "2023-07-01",
+    "end": "2024-06-30"
+  },
+  "relatedArtifact": [ {
+    "type": "citation",
+    "citation": "Yale New Haven Health Services Corporation/Center for Outcomes Research & Evaluation (YNHHSC/CORE) Prepared for CMS. (2015). 2013 Core Clinical Data Elements Technical Report (Version 1.1). https://www.cms.gov/Medicare/Quality-Initiatives-Patient-Assessment-Instruments/HospitalQualityInits/Downloads/Core-Clinical-Data-Elements-and-Hybrid-Measures.zip"
+  } ],
+  "library": [ "http://ecqi.healthit.gov/ecqms/Library/HybridHospitalWideReadmissionFHIR" ],
+  "disclaimer": "These performance specifications are not clinical guidelines and do not establish a standard of medical care, and have not been tested for all potential applications.\n\nTHE MEASURES AND SPECIFICATIONS ARE PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND.\n\nDue to technical limitations, registered trademarks are indicated by (R) or [R] and unregistered trademarks are indicated by (TM) or [TM].",
+  "scoring": {
+    "coding": [ {
+      "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+      "code": "cohort",
+      "display": "Cohort"
+    } ]
+  },
+  "type": [ {
+    "coding": [ {
+      "system": "http://terminology.hl7.org/CodeSystem/measure-type",
+      "code": "outcome"
+    } ]
+  } ],
+  "rationale": "The intent of this logic is to extract the FIRST set of clinical data elements from hospital electronic health records (EHRs) for all qualifying encounters. The data will be linked with administrative claims to risk adjust the Hybrid HWR outcome measure. This work addresses stakeholder concerns that clinical data garnered from patients, and used by clinicians to guide diagnostic decisions and treatment, are preferable to administrative claims data when profiling hospitals' case mix. We are calling the list of data elements for extraction the \"HWR-specific core clinical data elements\". The core clinical data elements are the first set of vital signs and basic laboratory tests resulted from encounters for adult Medicare Fee-For-Service patients, age 65 or older (Initial Population), after they arrive at the hospital to which they are subsequently admitted. For example, this first set of data values are often captured in the emergency department or in the pre-operative area, sometimes hours before a patient is admitted to that same facility. \n\nThese data elements were selected because they: 1. reflect patients' clinical status when they first present to the hospital, 2. are clinically and statistically relevant to patient outcomes, 3. are consistently obtained on adult inpatient encounters based on current clinical practice, 4. are captured with a standard definition and recorded in a standard format across providers, and 5. are entered in structured fields that are feasibly retrieved from current EHR systems (YNHHS/CORE, 2015).\n\nAdditional data called Linking Variables are used to link EHR data files with administrative claims data for CMS to calculate results for the Hybrid HWR measure, which are: CMS Certification Number, Health Insurance Claim Number (HICN) or Medicare Beneficiary Identifier (MBI), date of birth, sex, admission date, and discharge date.",
+  "clinicalRecommendationStatement": "The logic is not meant to guide or alter the care patients receive. The purpose of this core clinical data elements logic is to extract clinical data that are already routinely captured in EHRs from encounters for hospitalized adult patients. It is not intended to require that clinical staff perform additional measurements or tests that are not needed for diagnostic assessment or treatment of patients.",
+  "improvementNotation": {
+    "coding": [ {
+      "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+      "code": "decrease"
+    } ]
+  },
+  "guidance": "These specifications are for use for data with discharges that occur between July 1, 2023 and June 30, 2024. \n\nThis logic guides the user to extract the FIRST resulted HWR-specific core clinical data elements for all Medicare Fee-For-Service encounters for patients age 65 or older (Initial Population) directly admitted to the hospital or admitted to the same facility after being treated in another area such as the emergency department or hospital outpatient location. \n\nThe logic supports extraction of the FIRST set of HWR-specific core clinical data elements in two different ways depending on if the patient was a direct admission, meaning that the patient was admitted directly to an inpatient unit without first receiving care in the emergency department or other hospital outpatient locations within the same admitting facility: \n\n1. If the patient was a direct admission, the logic supports extraction of the FIRST resulted vital signs within 2 hours (120 minutes) after the start of the inpatient admission, and the FIRST resulted laboratory tests within 24 hours (1440 minutes) after the start of the inpatient admission. \n2. If the patient has values captured prior to admission, for example from the emergency department, pre-operative, or other outpatient area within the hospital, the logic supports extraction of the FIRST resulted vital signs and laboratory tests within 24 hours (1440 minutes) PRIOR to the start of the inpatient admission. All clinical systems used in inpatient and outpatient locations within the hospital facility should be queried when looking for core clinical data element values related to a patient who is subsequently admitted.\n\nValue sets for the laboratory tests represent the LOINC codes currently available for these tests. If the institution is using local codes to capture and store relevant laboratory test data, those sites should map that information to the LOINC code for reporting of the core clinical data elements.\n\nNOTE: Do not report ALL values on an encounter during their entire admission. Only report the FIRST resulted value for EACH core clinical data element collected in the appropriate timeframe, if available.\n\nFor each core clinical data element, please report values using one of the appropriate units of measurement listed below, which represent valid UCUM codes: \n\nCore Clinical Data Element                          UCUM Unit\n\nBicarbonate----------------------------------meq/L \n                                                             mmol/L \n\nCreatinine------------------------------------mg/dL \n                                                             umol/L\n\nGlucose--------------------------------------mg/dL\n                                                            mmol/L\n\nHeart rate------------------------------------{Beats}/min\n\nHematocrit -----------------------------------%\n\nOxygen saturation (by pulse oximetry)-----%{Oxygen}\n\nPotassium------------------------------------meq/L \n                                                             mmol/L\n\nRespiratory rate------------------------------{Breaths}/min\n\nSodium---------------------------------------meq/L\n                                                             mmol/L\n \nSystolic blood pressure----------------------mm[Hg]\n\nTemperature----------------------------------Cel\n                                                              [degF]  \n\nWeight-----------------------------------------kg\n                                                               [lb_av]\n                                                               g\n                                                          \nWhite blood cell count ----------------------{Cells}/uL\n                                                              10*3/uL\n                                                              10*9/L \n                                                              /mm3\n \nFor each encounter please also submit the following Linking Variables: \nCMS Certification Number,\nHealth Insurance Claim Number (HICN) or Medicare Beneficiary Identifier (MBI),\nDate of Birth,\nSex,\nInpatient Admission Date, and \nDischarge Date.\n\nThe initial population includes patients with inpatient hospitalizations and patients from Acute Hospital Care at Home programs, who are treated and billed as inpatients but receive care in their home.\n\nThis FHIR-based measure has been derived from the QDM-based measure: CMS529v3.1 (QDM 5.6)",
+  "group": [ {
+    "population": [ {
+      "id": "087F31A7-36A7-4F47-AB51-E1264E96E0B8",
+      "code": {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code": "initial-population",
+          "display": "Initial Population"
+        } ]
+      },
+      "criteria": {
+        "language": "text/cql.identifier",
+        "expression": "Initial Population"
+      }
+    } ]
+  } ],
+  "supplementalData": [ {
+    "id": "1ef77bba-9e6e-48a5-9006-c3b220d90b85",
+    "usage": [ {
+      "coding": [ {
+        "system": "http://terminology.hl7.org/CodeSystem/measure-data-usage",
+        "code": "supplemental-data"
+      } ]
+    } ],
+    "criteria": {
+      "language": "text/cql.identifier",
+      "expression": "Results"
+    }
+  }, {
+    "id": "FDDA37C1-6F43-4158-B3A5-1476DA2822B6",
+    "usage": [ {
+      "coding": [ {
+        "system": "http://terminology.hl7.org/CodeSystem/measure-data-usage",
+        "code": "supplemental-data"
+      } ]
+    } ],
+    "criteria": {
+      "language": "text/cql.identifier",
+      "expression": "SDE Ethnicity"
+    }
+  }, {
+    "id": "88F6552F-0FCA-488B-9777-265FCFDF748F",
+    "usage": [ {
+      "coding": [ {
+        "system": "http://terminology.hl7.org/CodeSystem/measure-data-usage",
+        "code": "supplemental-data"
+      } ]
+    } ],
+    "criteria": {
+      "language": "text/cql.identifier",
+      "expression": "SDE Payer"
+    }
+  }, {
+    "id": "768B11DD-00E6-448F-939E-0B922C021682",
+    "usage": [ {
+      "coding": [ {
+        "system": "http://terminology.hl7.org/CodeSystem/measure-data-usage",
+        "code": "supplemental-data"
+      } ]
+    } ],
+    "criteria": {
+      "language": "text/cql.identifier",
+      "expression": "SDE Race"
+    }
+  }, {
+    "id": "BE0619B1-7E08-4F89-845F-04DB548BA4D1",
+    "usage": [ {
+      "coding": [ {
+        "system": "http://terminology.hl7.org/CodeSystem/measure-data-usage",
+        "code": "supplemental-data"
+      } ]
+    } ],
+    "criteria": {
+      "language": "text/cql.identifier",
+      "expression": "SDE Sex"
+    }
+  } ]
+}

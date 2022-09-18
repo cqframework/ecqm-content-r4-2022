@@ -15,7 +15,7 @@
   "subject": {
     "reference": "Patient/denom-EXM816"
   },
-  "effectiveDateTime": "2019-01-17T06:04:00",
+  "effectiveDateTime": "2021-01-17T06:04:00",
   "valueQuantity": {
     "value": 81,
     "unit": "mg/dL",
