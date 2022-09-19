@@ -1,0 +1,120 @@
+{
+  "resourceType": "ValueSet",
+  "id": "2.16.840.1.113883.3.666.5.2289",
+  "url": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.666.5.2289",
+  "identifier": [
+    {
+      "system": "urn:ihe:iti:svs:2008",
+      "value": "2.16.840.1.113883.3.666.5.2289"
+    }
+  ],
+  "version": "Latest",
+  "name": "Acute-care-hospital-Inpatient-Encounter",
+  "title": "Acute care hospital Inpatient Encounter",
+  "purpose": "(Clinical Focus: This set of values identifies patients who have an admission to an acute care hospital for an inpatient hospitalization.),(Data Element Scope: The intent of this data element is to identify patients who have an admission to an acute care hospital for an inpatient hospitalization.  Using the Quality Data Model, this particular element will map to the Encounter category.),(Inclusion Criteria: Only use codes which represent an admission to an acute care hospital for an inpatient hospitalization.  Codes used are to be SNOMED-CT codes only.),(Exclusion Criteria: Codes for non-acute care hospitals or outpatient facilities such as an ambulatory surgery center should be excluded.)",
+  "status": "active",
+  "experimental": false,
+  "publisher": "Lantana",
+  "expansion": {
+    "identifier": "20220505",
+    "timestamp": "2016-03-31",
+    "contains": [
+      {
+        "system": "http://snomed.info/sct",
+        "code": "112689000",
+        "version": "2022-03",
+        "display": "Hospital admission, elective, with complete pre-admission work-up (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "1505002",
+        "version": "2022-03",
+        "display": "Hospital admission for isolation (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "15584006",
+        "version": "2022-03",
+        "display": "Hospital admission, elective, with partial pre-admission work-up (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "183481006",
+        "version": "2022-03",
+        "display": "Non-urgent hospital admission (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "2252009",
+        "version": "2022-03",
+        "display": "Hospital admission, urgent, 48 hours (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "25986004",
+        "version": "2022-03",
+        "display": "Hospital admission, under police custody (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "305337004",
+        "version": "2022-03",
+        "display": "Admission to community hospital (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "305338009",
+        "version": "2022-03",
+        "display": "Admission to general practice hospital (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "305339001",
+        "version": "2022-03",
+        "display": "Admission to private hospital (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "305341000",
+        "version": "2022-03",
+        "display": "Admission to tertiary referral hospital (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "36723004",
+        "version": "2022-03",
+        "display": "Hospital admission, pre-nursing home placement (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "405614004",
+        "version": "2022-03",
+        "display": "Unexpected hospital admission (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "417005",
+        "version": "2022-03",
+        "display": "Hospital re-admission (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "45702004",
+        "version": "2022-03",
+        "display": "Hospital admission, precertified by medical audit action (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "52748007",
+        "version": "2022-03",
+        "display": "Hospital admission, involuntary (procedure)"
+      },
+      {
+        "system": "http://snomed.info/sct",
+        "code": "81672003",
+        "version": "2022-03",
+        "display": "Hospital admission, elective, without pre-admission work-up (procedure)"
+      }
+    ]
+  }
+}
