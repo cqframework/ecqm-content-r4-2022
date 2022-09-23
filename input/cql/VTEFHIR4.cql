@@ -1,36 +1,49 @@
-library VTEFHIR4 version '4.8.000'
+/*
+@update: Refresh from 2022AU
+*/
+library VTEFHIR4 version '6.0.000'
 
 using FHIR version '4.0.1'
 
-include MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global
-include FHIRHelpers version '4.0.001' called FHIRHelpers
+include FHIRHelpers version '4.1.000' called FHIRHelpers
+include FHIRCommon version '1.1.000' called FHIRCommon
+include MATGlobalCommonFunctionsFHIR4 version '7.0.000' called Global
+include TJCOverallFHIR4 version '6.0.000' called TJC
 
-valueset "Intensive Care Unit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1029.206' 
+valueset "Obstetrics": 'urn:oid:2.16.840.1.113883.3.117.1.7.1.263'
+valueset "Obstetrics VTE": 'urn:oid:2.16.840.1.113883.3.117.1.7.1.264'
+valueset "Venous Thromboembolism": 'urn:oid:2.16.840.1.113883.3.117.1.7.1.279'
 
 parameter "Measurement Period" Interval<DateTime>
   default Interval[@2019-01-01T00:00:00.0, @2020-01-01T00:00:00.0)
 
 context Patient
 
+define "Admission without VTE or Obstetrical Conditions":
+  Global."Inpatient Encounter" InpatientEncounter
+    where not exists (
+      [Condition: category ~ FHIRCommon."encounter-diagnosis"] C
+        where FHIRHelpers.reference(C) in InpatientEncounter.diagnosis.condition
+          and (C.code in "Obstetrics" or C.code in "Venous Thromboembolism" or C.code in "Obstetrics VTE")
+    )
+
+define "Encounter with Age Range and without VTE Diagnosis or Obstetrical Conditions":
+  ( Global."Inpatient Encounter" InpatientEncounter
+      where AgeInYearsAt(date from start of InpatientEncounter.period) >= 18
+  )
+    intersect "Admission without VTE or Obstetrical Conditions"
+
 define function "StartOfFirstICU"(Encounter FHIR.Encounter ):
   start of "FirstICULocationPeriod"(Encounter)
 
 define function "FirstICULocationPeriod"(Encounter FHIR.Encounter ):
-  "FirstInpatientIntensiveCareUnit"(Encounter).period
-
-define function "FirstInpatientIntensiveCareUnit"(Encounter FHIR.Encounter ):
-  First((Encounter.location)HospitalLocation
-  			where Global.GetLocation(HospitalLocation.location).type in "Intensive Care Unit"
-  				and HospitalLocation.period during Encounter.period
-  			sort by start of period
-  	)
+  Global."FirstInpatientIntensiveCareUnit"(Encounter).period
 
 define function "CalendarDayOfOrDayAfter"(StartValue DateTime ):
   Interval[date from ( StartValue ), date from ( StartValue ) + 1 day]
 
-define function "FromDayOfStartOfHospitalizationToDayAfterAdmission"(Encounter FHIR.Encounter ):
-  Interval[date from ( start of Global."HospitalizationWithObservation" ( Encounter ) ), date from ( start of Encounter.period ) + 1 day]
+define function "FromDayOfStartOfHospitalizationToDayAfterAdmission"(Encounter "Encounter" ):
+  Interval[TJC."TruncateTime" ( start of Global."HospitalizationWithObservation" ( Encounter ) ), TJC."TruncateTime" ( start of Encounter.period + 2 days ) )
 
-define function "FromDayOfStartOfHospitalizationToDayAfterFirstICU"(Encounter FHIR.Encounter ):
-  Interval[date from ( start of Global."HospitalizationWithObservation" ( Encounter ) ), date from ( StartOfFirstICU(Encounter)) + 1 day]
-
+define function "FromDayOfStartOfHospitalizationToDayAfterFirstICU"(Encounter "Encounter" ):
+  Interval[TJC."TruncateTime" ( start of Global."HospitalizationWithObservation" ( Encounter ) ), TJC."TruncateTime" ( StartOfFirstICU(Encounter)+ 2 days ) )
