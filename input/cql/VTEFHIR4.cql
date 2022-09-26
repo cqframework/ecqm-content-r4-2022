@@ -13,6 +13,8 @@ include TJCOverallFHIR4 version '6.0.000' called TJC
 valueset "Obstetrics": 'urn:oid:2.16.840.1.113883.3.117.1.7.1.263'
 valueset "Obstetrics VTE": 'urn:oid:2.16.840.1.113883.3.117.1.7.1.264'
 valueset "Venous Thromboembolism": 'urn:oid:2.16.840.1.113883.3.117.1.7.1.279'
+valueset "Intensive Care Unit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1029.206'
+
 
 parameter "Measurement Period" Interval<DateTime>
   default Interval[@2019-01-01T00:00:00.0, @2020-01-01T00:00:00.0)
@@ -38,6 +40,13 @@ define function "StartOfFirstICU"(Encounter FHIR.Encounter ):
 
 define function "FirstICULocationPeriod"(Encounter FHIR.Encounter ):
   Global."FirstInpatientIntensiveCareUnit"(Encounter).period
+
+define function "FirstInpatientIntensiveCareUnit"(Encounter FHIR.Encounter ):
+  First((Encounter.location)HospitalLocation
+  			where Global.GetLocation(HospitalLocation.location).type in "Intensive Care Unit"
+  				and HospitalLocation.period during Encounter.period
+  			sort by start of period
+  	)
 
 define function "CalendarDayOfOrDayAfter"(StartValue DateTime ):
   Interval[date from ( StartValue ), date from ( StartValue ) + 1 day]

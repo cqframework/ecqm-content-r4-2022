@@ -2,10 +2,11 @@ library VenousThromboembolismProphylaxisFHIR version '0.0.006'
 
 using FHIR version '4.0.1'
 
-include FHIRHelpers version '4.0.001' called FHIRHelpers
-include SupplementalDataElementsFHIR4 version '2.0.000' called SDE
-include MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global
-include VTEFHIR4 version '4.8.000' called VTE
+include FHIRHelpers version '4.1.000' called FHIRHelpers
+include SupplementalDataElementsFHIR4 version '3.0.000' called SDE
+include MATGlobalCommonFunctionsFHIR4 version '7.0.000' called Global
+include FHIRCommon version '1.1.000' called Common
+include VTEFHIR4 version '6.0.000' called VTE
 
 codesystem "LOINC": 'http://loinc.org' 
 
@@ -123,9 +124,9 @@ define "Encounter with Principal Procedure of SCIP VTE Selected Surgery":
   from
                                       "Encounter with Age Range and without VTE Diagnosis or Obstetrical Conditions" QualifyingEncounter,
                                       "SCIP VTE Selected Surgery" SelectedProcedure
-                                      let EncounterProcedure: Global.GetExtension(QualifyingEncounter, 'qicore-encounter-procedure')
-                                  where FHIRHelpers.ToInteger(Global.GetExtension(EncounterProcedure, 'rank').value as FHIR.positiveInt) = 1
-                                      and Global.GetId(FHIRHelpers.ToString((Global.GetExtension(EncounterProcedure, 'procedure').value as FHIR.Reference).reference)) = SelectedProcedure.id
+                                      let EncounterProcedure: Common.Extension(QualifyingEncounter, 'qicore-encounter-procedure')
+                                  where FHIRHelpers.ToInteger(Common.Extension(EncounterProcedure, 'rank').value as FHIR.positiveInt) = 1
+                                      and Global.GetId(FHIRHelpers.ToString((Common.Extension(EncounterProcedure, 'procedure').value as FHIR.Reference).reference)) = SelectedProcedure.id
                                       and Global."Normalize Interval"(SelectedProcedure.performed) during QualifyingEncounter.period
                                       return QualifyingEncounter
 
@@ -142,7 +143,7 @@ define "No VTE Prophylaxis Device Applied or Ordered":
                                   union
                                     (
                                       ["Procedure": "Device Application"] DeviceApplied
-                                      let DeviceNotDoneTiming: Global.GetExtension(DeviceApplied, 'qicore-recorded').value
+                                      let DeviceNotDoneTiming: Common.Extension(DeviceApplied, 'qicore-recorded').value
                                       where (DeviceApplied.usedCode in "Intermittent pneumatic compression devices (IPC)"
                                             or DeviceApplied.usedCode in "Venous foot pumps (VFP)"
                                             or DeviceApplied.usedCode in "Graduated compression stockings (GCS)"
@@ -208,7 +209,7 @@ define "No VTE Prophylaxis Medication Administered or Ordered":
                   union ["MedicationAdministration": "Injectable Factor Xa Inhibitor for VTE Prophylaxis"]
                   union ["MedicationAdministration": "Warfarin"]
                   union ["MedicationAdministration": "Rivaroxaban for VTE Prophylaxis"] ) MedicationAdm
-                  let MedicationNotDoneTiming: Global.GetExtension ( MedicationAdm, 'qicore-recorded' ).value
+                  let MedicationNotDoneTiming: Common.Extension ( MedicationAdm, 'qicore-recorded' ).value
                   where MedicationAdm.status = 'not-done'
                   return {
                     id: MedicationAdm.id,
@@ -415,5 +416,5 @@ define "Low Risk for VTE or Anticoagulant Administered on Day of or Day After Pr
     return QualifyingEncounter
 
 define function "GetStatusReason"(requestReason ServiceRequest ):
-  Global.GetBaseExtension(requestReason, 'request-statusReason')
+  Common.BaseExtension(requestReason, 'request-statusReason')
 

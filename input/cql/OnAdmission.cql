@@ -50,7 +50,7 @@ define "Encounter With Diabetes Diagnosis Present on Admission (3)":
   Global."Inpatient Encounter" IPEncounter
     where exists (IPEncounter.diagnosis D
       where Global.GetCondition(D.condition).code in "Diabetes"
-        and Global.PresentOnAdmissionIndicator(D) in "Present on Admission or Clinically Undetermined"
+        and QICoreCommon.PresentOnAdmission(D) in "Present on Admission or Clinically Undetermined"
     )
 
 //define "Encounter With Diabetes Diagnosis Present on Admission (4)":
