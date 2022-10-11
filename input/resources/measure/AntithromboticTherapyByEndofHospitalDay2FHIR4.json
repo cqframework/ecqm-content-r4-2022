@@ -3,7 +3,7 @@
   "id": "AntithromboticTherapyByEndofHospitalDay2FHIR4",
   "meta": {
     "versionId": "4",
-    "lastUpdated": "2022-07-05T09:51:34.000-04:00",
+    "lastUpdated": "2022-07-05T07:51:34.000-06:00",
     "source": "#7HJgnmHSGGvWv2M0",
     "profile": [ "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/proportion-measure-cqfm", "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/computable-measure-cqfm" ]
   },

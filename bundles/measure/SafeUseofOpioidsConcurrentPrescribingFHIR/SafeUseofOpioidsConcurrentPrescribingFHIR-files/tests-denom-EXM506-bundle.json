@@ -1,0 +1,121 @@
+{
+  "resourceType": "Bundle",
+  "id": "tests-denom-EXM506-bundle",
+  "type": "transaction",
+  "entry": [ {
+    "resource": {
+      "resourceType": "Encounter",
+      "id": "denom-EXM506-1",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter" ]
+      },
+      "status": "finished",
+      "class": {
+        "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+        "code": "IMP",
+        "display": "inpatient encounter"
+      },
+      "type": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "32485007",
+          "display": "Hospital admission (procedure)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "Patient/denom-EXM506"
+      },
+      "period": {
+        "start": "2022-01-16T08:30:00-07:00",
+        "end": "2022-01-20T08:30:00-07:00"
+      }
+    },
+    "request": {
+      "method": "PUT",
+      "url": "Encounter/denom-EXM506-1"
+    }
+  }, {
+    "resource": {
+      "resourceType": "Patient",
+      "id": "denom-EXM506",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient" ]
+      },
+      "extension": [ {
+        "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+        "extension": [ {
+          "url": "ombCategory",
+          "valueCoding": {
+            "system": "http://www.cdc.gov/phin/resources/vocabulary/index.html",
+            "code": "1002-5",
+            "display": "American Indian or Alaska Native"
+          }
+        } ]
+      }, {
+        "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+        "extension": [ {
+          "url": "ombCategory",
+          "valueCoding": {
+            "system": "http://www.cdc.gov/phin/resources/vocabulary/index.html",
+            "code": "2186-5",
+            "display": "Not Hispanic or Latino"
+          }
+        } ]
+      } ],
+      "identifier": [ {
+        "use": "usual",
+        "type": {
+          "coding": [ {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "MR",
+            "display": "Medical Record Number"
+          } ]
+        },
+        "system": "http://hospital.smarthealthit.org",
+        "value": "999999992"
+      } ],
+      "name": [ {
+        "family": "Jones",
+        "given": [ "Tom" ]
+      } ],
+      "gender": "male",
+      "birthDate": "1977-06-21"
+    },
+    "request": {
+      "method": "PUT",
+      "url": "Patient/denom-EXM506"
+    }
+  }, {
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "denom-EXM506-2",
+      "status": "active",
+      "intent": "plan",
+      "category": [ {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/medicationrequest-category",
+          "code": "discharge",
+          "display": "Discharge"
+        } ]
+      } ],
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "1014599",
+          "display": "acetaminophen 300 MG / oxycodone hydrochloride 10 MG Oral Tablet"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/denom-EXM506"
+      },
+      "encounter": {
+        "reference": "Encounter/denom-EXM506-1"
+      },
+      "authoredOn": "2022-01-17T08:00:00-07:00"
+    },
+    "request": {
+      "method": "PUT",
+      "url": "MedicationRequest/denom-EXM506-2"
+    }
+  } ]
+}

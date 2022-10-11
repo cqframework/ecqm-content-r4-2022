@@ -1,0 +1,162 @@
+{
+  "resourceType": "Bundle",
+  "id": "tests-denexcep-EXM190-1stICUlt1day-bundle",
+  "type": "transaction",
+  "entry": [ {
+    "resource": {
+      "resourceType": "Bundle",
+      "id": "denexcep-EXM190-1stICUlt1day-bundle",
+      "type": "collection",
+      "entry": [ {
+        "fullUrl": "http://clinfhir.com/fhir/Patient/denexcep-EXM190-1stICUlt1day",
+        "resource": {
+          "resourceType": "Patient",
+          "id": "denexcep-EXM190-1stICUlt1day",
+          "extension": [ {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            "extension": [ {
+              "url": "ombCategory",
+              "valueCoding": {
+                "system": "urn:oid:2.16.840.1.113883.6.238",
+                "code": "1002-5",
+                "display": "American Indian or Alaska Native",
+                "userSelected": true
+              }
+            }, {
+              "url": "text",
+              "valueString": "American Indian or Alaska Native"
+            } ]
+          }, {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+            "extension": [ {
+              "url": "ombCategory",
+              "valueCoding": {
+                "system": "urn:oid:2.16.840.1.113883.6.238",
+                "code": "2135-2",
+                "display": "Hispanic or Latino",
+                "userSelected": true
+              }
+            }, {
+              "url": "text",
+              "valueString": "Hispanic or Latino"
+            } ]
+          } ],
+          "identifier": [ {
+            "type": {
+              "coding": [ {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                "code": "MR"
+              } ]
+            },
+            "value": "2a65a26f9f7578ed1148174b365eff5a"
+          } ],
+          "active": true,
+          "name": [ {
+            "use": "usual",
+            "family": "DENEXPass",
+            "given": [ "1LOSLT1DayICU_2ndICULOSGT1Day" ]
+          } ],
+          "gender": "female",
+          "birthDate": "1974-03-03"
+        }
+      }, {
+        "fullUrl": "http://clinfhir.com/fhir/Condition/denexcep-EXM190-1stICUlt1day-54",
+        "resource": {
+          "resourceType": "Condition",
+          "id": "denexcep-EXM190-1stICUlt1day-54",
+          "subject": {
+            "reference": "Patient/denexcep-EXM190-1stICUlt1day"
+          }
+        }
+      }, {
+        "fullUrl": "http://clinfhir.com/fhir/Location/denexcep-EXM190-1stICUlt1day-57",
+        "resource": {
+          "resourceType": "Location",
+          "id": "denexcep-EXM190-1stICUlt1day-57",
+          "type": [ {
+            "coding": [ {
+              "system": "http://terminology.hl7.org/CodeSystem/hsloc",
+              "version": "2022",
+              "code": "1025-6",
+              "display": "Trauma Critical Care",
+              "userSelected": true
+            } ]
+          } ],
+          "partOf": {
+            "reference": "Location/denexcep-EXM190-1stICUlt1day-58"
+          }
+        }
+      }, {
+        "fullUrl": "http://clinfhir.com/fhir/Location/denexcep-EXM190-1stICUlt1day-58",
+        "resource": {
+          "resourceType": "Location",
+          "id": "denexcep-EXM190-1stICUlt1day-58",
+          "type": [ {
+            "coding": [ {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+              "code": "ETU",
+              "display": "Emergency trauma unit"
+            } ]
+          } ]
+        }
+      }, {
+        "fullUrl": "http://clinfhir.com/fhir/Encounter/denexcep-EXM190-1stICUlt1day-610",
+        "resource": {
+          "resourceType": "Encounter",
+          "id": "denexcep-EXM190-1stICUlt1day-610",
+          "status": "finished",
+          "class": {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+            "code": "IMP",
+            "display": "inpatient encounter",
+            "userSelected": true
+          },
+          "type": [ {
+            "coding": [ {
+              "system": "http://snomed.info/sct",
+              "code": "8715000"
+            } ]
+          } ],
+          "subject": {
+            "reference": "Patient/denexcep-EXM190-1stICUlt1day"
+          },
+          "period": {
+            "start": "2019-12-04T08:00:00+00:00",
+            "end": "2019-12-30T08:15:00+00:00"
+          },
+          "length": {
+            "value": 26,
+            "unit": "days"
+          },
+          "diagnosis": [ {
+            "condition": {
+              "reference": "Condition/denexcep-EXM190-1stICUlt1day-54"
+            },
+            "use": {
+              "coding": [ {
+                "system": "http://snomed.info/sct",
+                "code": "111297002",
+                "display": "Ischemic Stroke"
+              } ]
+            },
+            "rank": 1
+          } ],
+          "location": [ {
+            "location": {
+              "reference": "Location/denexcep-EXM190-1stICUlt1day-57"
+            },
+            "status": "completed",
+            "period": {
+              "start": "2019-12-06T08:00:00.000+00:00",
+              "end": "2019-12-06T09:15:00.000+00:00"
+            }
+          } ]
+        }
+      } ]
+    },
+    "request": {
+      "method": "PUT",
+      "url": "Bundle/denexcep-EXM190-1stICUlt1day-bundle"
+    }
+  } ]
+}

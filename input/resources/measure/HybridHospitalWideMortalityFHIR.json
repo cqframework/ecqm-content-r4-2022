@@ -3,14 +3,484 @@
   "id": "HybridHospitalWideMortalityFHIR",
   "meta": {
     "versionId": "2",
-    "lastUpdated": "2022-09-02T01:58:11.000+00:00",
+    "lastUpdated": "2022-09-01T19:58:11.000-06:00",
     "source": "#eVw11OMWk7xg5hi3",
-    "profile": [ "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cohort-measure-cqfm" ]
+    "profile": [ "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cohort-measure-cqfm", "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/computable-measure-cqfm" ]
   },
   "language": "en",
+  "contained": [ {
+    "resourceType": "Library",
+    "id": "effective-data-requirements",
+    "extension": [ {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "SupplementalDataElementsFHIR4"
+      }, {
+        "url": "name",
+        "valueString": "SDE Sex"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Sex\":\n  case\n      when Patient.gender = 'male' then Code { code: 'M', system: 'http://hl7.org/fhir/v3/AdministrativeGender', display: 'Male' }\n      when Patient.gender = 'female' then Code { code: 'F', system: 'http://hl7.org/fhir/v3/AdministrativeGender', display: 'Female' }\n      else null\n    end"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 0
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HybridHospitalWideMortalityFHIR"
+      }, {
+        "url": "name",
+        "valueString": "SDE Sex"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Sex\":\n  SDE.\"SDE Sex\""
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 1
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HybridHospitalWideMortalityFHIR"
+      }, {
+        "url": "name",
+        "valueString": "Inpatient Encounters"
+      }, {
+        "url": "statement",
+        "valueString": "define \"Inpatient Encounters\":\n  from\n   [\"Encounter\": \"Encounter Inpatient\"] InpatientEncounter,\n        [\"Coverage\": \"Medicare payer\"] Payer \n           where InpatientEncounter.status = 'finished' \n             and Global.\"LengthInDays\" (Global.\"HospitalizationWithObservation\" ( InpatientEncounter )) < 365\n         and InpatientEncounter.period ends during day of \"Measurement Period\"\n           and \"AgeInYearsAt\" ( date from start of InpatientEncounter.period ) in Interval[65, 94]\n                                                                                      return InpatientEncounter"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 2
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HybridHospitalWideMortalityFHIR"
+      }, {
+        "url": "name",
+        "valueString": "Results"
+      }, {
+        "url": "statement",
+        "valueString": "define \"Results\":\n  flatten{\n        //          First physical exams (vital signs)       \n                                                                    \"FirstPhysicalExamWithEncounterId\"([Observation: \"Heart Rate\"], 'FirstHeartRate'),\n                                                                    \"FirstPhysicalExamWithEncounterId\"([Observation: \"Systolic Blood Pressure\"], 'FirstSystolicBP'),\n                                                                    \"FirstPhysicalExamWithEncounterId\"([Observation: \"Body temperature\"], 'FirstTemperature'),\n                                                                    \"FirstPhysicalExamWithEncounterId\"([Observation: \"Oxygen Saturation by Pulse Oximetry\"], 'FirstO2Saturation'),\n                                                                              //                   First lab tests\n                                                                     \"FirstLabTestWithEncounterId\"([Observation: \"Hematocrit lab test\"], 'FirstHematocrit'),\n                                                                     \"FirstLabTestWithEncounterId\"([Observation: \"Platelet count lab test\"], 'FirstPlateletCount'),\n                                                                     \"FirstLabTestWithEncounterId\"([Observation: \"White blood cells count lab test\"], 'FirstWhiteBloodCell'),\n                                                                     \"FirstLabTestWithEncounterId\"([Observation: \"Sodium lab test\"], 'FirstSodium'),\n                                                                     \"FirstLabTestWithEncounterId\"([Observation: \"Bicarbonate lab test\"], 'FirstBicarbonate'),\n                                                                     \"FirstLabTestWithEncounterId\"([Observation: \"Creatinine lab test\"], 'FirstCreatinine')\n      }"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 3
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "SupplementalDataElementsFHIR4"
+      }, {
+        "url": "name",
+        "valueString": "SDE Payer"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Payer\":\n  [Coverage: type in \"Payer\"] Payer\n    return {\n      code: Payer.type,\n      period: Payer.period\n    }"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 4
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HybridHospitalWideMortalityFHIR"
+      }, {
+        "url": "name",
+        "valueString": "SDE Payer"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Payer\":\n  SDE.\"SDE Payer\""
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 5
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HybridHospitalWideMortalityFHIR"
+      }, {
+        "url": "name",
+        "valueString": "Initial Population"
+      }, {
+        "url": "statement",
+        "valueString": "define \"Initial Population\":\n  \"Inpatient Encounters\""
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 6
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "SupplementalDataElementsFHIR4"
+      }, {
+        "url": "name",
+        "valueString": "SDE Ethnicity"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Ethnicity\":\n  (QICore.Ethnicity(Patient)) E\n    return FHIR.CodeableConcept {\n      coding: { E.ombCategory } union E.detailed,\n      text: E.text\n    }"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 7
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HybridHospitalWideMortalityFHIR"
+      }, {
+        "url": "name",
+        "valueString": "SDE Ethnicity"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Ethnicity\":\n  SDE.\"SDE Ethnicity\""
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 8
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "SupplementalDataElementsFHIR4"
+      }, {
+        "url": "name",
+        "valueString": "SDE Race"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Race\":\n  (QICore.Race(Patient)) R\n    return FHIR.CodeableConcept {\n      coding: R.ombCategory union R.detailed,\n      text: R.text\n    }"
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 9
+      } ]
+    }, {
+      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
+      "extension": [ {
+        "url": "libraryName",
+        "valueString": "HybridHospitalWideMortalityFHIR"
+      }, {
+        "url": "name",
+        "valueString": "SDE Race"
+      }, {
+        "url": "statement",
+        "valueString": "define \"SDE Race\":\n  SDE.\"SDE Race\""
+      }, {
+        "url": "displaySequence",
+        "valueInteger": 10
+      } ]
+    } ],
+    "status": "active",
+    "type": {
+      "coding": [ {
+        "system": "http://terminology.hl7.org/CodeSystem/library-type",
+        "code": "module-definition"
+      } ]
+    },
+    "relatedArtifact": [ {
+      "type": "depends-on",
+      "display": "Library SDE",
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/SupplementalDataElementsFHIR4|3.0.000"
+    }, {
+      "type": "depends-on",
+      "display": "Library FHIRHelpers",
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/FHIRHelpers|4.1.000"
+    }, {
+      "type": "depends-on",
+      "display": "Library Global",
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/MATGlobalCommonFunctionsFHIR4|7.0.000"
+    }, {
+      "type": "depends-on",
+      "display": "Library QICore",
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/QICoreCommon|1.0.000"
+    }, {
+      "type": "depends-on",
+      "display": "Library FHIRCommon",
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/FHIRCommon|1.1.000"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Encounter Inpatient",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.666.5.307"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Medicare payer",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1104.10"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Observation Services",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1111.143"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Emergency Department Visit",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.117.1.7.1.292"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Heart Rate",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.149"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Systolic Blood Pressure",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.163"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Body temperature",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.152"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Oxygen Saturation by Pulse Oximetry",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.151"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Hematocrit lab test",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.114"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Platelet count lab test",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.127"
+    }, {
+      "type": "depends-on",
+      "display": "Value set White blood cells count lab test",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.129"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Sodium lab test",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.119"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Bicarbonate lab test",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.139"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Creatinine lab test",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.666.5.2363"
+    }, {
+      "type": "depends-on",
+      "display": "Value set Payer",
+      "resource": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.3591"
+    } ],
+    "parameter": [ {
+      "name": "Measurement Period",
+      "use": "in",
+      "min": 0,
+      "max": "1",
+      "type": "Period"
+    }, {
+      "name": "SDE Sex",
+      "use": "out",
+      "min": 0,
+      "max": "1",
+      "type": "Coding"
+    }, {
+      "name": "Results",
+      "use": "out",
+      "min": 0,
+      "max": "*",
+      "type": "string"
+    }, {
+      "name": "SDE Payer",
+      "use": "out",
+      "min": 0,
+      "max": "*",
+      "type": "Any"
+    }, {
+      "name": "Initial Population",
+      "use": "out",
+      "min": 0,
+      "max": "*",
+      "type": "Encounter"
+    }, {
+      "name": "SDE Ethnicity",
+      "use": "out",
+      "min": 0,
+      "max": "1",
+      "type": "CodeableConcept"
+    }, {
+      "name": "SDE Race",
+      "use": "out",
+      "min": 0,
+      "max": "1",
+      "type": "CodeableConcept"
+    } ],
+    "dataRequirement": [ {
+      "profile": [ "http://hl7.org/fhir/AdministrativeGender" ],
+      "mustSupport": [ "value" ]
+    }, {
+      "type": "Patient",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Patient" ],
+      "mustSupport": [ "ombCategory", "detailed", "text" ]
+    }, {
+      "type": "Patient",
+      "profile": [ "http://hl7.org/fhir/Patient" ],
+      "mustSupport": [ "gender" ]
+    }, {
+      "profile": [ "http://hl7.org/fhir/EncounterStatus" ],
+      "mustSupport": [ "value" ]
+    }, {
+      "type": "Encounter",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Encounter" ],
+      "mustSupport": [ "type", "status", "period" ],
+      "codeFilter": [ {
+        "path": "type",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1111.143"
+      } ]
+    }, {
+      "type": "Encounter",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Encounter" ],
+      "mustSupport": [ "type", "status", "period" ],
+      "codeFilter": [ {
+        "path": "type",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.117.1.7.1.292"
+      } ]
+    }, {
+      "type": "Encounter",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Encounter" ],
+      "mustSupport": [ "type", "status", "period" ],
+      "codeFilter": [ {
+        "path": "type",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.666.5.307"
+      } ]
+    }, {
+      "type": "Coverage",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Coverage" ],
+      "mustSupport": [ "type" ],
+      "codeFilter": [ {
+        "path": "type",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1104.10"
+      } ]
+    }, {
+      "type": "Coverage",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Coverage" ],
+      "mustSupport": [ "type", "period" ],
+      "codeFilter": [ {
+        "path": "type",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.3591"
+      } ]
+    }, {
+      "profile": [ "http://hl7.org/fhir/ObservationStatus" ],
+      "mustSupport": [ "value" ]
+    }, {
+      "type": "string",
+      "profile": [ "http://hl7.org/fhir/string" ],
+      "mustSupport": [ "value" ]
+    }, {
+      "type": "Quantity",
+      "profile": [ "http://hl7.org/fhir/Quantity" ],
+      "mustSupport": [ "value", "comparator", "system", "system.value", "value.value", "code", "code.value", "unit", "unit.value" ]
+    }, {
+      "type": "instant",
+      "profile": [ "http://hl7.org/fhir/instant" ],
+      "mustSupport": [ "value" ]
+    }, {
+      "type": "Observation",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Observation" ],
+      "mustSupport": [ "code" ],
+      "codeFilter": [ {
+        "path": "code",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.149"
+      } ]
+    }, {
+      "type": "Observation",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Observation" ],
+      "mustSupport": [ "code" ],
+      "codeFilter": [ {
+        "path": "code",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.163"
+      } ]
+    }, {
+      "type": "Observation",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Observation" ],
+      "mustSupport": [ "code" ],
+      "codeFilter": [ {
+        "path": "code",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.152"
+      } ]
+    }, {
+      "type": "Observation",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Observation" ],
+      "mustSupport": [ "code" ],
+      "codeFilter": [ {
+        "path": "code",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.151"
+      } ]
+    }, {
+      "type": "Observation",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Observation" ],
+      "mustSupport": [ "code" ],
+      "codeFilter": [ {
+        "path": "code",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.114"
+      } ]
+    }, {
+      "type": "Observation",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Observation" ],
+      "mustSupport": [ "code" ],
+      "codeFilter": [ {
+        "path": "code",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.127"
+      } ]
+    }, {
+      "type": "Observation",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Observation" ],
+      "mustSupport": [ "code" ],
+      "codeFilter": [ {
+        "path": "code",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.129"
+      } ]
+    }, {
+      "type": "Observation",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Observation" ],
+      "mustSupport": [ "code" ],
+      "codeFilter": [ {
+        "path": "code",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.119"
+      } ]
+    }, {
+      "type": "Observation",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Observation" ],
+      "mustSupport": [ "code" ],
+      "codeFilter": [ {
+        "path": "code",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1045.139"
+      } ]
+    }, {
+      "type": "Observation",
+      "profile": [ "http://hl7.org/fhir/StructureDefinition/Observation" ],
+      "mustSupport": [ "code" ],
+      "codeFilter": [ {
+        "path": "code",
+        "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.666.5.2363"
+      } ]
+    }, {
+      "type": "uri",
+      "profile": [ "http://hl7.org/fhir/uri" ],
+      "mustSupport": [ "value" ]
+    }, {
+      "type": "Extension",
+      "profile": [ "http://hl7.org/fhir/Extension" ],
+      "mustSupport": [ "value" ]
+    } ]
+  } ],
   "extension": [ {
     "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis",
     "valueCode": "Encounter"
+  }, {
+    "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-softwaresystem",
+    "valueReference": {
+      "reference": "Device/cqf-tooling"
+    }
+  }, {
+    "id": "effective-data-requirements",
+    "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-effectiveDataRequirements",
+    "valueReference": {
+      "reference": "#effective-data-requirements"
+    }
   } ],
   "url": "http://ecqi.healthit.gov/ecqms/Measure/HybridHospitalWideMortalityFHIR",
   "identifier": [ {
@@ -31,6 +501,7 @@
   "title": "Core Clinical Data Elements for the Hybrid Hospital-Wide (All-Condition, All-Procedure) Risk-Standardized Mortality Measure (HWM) FHIR",
   "status": "draft",
   "experimental": false,
+  "date": "2022-10-11T10:58:09-06:00",
   "publisher": "Centers for Medicare & Medicaid Services (CMS)",
   "contact": [ {
     "telecom": [ {

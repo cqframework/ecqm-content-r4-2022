@@ -1,8 +1,8 @@
 #!/bin/bash
 #DO NOT EDIT WITH WINDOWS
-tooling_jar=tooling-1.3.1-SNAPSHOT-jar-with-dependencies.jar
+tooling_jar=tooling-1.4.1-SNAPSHOT-jar-with-dependencies.jar
 input_cache_path=./input-cache
-mat_bundle=/Users/bryantaustin/Projects/ecqm-content-r4-2021/bundles/mat/CMS125FHIR-v0-0-009-FHIR-4-0-1/CMS125FHIR-v0-0-009-FHIR-4-0-1.json
+mat_bundle=/Users/bryantaustin/Projects/ecqm-content-r4-2022-master/bundles/mat/CMS871FHIR-v0-0-014-FHIR-4-0-1/CMS871FHIR-v0-0-014-FHIR-4-0-1.json
 
 set -e
 

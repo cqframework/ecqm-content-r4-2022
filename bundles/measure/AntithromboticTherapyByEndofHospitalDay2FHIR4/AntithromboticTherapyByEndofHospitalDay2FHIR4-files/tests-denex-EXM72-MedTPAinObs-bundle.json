@@ -1,0 +1,209 @@
+{
+  "resourceType": "Bundle",
+  "id": "tests-denex-EXM72-MedTPAinObs-bundle",
+  "type": "transaction",
+  "entry": [ {
+    "resource": {
+      "resourceType": "Bundle",
+      "id": "denex-EXM72-MedTPAinObs-bundle",
+      "type": "collection",
+      "entry": [ {
+        "fullUrl": "http://clinfhir.com/fhir/Patient/denex-EXM72-MedTPAinObs",
+        "resource": {
+          "resourceType": "Patient",
+          "id": "denex-EXM72-MedTPAinObs",
+          "extension": [ {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            "extension": [ {
+              "url": "ombCategory",
+              "valueCoding": {
+                "system": "urn:oid:2.16.840.1.113883.6.238",
+                "code": "2054-5",
+                "display": "Black or African American",
+                "userSelected": true
+              }
+            }, {
+              "url": "text",
+              "valueString": "Black or African American"
+            } ]
+          }, {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+            "extension": [ {
+              "url": "ombCategory",
+              "valueCoding": {
+                "system": "urn:oid:2.16.840.1.113883.6.238",
+                "code": "2186-5",
+                "display": "Not Hispanic or Latino",
+                "userSelected": true
+              }
+            }, {
+              "url": "text",
+              "valueString": "Not Hispanic or Latino"
+            } ]
+          } ],
+          "identifier": [ {
+            "type": {
+              "coding": [ {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                "code": "MR"
+              } ]
+            },
+            "value": "2a65a26f9f7578ed1148174b365eff5a"
+          } ],
+          "active": true,
+          "name": [ {
+            "use": "usual",
+            "family": "DENEXPass",
+            "given": [ "MedTPAdurObs_ED<1hrObs<1hrBFEnc" ]
+          } ],
+          "gender": "female",
+          "birthDate": "1975-09-26"
+        }
+      }, {
+        "fullUrl": "http://clinfhir.com/fhir/Condition/ischemic-stroke-7f36",
+        "resource": {
+          "resourceType": "Condition",
+          "id": "ischemic-stroke-7f36",
+          "code": {
+            "coding": [ {
+              "system": "http://snomed.info/sct",
+              "version": "2020-09",
+              "code": "111297002",
+              "display": "Nonparalytic stroke (disorder)",
+              "userSelected": true
+            } ]
+          },
+          "subject": {
+            "reference": "Patient/denex-EXM72-MedTPAinObs"
+          },
+          "recordedDate": "2019-08-16T08:00:00.000+00:00"
+        }
+      }, {
+        "fullUrl": "http://clinfhir.com/fhir/Location/denex-EXM72-MedTPAinObs-medReq",
+        "resource": {
+          "resourceType": "MedicationAdministration",
+          "id": "denex-EXM72-MedTPAinObs-MedAdm",
+          "status": "completed",
+          "medicationCodeableConcept": {
+            "coding": [ {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "1804799"
+            } ]
+          },
+          "subject": {
+            "reference": "Patient/denex-EXM72-MedTPAinObs"
+          },
+          "effectivePeriod": {
+            "start": "2019-10-10T06:31:00+00:00"
+          }
+        }
+      }, {
+        "fullUrl": "http://clinfhir.com/fhir/Encounter/denex-EXM72-MedTPAinObs-EDvisit",
+        "resource": {
+          "resourceType": "Encounter",
+          "id": "denex-EXM72-MedTPAinObs-EDvisit",
+          "status": "finished",
+          "class": {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+            "code": "IMP",
+            "display": "inpatient encounter",
+            "userSelected": true
+          },
+          "type": [ {
+            "coding": [ {
+              "system": "http://snomed.info/sct",
+              "code": "4525004"
+            } ]
+          } ],
+          "subject": {
+            "reference": "Patient/denex-EXM72-MedTPAinObs"
+          },
+          "period": {
+            "start": "2019-10-10T06:00:00+00:00",
+            "end": "2019-10-10T06:30:00+00:00"
+          },
+          "length": {
+            "value": 0,
+            "unit": "days"
+          }
+        }
+      }, {
+        "fullUrl": "http://clinfhir.com/fhir/Encounter/denex-EXM72-MedTPAinObs-OBS",
+        "resource": {
+          "resourceType": "Encounter",
+          "id": "denex-EXM72-MedTPAinObs-OBS",
+          "status": "finished",
+          "class": {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+            "code": "IMP",
+            "display": "inpatient encounter"
+          },
+          "type": [ {
+            "coding": [ {
+              "system": "http://snomed.info/sct",
+              "code": "448851000124103"
+            } ]
+          } ],
+          "subject": {
+            "reference": "Patient/denex-EXM72-MedTPAinObs"
+          },
+          "period": {
+            "start": "2019-10-10T06:31:00+00:00",
+            "end": "2019-10-10T07:30:00+00:00"
+          },
+          "length": {
+            "value": 0,
+            "unit": "days"
+          }
+        }
+      }, {
+        "fullUrl": "http://clinfhir.com/fhir/Encounter/denex-EXM72-MedTPAinObs-INP",
+        "resource": {
+          "resourceType": "Encounter",
+          "id": "denex-EXM72-MedTPAinObs-INP",
+          "status": "finished",
+          "class": {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+            "code": "IMP",
+            "display": "inpatient encounter",
+            "userSelected": true
+          },
+          "type": [ {
+            "coding": [ {
+              "system": "http://snomed.info/sct",
+              "code": "32485007"
+            } ]
+          } ],
+          "subject": {
+            "reference": "Patient/denex-EXM72-MedTPAinObs"
+          },
+          "period": {
+            "start": "2019-10-10T07:31:00+00:00",
+            "end": "2019-10-12T11:15:00+00:00"
+          },
+          "length": {
+            "value": 2,
+            "unit": "days"
+          },
+          "diagnosis": [ {
+            "condition": {
+              "reference": "Condition/ischemic-stroke-7f36"
+            },
+            "use": {
+              "coding": [ {
+                "system": "http://snomed.info/sct",
+                "code": "111297002",
+                "display": "Ischemic Stroke"
+              } ]
+            },
+            "rank": 1
+          } ]
+        }
+      } ]
+    },
+    "request": {
+      "method": "PUT",
+      "url": "Bundle/denex-EXM72-MedTPAinObs-bundle"
+    }
+  } ]
+}

@@ -3,7 +3,7 @@
   "id": "IntensiveCareUnitVenousThromboembolismProphylaxisFHIR",
   "meta": {
     "versionId": "14",
-    "lastUpdated": "2022-07-01T17:59:25.000+00:00",
+    "lastUpdated": "2022-07-01T11:59:25.000-06:00",
     "source": "#wKmDW38y2agbCI1d",
     "profile": [ "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/proportion-measure-cqfm" ]
   },
@@ -11,6 +11,11 @@
   "extension": [ {
     "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis",
     "valueCode": "Encounter"
+  }, {
+    "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-softwaresystem",
+    "valueReference": {
+      "reference": "Device/cqf-tooling"
+    }
   } ],
   "url": "http://ecqi.healthit.gov/ecqms/Measure/IntensiveCareUnitVenousThromboembolismProphylaxisFHIR",
   "identifier": [ {

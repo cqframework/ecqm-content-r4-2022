@@ -2,9 +2,9 @@
   "resourceType": "Measure",
   "id": "HospitalHarmHyperglycemiainHospitalizedPatientsFHIR",
   "meta": {
-    "versionId": "22",
-    "lastUpdated": "2022-05-05T07:59:13.000-06:00",
-    "source": "#O1mLk1rOg0MfPqWq",
+    "versionId": "28",
+    "lastUpdated": "2022-09-30T11:08:47.000-06:00",
+    "source": "#LyEEjyTCNtnwCrsP",
     "profile": [ "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/ratio-measure-cqfm", "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/computable-measure-cqfm" ]
   },
   "language": "en",
@@ -12,13 +12,6 @@
     "resourceType": "Library",
     "id": "effective-data-requirements",
     "extension": [ {
-      "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-directReferenceCode",
-      "valueCoding": {
-        "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
-        "code": "confirmed",
-        "display": "confirmed"
-      }
-    }, {
       "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-logicDefinition",
       "extension": [ {
         "url": "libraryName",
@@ -73,7 +66,7 @@
         "valueString": "Qualifying Encounters"
       }, {
         "url": "statement",
-        "valueString": "define \"Qualifying Encounters\":\n  \"Inpatient Encounter During Measurement Period\" InpatientEncounter\n    where AgeInYearsAt(date from start of Global.\"HospitalizationWithObservation\"(InpatientEncounter))>= 18"
+        "valueString": "define \"Qualifying Encounters\":\n  \"Inpatient Encounter During Measurement Period\" InpatientEncounter\n    where AgeInYearsAt(date from start of InpatientEncounter.period)>= 18"
       }, {
         "url": "displaySequence",
         "valueInteger": 3
@@ -85,10 +78,10 @@
         "valueString": "HospitalHarmHyperglycemiainHospitalizedPatientsFHIR"
       }, {
         "url": "name",
-        "valueString": "Encounter With Hospitalization Period"
+        "valueString": "Encounter with Hospitalization Period"
       }, {
         "url": "statement",
-        "valueString": "/**\n * Create paring of encounters to hospitalization period so this calculation can be inspected and the result \n * can be reused, making the logic faster.*/\ndefine \"Encounter With Hospitalization Period\":\n  \"Qualifying Encounters\" InpatientHospitalization\n    return Tuple {\n      encounter: InpatientHospitalization,\n      hospitalizationPeriod: Global.\"HospitalizationWithObservation\" ( InpatientHospitalization )\n    }"
+        "valueString": "/**\n * Create paring of encounters to hospitalization period so this calculation can be inspected and the result \n * can be reused, making the logic faster.*/\ndefine \"Encounter with Hospitalization Period\":\n  \"Qualifying Encounters\" InpatientHospitalization\n    return Tuple {\n      encounter: InpatientHospitalization,\n      hospitalizationPeriod: Global.\"HospitalizationWithObservation\" ( InpatientHospitalization )\n    }"
       }, {
         "url": "displaySequence",
         "valueInteger": 4
@@ -100,10 +93,10 @@
         "valueString": "HospitalHarmHyperglycemiainHospitalizedPatientsFHIR"
       }, {
         "url": "name",
-        "valueString": "Encounter With Existing Diabetes Diagnosis"
+        "valueString": "Encounter with Existing Diabetes Diagnosis"
       }, {
         "url": "statement",
-        "valueString": "/**\n * Using the already calculated pairing of hospitalization periods with encounters, filter on ones with \n * diabetes and return the encounter.*/\ndefine \"Encounter With Existing Diabetes Diagnosis\":\n  \"Encounter With Hospitalization Period\" Hospitalization\n    with [\"Condition\": \"Diabetes\"] Diabetes\n      such that Diabetes.verificationStatus ~ ToConcept(Global.\"confirmed\")\n        and ( Global.\"Prevalence Period\" ( Diabetes ) starts before \n          end of Hospitalization.hospitalizationPeriod\n        )\n    return Hospitalization.encounter"
+        "valueString": "/**\n * Using the already calculated pairing of hospitalization periods with encounters, filter on ones with \n * diabetes and return the encounter.*/\ndefine \"Encounter with Existing Diabetes Diagnosis\":\n  \"Encounter with Hospitalization Period\" Hospitalization\n    with [\"Condition\": \"Diabetes\"] Diabetes\n      such that ( Global.\"Prevalence Period\" ( Diabetes ) starts before \n        end of Hospitalization.hospitalizationPeriod\n      )\n    return Hospitalization.encounter"
       }, {
         "url": "displaySequence",
         "valueInteger": 5
@@ -115,10 +108,10 @@
         "valueString": "HospitalHarmHyperglycemiainHospitalizedPatientsFHIR"
       }, {
         "url": "name",
-        "valueString": "Encounter With Hypoglycemic Medication"
+        "valueString": "Encounter with Hypoglycemic Medication"
       }, {
         "url": "statement",
-        "valueString": "/**\n * Using the already calculated pairing of hospitalization periods with encounters, filter on ones with \n * hypoglycemic medicatons and return the encounter.*/\ndefine \"Encounter With Hypoglycemic Medication\":\n  from\n    \"Encounter With Hospitalization Period\" Hospitalization,\n    [\"MedicationAdministration\": \"Hypoglycemics Treatment Medications\"] HypoglycemicMed\n    where HypoglycemicMed.status = 'completed'\n      and HypoglycemicMed.status != 'not-done'\n      and Global.\"Normalize Interval\" ( HypoglycemicMed.effective ) during Hospitalization.hospitalizationPeriod\n    return Hospitalization.encounter"
+        "valueString": "/**\n * Using the already calculated pairing of hospitalization periods with encounters, filter on ones with \n * hypoglycemic medicatons and return the encounter.*/\ndefine \"Encounter with Hypoglycemic Medication\":\n  from\n    \"Encounter with Hospitalization Period\" Hospitalization,\n    [\"MedicationAdministration\": \"Hypoglycemics Treatment Medications\"] HypoglycemicMed\n    where HypoglycemicMed.status = 'completed'\n      and HypoglycemicMed.status != 'not-done'\n      and Global.\"Normalize Interval\" ( HypoglycemicMed.effective ) during Hospitalization.hospitalizationPeriod\n    return Hospitalization.encounter"
       }, {
         "url": "displaySequence",
         "valueInteger": 6
@@ -130,10 +123,10 @@
         "valueString": "HospitalHarmHyperglycemiainHospitalizedPatientsFHIR"
       }, {
         "url": "name",
-        "valueString": "Encounter With Elevated Blood Glucose Lab"
+        "valueString": "Encounter with Elevated Blood Glucose Lab"
       }, {
         "url": "statement",
-        "valueString": "/**\n * Using the already calculated pairing of hospitalization periods with encounters, filter on ones with \n * any elevated (>= 200) blood glucose reading during the hospitalization*/\ndefine \"Encounter With Elevated Blood Glucose Lab\":\n  \"Encounter With Hospitalization Period\" Hospitalization\n    with [\"Observation\": \"Glucose Lab Test Mass Per Volume\"] BloodGlucoseLab\n      such that BloodGlucoseLab.effective as dateTime during Hospitalization.hospitalizationPeriod\n        and BloodGlucoseLab.status in { 'final', 'amended', 'corrected' }\n        and BloodGlucoseLab.status != 'cancelled'\n        and BloodGlucoseLab.value >= 200 'mg/dL'\n    return Hospitalization.encounter"
+        "valueString": "/**\n * Using the already calculated pairing of hospitalization periods with encounters, filter on ones with \n * any elevated (>= 200) blood glucose reading during the hospitalization*/\ndefine \"Encounter with Elevated Blood Glucose Lab\":\n  \"Encounter with Hospitalization Period\" Hospitalization\n    with [\"Observation\": \"Glucose Lab Test Mass Per Volume\"] BloodGlucoseLab\n      such that BloodGlucoseLab.effective as dateTime during Hospitalization.hospitalizationPeriod\n        and BloodGlucoseLab.status in { 'final', 'amended', 'corrected' }\n        and BloodGlucoseLab.status != 'cancelled'\n        and BloodGlucoseLab.value >= 200 'mg/dL'\n    return Hospitalization.encounter"
       }, {
         "url": "displaySequence",
         "valueInteger": 7
@@ -148,7 +141,7 @@
         "valueString": "Initial Population"
       }, {
         "url": "statement",
-        "valueString": "define \"Initial Population\":\n  \"Encounter With Existing Diabetes Diagnosis\"\n    union \"Encounter With Hypoglycemic Medication\"\n    union \"Encounter With Elevated Blood Glucose Lab\""
+        "valueString": "define \"Initial Population\":\n  \"Encounter with Existing Diabetes Diagnosis\"\n    union \"Encounter with Hypoglycemic Medication\"\n    union \"Encounter with Elevated Blood Glucose Lab\""
       }, {
         "url": "displaySequence",
         "valueInteger": 8
@@ -175,10 +168,10 @@
         "valueString": "HospitalHarmHyperglycemiainHospitalizedPatientsFHIR"
       }, {
         "url": "name",
-        "valueString": "Days With Glucose Results"
+        "valueString": "Days with Glucose Results"
       }, {
         "url": "statement",
-        "valueString": "define \"Days With Glucose Results\":\n  \"Days in Hospitalization\" InpatientHospitalDays\n    return Tuple {\n      encounter: InpatientHospitalDays.encounter,\n      relevantPeriod: InpatientHospitalDays.relevantPeriod,\n      relevantDays: ( InpatientHospitalDays.relevantDays EncounterDay\n          return Tuple {\n            dayIndex: EncounterDay.dayIndex,\n            dayPeriod: EncounterDay.dayPeriod,\n            hasSevereResult: exists ( [\"Observation\": \"Glucose Lab Test Mass Per Volume\"] BloodGlucoseLab1\n                where BloodGlucoseLab1.status in { 'final', 'amended', 'corrected' }\n                  and BloodGlucoseLab1.status != 'cancelled'\n                  and BloodGlucoseLab1.value > 300 'mg/dL'\n                  and BloodGlucoseLab1.effective as dateTime during EncounterDay.dayPeriod\n            ),\n            hasElevatedResult: exists ( [\"Observation\": \"Glucose Lab Test Mass Per Volume\"] BloodGlucoseLab2\n                where BloodGlucoseLab2.status in { 'final', 'amended', 'corrected' }\n                  and BloodGlucoseLab2.status != 'cancelled'\n                  and BloodGlucoseLab2.value >= 200 'mg/dL'\n                  and BloodGlucoseLab2.effective as dateTime during EncounterDay.dayPeriod\n            ),\n            hasNoResult: not exists ( [\"Observation\": \"Glucose Lab Test Mass Per Volume\"] BloodGlucoseLab3\n                where BloodGlucoseLab3.status in { 'final', 'amended', 'corrected' }\n                  and BloodGlucoseLab3.status != 'cancelled'\n                  and BloodGlucoseLab3.effective as dateTime during EncounterDay.dayPeriod\n            )\n          }\n      )\n    }"
+        "valueString": "define \"Days with Glucose Results\":\n  \"Days in Hospitalization\" InpatientHospitalDays\n    return Tuple {\n      encounter: InpatientHospitalDays.encounter,\n      relevantPeriod: InpatientHospitalDays.relevantPeriod,\n      relevantDays: ( InpatientHospitalDays.relevantDays EncounterDay\n          return Tuple {\n            dayIndex: EncounterDay.dayIndex,\n            dayPeriod: EncounterDay.dayPeriod,\n            hasSevereResult: exists ( [\"Observation\": \"Glucose Lab Test Mass Per Volume\"] BloodGlucoseLab1\n                where BloodGlucoseLab1.status in { 'final', 'amended', 'corrected' }\n                  and BloodGlucoseLab1.status != 'cancelled'\n                  and BloodGlucoseLab1.value > 300 'mg/dL'\n                  and BloodGlucoseLab1.effective as dateTime during EncounterDay.dayPeriod\n            ),\n            hasElevatedResult: exists ( [\"Observation\": \"Glucose Lab Test Mass Per Volume\"] BloodGlucoseLab2\n                where BloodGlucoseLab2.status in { 'final', 'amended', 'corrected' }\n                  and BloodGlucoseLab2.status != 'cancelled'\n                  and BloodGlucoseLab2.value >= 200 'mg/dL'\n                  and BloodGlucoseLab2.effective as dateTime during EncounterDay.dayPeriod\n            ),\n            hasNoResult: not exists ( [\"Observation\": \"Glucose Lab Test Mass Per Volume\"] BloodGlucoseLab3\n                where BloodGlucoseLab3.status in { 'final', 'amended', 'corrected' }\n                  and BloodGlucoseLab3.status != 'cancelled'\n                  and BloodGlucoseLab3.effective as dateTime during EncounterDay.dayPeriod\n            )\n          }\n      )\n    }"
       }, {
         "url": "displaySequence",
         "valueInteger": 10
@@ -190,10 +183,10 @@
         "valueString": "HospitalHarmHyperglycemiainHospitalizedPatientsFHIR"
       }, {
         "url": "name",
-        "valueString": "Days With Hyperglycemic Events"
+        "valueString": "Days with Hyperglycemic Events"
       }, {
         "url": "statement",
-        "valueString": "/*# hyper days uses \"Relevant Encounters With Glucose Result Days\" to find if hyper event on each day. Skips 1st day in 'RelevantDays`. Returns boolean based on: Today high result OR Today no result AND Yesterday high result AND 2 days ago high result*/\ndefine \"Days With Hyperglycemic Events\":\n  \"Days With Glucose Results\" EncounterWithResultDays\n            let eligibleEventDays: EncounterWithResultDays.relevantDays EncounterDay\n              where EncounterDay.dayIndex > 1\n              return Tuple {\n                dayIndex: EncounterDay.dayIndex,\n                dayPeriod: EncounterDay.dayPeriod,\n                hasHyperglycemicEvent: ( EncounterDay.hasSevereResult\n                    or ( EncounterDay.hasNoResult\n                        and EncounterWithResultDays.relevantDays[EncounterDay.dayIndex - 2].hasElevatedResult\n                        and EncounterWithResultDays.relevantDays[EncounterDay.dayIndex - 3].hasElevatedResult\n                    )\n                )\n              }\n            return Tuple {\n              encounter: EncounterWithResultDays.encounter,\n              relevantPeriod: EncounterWithResultDays.relevantPeriod,\n              eligibleEventDays: eligibleEventDays\n            }"
+        "valueString": "/*# hyper days uses \"Relevant Encounters With Glucose Result Days\" to find if hyper event on each day. Skips 1st day in 'RelevantDays`. Returns boolean based on: Today high result OR Today no result AND Yesterday high result AND 2 days ago high result*/\ndefine \"Days with Hyperglycemic Events\":\n  \"Days with Glucose Results\" EncounterWithResultDays\n            let eligibleEventDays: EncounterWithResultDays.relevantDays EncounterDay\n              where EncounterDay.dayIndex > 1\n              return Tuple {\n                dayIndex: EncounterDay.dayIndex,\n                dayPeriod: EncounterDay.dayPeriod,\n                hasHyperglycemicEvent: ( EncounterDay.hasSevereResult\n                    or ( EncounterDay.hasNoResult\n                        and EncounterWithResultDays.relevantDays[EncounterDay.dayIndex - 2].hasElevatedResult\n                        and EncounterWithResultDays.relevantDays[EncounterDay.dayIndex - 3].hasElevatedResult\n                    )\n                )\n              }\n            return Tuple {\n              encounter: EncounterWithResultDays.encounter,\n              relevantPeriod: EncounterWithResultDays.relevantPeriod,\n              eligibleEventDays: eligibleEventDays\n            }"
       }, {
         "url": "displaySequence",
         "valueInteger": 11
@@ -205,10 +198,10 @@
         "valueString": "HospitalHarmHyperglycemiainHospitalizedPatientsFHIR"
       }, {
         "url": "name",
-        "valueString": "Encounter With Hyperglycemic Events"
+        "valueString": "Encounter with Hyperglycemic Events"
       }, {
         "url": "statement",
-        "valueString": "/***/\ndefine \"Encounter With Hyperglycemic Events\":\n  \"Days With Hyperglycemic Events\" HyperglycemicEventDays\n    where exists ( HyperglycemicEventDays.eligibleEventDays EligibleEventDay\n        where EligibleEventDay.hasHyperglycemicEvent\n    )\n    return HyperglycemicEventDays.encounter"
+        "valueString": "/***/\ndefine \"Encounter with Hyperglycemic Events\":\n  \"Days with Hyperglycemic Events\" HyperglycemicEventDays\n    where exists ( HyperglycemicEventDays.eligibleEventDays EligibleEventDay\n        where EligibleEventDay.hasHyperglycemicEvent\n    )\n    return HyperglycemicEventDays.encounter"
       }, {
         "url": "displaySequence",
         "valueInteger": 12
@@ -223,7 +216,7 @@
         "valueString": "Numerator"
       }, {
         "url": "statement",
-        "valueString": "define \"Numerator\":\n  \"Encounter With Hyperglycemic Events\""
+        "valueString": "define \"Numerator\":\n  \"Encounter with Hyperglycemic Events\""
       }, {
         "url": "displaySequence",
         "valueInteger": 13
@@ -253,7 +246,7 @@
         "valueString": "SDE Payer"
       }, {
         "url": "statement",
-        "valueString": "define \"SDE Payer\":\n  [Coverage: type in \"Payer\"] Payer\n        return {\n          code: Payer.type,\n          period: Payer.period\n        }"
+        "valueString": "define \"SDE Payer\":\n  [Coverage: type in \"Payer\"] Payer\n    return {\n      code: Payer.type,\n      period: Payer.period\n    }"
       }, {
         "url": "displaySequence",
         "valueInteger": 15
@@ -283,7 +276,7 @@
         "valueString": "SDE Ethnicity"
       }, {
         "url": "statement",
-        "valueString": "define \"SDE Ethnicity\":\n  (flatten (\n      Patient.extension Extension\n        where Extension.url = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity'\n          return Extension.extension\n    )) E\n      where E.url = 'ombCategory'\n        or E.url = 'detailed'\n      return E.value as Coding"
+        "valueString": "define \"SDE Ethnicity\":\n  (QICore.Ethnicity(Patient)) E\n    return FHIR.CodeableConcept {\n      coding: { E.ombCategory } union E.detailed,\n      text: E.text\n    }"
       }, {
         "url": "displaySequence",
         "valueInteger": 17
@@ -310,10 +303,10 @@
         "valueString": "HospitalHarmHyperglycemiainHospitalizedPatientsFHIR"
       }, {
         "url": "name",
-        "valueString": "First Blood Glucose Within 1 Hour Prior To and 6 Hours After Encounter Start"
+        "valueString": "First Blood Glucose within 1 Hour Prior To and 6 Hours After Encounter Start"
       }, {
         "url": "statement",
-        "valueString": "define \"First Blood Glucose Within 1 Hour Prior To and 6 Hours After Encounter Start\":\n  First([\"Observation\": \"Glucose Lab Test Mass Per Volume\"] FirstBloodGlucose\n      with(\"Qualifying Encounters\")InpatientEncounter\n        such that FirstBloodGlucose.effective as dateTime during Interval[(start of Global.\"HospitalizationWithObservation\"(InpatientEncounter)- 1 hour),(start of Global.\"HospitalizationWithObservation\"(InpatientEncounter)+ 6 hours)]\n          and FirstBloodGlucose.status in { 'final', 'amended', 'corrected' }\n          and FirstBloodGlucose.status != 'cancelled'\n      sort by effective\n  )"
+        "valueString": "define \"First Blood Glucose within 1 Hour Prior To and 6 Hours After Encounter Start\":\n  First([\"Observation\": \"Glucose Lab Test Mass Per Volume\"] FirstBloodGlucose\n      with(\"Qualifying Encounters\")InpatientEncounter\n        such that FirstBloodGlucose.effective as dateTime during Interval[(start of Global.\"HospitalizationWithObservation\"(InpatientEncounter)- 1 hour),(start of Global.\"HospitalizationWithObservation\"(InpatientEncounter)+ 6 hours)]\n          and FirstBloodGlucose.status in { 'final', 'amended', 'corrected' }\n          and FirstBloodGlucose.status != 'cancelled'\n      sort by effective\n  )"
       }, {
         "url": "displaySequence",
         "valueInteger": 19
@@ -325,10 +318,10 @@
         "valueString": "HospitalHarmHyperglycemiainHospitalizedPatientsFHIR"
       }, {
         "url": "name",
-        "valueString": "Encounter With First Blood Glucose Greater Than or Equal to 1000"
+        "valueString": "Encounter with First Blood Glucose Greater Than or Equal to 1000"
       }, {
         "url": "statement",
-        "valueString": "define \"Encounter With First Blood Glucose Greater Than or Equal to 1000\":\n  \"Qualifying Encounters\" InpatientHospitalization\n    with \"First Blood Glucose Within 1 Hour Prior To and 6 Hours After Encounter Start\" FirstGlucoseResult\n      such that FirstGlucoseResult.value as Quantity >= 1000 'mg/dL'"
+        "valueString": "define \"Encounter with First Blood Glucose Greater Than or Equal to 1000\":\n  \"Qualifying Encounters\" InpatientHospitalization\n    with \"First Blood Glucose within 1 Hour Prior To and 6 Hours After Encounter Start\" FirstGlucoseResult\n      such that FirstGlucoseResult.value as Quantity >= 1000 'mg/dL'"
       }, {
         "url": "displaySequence",
         "valueInteger": 20
@@ -343,7 +336,7 @@
         "valueString": "Denominator Exclusions"
       }, {
         "url": "statement",
-        "valueString": "define \"Denominator Exclusions\":\n  \"Encounter With First Blood Glucose Greater Than or Equal to 1000\""
+        "valueString": "define \"Denominator Exclusions\":\n  \"Encounter with First Blood Glucose Greater Than or Equal to 1000\""
       }, {
         "url": "displaySequence",
         "valueInteger": 21
@@ -358,7 +351,7 @@
         "valueString": "SDE Race"
       }, {
         "url": "statement",
-        "valueString": "define \"SDE Race\":\n  (flatten (\n      Patient.extension Extension\n        where Extension.url = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race'\n          return Extension.extension\n    )) E\n      where E.url = 'ombCategory'\n        or E.url = 'detailed'\n      return E.value as Coding"
+        "valueString": "define \"SDE Race\":\n  (QICore.Race(Patient)) R\n    return FHIR.CodeableConcept {\n      coding: R.ombCategory union R.detailed,\n      text: R.text\n    }"
       }, {
         "url": "displaySequence",
         "valueInteger": 22
@@ -389,19 +382,23 @@
     "relatedArtifact": [ {
       "type": "depends-on",
       "display": "Library SDE",
-      "resource": "http://ecqi.healthit.gov/ecqms/Library/SupplementalDataElementsFHIR4|2.0.000"
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/SupplementalDataElementsFHIR4|3.0.000"
     }, {
       "type": "depends-on",
       "display": "Library FHIRHelpers",
-      "resource": "http://ecqi.healthit.gov/ecqms/Library/FHIRHelpers|4.0.001"
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/FHIRHelpers|4.1.000"
     }, {
       "type": "depends-on",
       "display": "Library Global",
-      "resource": "http://ecqi.healthit.gov/ecqms/Library/MATGlobalCommonFunctionsFHIR4|6.1.000"
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/MATGlobalCommonFunctionsFHIR4|7.0.000"
     }, {
       "type": "depends-on",
-      "display": "Code system ConditionVerificationStatusCodes",
-      "resource": "http://terminology.hl7.org/CodeSystem/condition-ver-status"
+      "display": "Library FHIRCommon",
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/FHIRCommon|1.1.000"
+    }, {
+      "type": "depends-on",
+      "display": "Library QICore",
+      "resource": "http://ecqi.healthit.gov/ecqms/Library/QICoreCommon|1.0.000"
     }, {
       "type": "depends-on",
       "display": "Value set Encounter Inpatient",
@@ -471,8 +468,8 @@
       "name": "SDE Ethnicity",
       "use": "out",
       "min": 0,
-      "max": "*",
-      "type": "Coding"
+      "max": "1",
+      "type": "CodeableConcept"
     }, {
       "name": "Denominator Exclusions",
       "use": "out",
@@ -483,8 +480,8 @@
       "name": "SDE Race",
       "use": "out",
       "min": 0,
-      "max": "*",
-      "type": "Coding"
+      "max": "1",
+      "type": "CodeableConcept"
     } ],
     "dataRequirement": [ {
       "profile": [ "http://hl7.org/fhir/AdministrativeGender" ],
@@ -492,7 +489,7 @@
     }, {
       "type": "Patient",
       "profile": [ "http://hl7.org/fhir/StructureDefinition/Patient" ],
-      "mustSupport": [ "url", "extension", "value" ]
+      "mustSupport": [ "ombCategory", "detailed", "text" ]
     }, {
       "type": "Patient",
       "profile": [ "http://hl7.org/fhir/Patient" ],
@@ -503,7 +500,7 @@
     }, {
       "type": "Encounter",
       "profile": [ "http://hl7.org/fhir/StructureDefinition/Encounter" ],
-      "mustSupport": [ "type", "period" ],
+      "mustSupport": [ "type", "status", "period" ],
       "codeFilter": [ {
         "path": "type",
         "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1111.143"
@@ -511,7 +508,7 @@
     }, {
       "type": "Encounter",
       "profile": [ "http://hl7.org/fhir/StructureDefinition/Encounter" ],
-      "mustSupport": [ "type", "period" ],
+      "mustSupport": [ "type", "status", "period" ],
       "codeFilter": [ {
         "path": "type",
         "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.117.1.7.1.292"
@@ -527,7 +524,7 @@
     }, {
       "type": "Condition",
       "profile": [ "http://hl7.org/fhir/StructureDefinition/Condition" ],
-      "mustSupport": [ "code", "verificationStatus" ],
+      "mustSupport": [ "code" ],
       "codeFilter": [ {
         "path": "code",
         "valueSet": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.103.12.1001"
@@ -551,6 +548,10 @@
       "profile": [ "http://hl7.org/fhir/ObservationStatus" ],
       "mustSupport": [ "value" ]
     }, {
+      "type": "Quantity",
+      "profile": [ "http://hl7.org/fhir/Quantity" ],
+      "mustSupport": [ "value", "comparator", "system", "system.value", "value.value", "code", "code.value", "unit", "unit.value" ]
+    }, {
       "type": "Observation",
       "profile": [ "http://hl7.org/fhir/StructureDefinition/Observation" ],
       "mustSupport": [ "code", "effective", "status", "value" ],
@@ -569,6 +570,10 @@
     }, {
       "type": "uri",
       "profile": [ "http://hl7.org/fhir/uri" ],
+      "mustSupport": [ "value" ]
+    }, {
+      "type": "Extension",
+      "profile": [ "http://hl7.org/fhir/Extension" ],
       "mustSupport": [ "value" ]
     } ]
   } ],
@@ -601,12 +606,12 @@
     "system": "http://hl7.org/fhir/cqi/ecqm/Measure/Identifier/nqf",
     "value": "3533e"
   } ],
-  "version": "0.0.011",
+  "version": "0.0.014",
   "name": "HospitalHarmHyperglycemiainHospitalizedPatientsFHIR",
   "title": "Hospital Harm - Severe HyperglycemiaFHIR",
   "status": "draft",
   "experimental": false,
-  "date": "2022-09-13T14:22:42-06:00",
+  "date": "2022-10-11T10:58:09-06:00",
   "publisher": "Centers for Medicare & Medicaid Services (CMS)",
   "contact": [ {
     "telecom": [ {
@@ -614,82 +619,58 @@
       "value": "https://cms.gov"
     } ]
   } ],
-  "description": "This measure assesses the number of inpatient hospital days with a hyperglycemic event (harm) per the total qualifying inpatient hospital days for that encounter for patients 18 years of age or older at admission",
+  "description": "This measure assesses the number of inpatient hospital days for patients age 18 and older with a hyperglycemic event (harm) per the total qualifying inpatient hospital days for that encounter",
   "purpose": "Unknown",
-  "copyright": "Limited proprietary coding is contained in the Measure specifications for user convenience. Users of proprietary code sets should obtain all necessary licenses from the owners of the code sets. American Institutes for Research(R), formerly IMPAQ International, disclaims all liability for use or accuracy of any third party codes contained in the specifications.\n\nLOINC(R) copyright 2004-2021 Regenstrief Institute, Inc. This material contains SNOMED Clinical Terms(R) (SNOMED CT[R]) copyright 2004-2021 International Health Terminology Standards Development Organisation. ICD-10 copyright 2021 World Health Organization. All Rights Reserved.",
+  "copyright": "Limited proprietary coding is contained in the Measure specifications for user convenience. Users of proprietary code sets should obtain all necessary licenses from the owners of the code sets. American Institutes for Research(R), formerly IMPAQ International, disclaims all liability for use or accuracy of any third party codes contained in the specifications.\n\nLOINC(R) copyright 2004-2022 Regenstrief Institute, Inc. This material contains SNOMED Clinical Terms(R) (SNOMED CT[R]) copyright 2004-2022 International Health Terminology Standards Development Organisation. ICD-10 copyright 2022 World Health Organization. All Rights Reserved.",
   "effectivePeriod": {
     "start": "2022-01-01",
     "end": "2022-12-31"
   },
   "relatedArtifact": [ {
     "type": "citation",
-    "citation": "American Diabetes Association. 15. Diabetes care in the hospital: standards of medical care in diabetes—2020. Diabetes Care 2020; 43 (suppl 1): S193–202"
+    "citation": "American Diabetes Association Professional Practice Committee; 16. (2022). Diabetes Care in the Hospital: Standards of Medical Care in Diabetes—2022. Diabetes Care 1 January 2022; 45 (Supplement_1): S244–S253.  https://doi.org/10.2337/dc22-S016"
   }, {
     "type": "citation",
-    "citation": "Cook CB, Kongable GL, Potter DJ, et al. Inpatient glucose control: a glycemic survey of 126 U.S. hospitals. J Hosp Med. 2009;4(9):E7-E14"
+    "citation": "Bersoux, S., Cook, C.B., Kongable, G.L., Shu, J. (2013). Trends in glycemic control over a 2-year period in 126 US hospitals. J Hosp Med. 2013;8(3):121-125. doi:10.1002/jhm.1997"
   }, {
     "type": "citation",
-    "citation": "Donihi AC, DiNardo MM, DeVita MA, et al. Use of a standardized protocol to decrease medication errors and adverse events related to sliding scale insulin. Qual Saf Health Care. 2006;15(2):89-91."
+    "citation": "Donihi, A.C., Gibson, J.M., Noschese, M.L., et al. (2011). Effect of targeted glycemic management program on provider response to inpatient hyperglycemia. Endocr Pract. 2011; (4)552-557"
   }, {
     "type": "citation",
-    "citation": "Donihi AC, Gibson JM, Noschese ML, et al. Effect of targeted glycemic management program on provider response to inpatient hyperglycemia. Endocr Pract. 2011; (4)552-557."
+    "citation": "Gosmanov, A.R., Gosmanova, E.O., Kitabchi, A.E. (2021). Hyperglycemic Crises: Diabetic Ketoacidosis and Hyperglycemic Hyperosmolar State. [Updated 2021 May 9]. In: Feingold KR, Anawalt B, Boyce A, et al., editors. Endotext [Internet]. South Dartmouth (MA): MDText.com, Inc.; 2000-. Available from: https://www.ncbi.nlm.nih.gov/books/NBK279052/"
   }, {
     "type": "citation",
-    "citation": "Falciglia M, Freyberg RW, Alemenoff PL, et al. Hyperglycemia-related mortality in critically ill patients varies with admission diagnosis. Crit Care Med. 2009; 37(12):3001-3009."
+    "citation": "Jamesen, E., Nevalainen, P.L., Eskelinen, A., et al. (2015). Risk factors for perioperative hyperglycemia in primary hip and knee replacements. Acta Orthop. 2015; 86(2):175-182"
   }, {
     "type": "citation",
-    "citation": "Jackson RS, Amdur RL, White JC, et al. Hyperglycemia is associated with increased risk of morbidity and mortality after colectomy for cancer. J Am Coll Surg. 2012;214(1):68-80."
+    "citation": "Korytkowski, M.T., Muniyappa, R., Antinori-Lent, K., Donihi, A.C., Drincic, A.T, Hirsch, I.B., Luger, A., McDonnell, M.E., Murad, M.H., Nielsen, C., Pegg, C., Rushakoff, R.J., Santesso, N., Umpierrez, G.E. (2022). Management of Hyperglycemia in Hospitalized Adult Patients in Non-Critical Care Settings: An Endocrine Society Clinical Practice Guideline, The Journal of Clinical Endocrinology & Metabolism, Volume 107, Issue 8, August 2022, Pages 2101–2128,  https://doi.org/10.1210/clinem/dgac278"
   }, {
     "type": "citation",
-    "citation": "Jamesen E, Nevalainen PL, Eskelinen A, et al. Risk factors for perioperative hyperglycemia in primary hip and knee replacements. Acta Orthop. 2015; 86(2):175-182."
+    "citation": "Krinsley, J.S., Jones, R.L. (2016). Cost analysis of intensive glycemic control in critically ill adult patients. Chest. 2016;129(3)644-650"
   }, {
     "type": "citation",
-    "citation": "King JT, Goulet JL, Perkal MF, et al. Glycemic control and infections in patients with diabetes undergoing noncardiac surgery. Ann surg. 2011;253(1):158-165."
+    "citation": "LeRoy, L.,  Richard, S. (2020). Harms Due to Diabetic Agents (Chapter 8), Making Healthcare Safer III: A Critical Analysis of Existing and Emerging Patient Safety Practices. Retrieved from: https://www.ahrq.gov/sites/default/files/wysiwyg/research/findings/making-healthcare-safer/mhs3/diabetes-1.pdf"
   }, {
     "type": "citation",
-    "citation": "Krinsley JS. Association between hyperglycemia and increased hospital mortality in a heterogeneous population of critically ill patients. Mayo Clin Proc. 2003 Dec;78(12):1471-1478."
+    "citation": "Maynard, G., Kulasa, K., Ramos, P., et al. (2015). Impact of a hypoglycemic reduction bundle and a systems approach to inpatient glycemic management. Endocr Pract. 2015;21(4):355-367"
   }, {
     "type": "citation",
-    "citation": "Krinsley JS, Jones RL. Cost analysis of intensive glycemic control in critically ill adult patients. Chest. 2016;129(3)644-650"
+    "citation": "Mendez, C.E., Ata, A., Rourke, J.M., et al. (2015). Daily inpatient glycemic survey (DINGS): A process to remotely identify and assist in the management of hospitalized patients with diabetes and hyperglycemia. Endocr Pract. 2015;21(8):927-935"
   }, {
     "type": "citation",
-    "citation": "Lee LJ, Emons MF, Martin SA, et al. Association of blood glucose levels with in-hospital mortality and 30-day readmission in patients undergoing invasive cardiovascular surgery. Curr Med Res Opin. 2012;28(1):1657-1665."
+    "citation": "Pasquel, F.J., Lansang, M.C., Dhatariya, K., Umpierrez, G.E. (2021). Management of diabetes and hyperglycaemia in the hospital. The Lancet Diabetes & Endocrinology. 2021; 9: 174–88"
   }, {
     "type": "citation",
-    "citation": "Matheny ME, Shubina M, Kimmel ZK., et al. Treatment intensification and blood glucose control among hospitalized diabetic patients. J Gen Intern Med. 2008;23(2)."
+    "citation": "Sathya, B., Davis, R., Taveira, T., et al. (2013). Intensity of peri-operative glycemic control and postoperative outcomes in patients with diabetes: a meta-analysis. Diabetes Res Clin Pract. 2013;102(1):815.10.1016/j.diabres.2013.05.003"
   }, {
     "type": "citation",
-    "citation": "Maynard G, Kulasa K, Ramos P, et al. Impact of a hypoglycemic reduction bundle and a systems approach to inpatient glycemic management. Endocr Pract. 2015;21(4):355-367."
+    "citation": "Umpierrez, G., Cardona, S., Pasquel, F., et al. (2015). Randomized controlled trial of intensive versus conservative glucose control in patients undergoing coronary artery bypass graft surgery: gluco-CABG trial. Diabetes Care. 2015;38(9):1665-1672"
   }, {
     "type": "citation",
-    "citation": "Mendez CE, Ata A, Rourke JM, et al. Daily inpatient glycemic survey (DINGS): A process to remotely identify and assist in the management of hospitalized patients with diabetes and hyperglycemia. Endocr Pract. 2015;21(8):927-935."
-  }, {
-    "type": "citation",
-    "citation": "Newton CA, Yong, S. Financial implications of glycemic control: Results of an inpatient diabetes management program. Endocr Pract. 2006;3:43-48."
-  }, {
-    "type": "citation",
-    "citation": "Pasquel FJ, Spiegelman R, McCauley M. Hyperglycemia during total parenteral nutrition: An important marker of poor outcome and mortality in hospitalized patients. Diabetes Care. 2010;(33)4:739-741."
-  }, {
-    "type": "citation",
-    "citation": "Rady MY. Influence of individual characteristics on outcome of glycemic control in intensive care unit patients with or without diabetes mellitus. Mayo Clin Proc 2005;80(12):1558-1567."
-  }, {
-    "type": "citation",
-    "citation": "Swanson CM, Potter DJ, Kongable GL, et al. Update on inpatient glycemic control in hospitals in the United States. Endocrine Practice. 2011;17(6):853-861."
-  }, {
-    "type": "citation",
-    "citation": "Umpierrez, GE, Hellman, R, Korytkowski, MT, et al. Management of Hyperglycemia in Hospitalized Patients in Non-critical Care Setting: An Endocrine Society Clinical Practice Guideline. J Clin Endocrinol Metab. 2012;97, 16-38"
-  }, {
-    "type": "citation",
-    "citation": "Umpierrez GE, Issacs DS, Bazargan N, et al. Hyperglycemia: an independent marker of in-hospital mortality in patients with undiagnosed diabetes. J Clin Endorinol Metab. 2002;87(3):978-982."
-  }, {
-    "type": "citation",
-    "citation": "Weinberg ME, Bacchetti P, Rushakoff, RJ. Frequently repeated glucose measurements overestimate the incidence of inpatient hypoglycemia and severe hyperglycemia. J Diabetes Sci Technol. 2010;May 1;4(3):577-582."
-  }, {
-    "type": "citation",
-    "citation": "Gosmanov AR, Gosmanova EO, Kitabchi AE. Hyperglycemic Crises: Diabetic Ketoacidosis and Hyperglycemic Hyperosmolar State. [Updated 2021 May 9]. In: Feingold KR, Anawalt B, Boyce A, et al., editors. Endotext [Internet]. South Dartmouth (MA): MDText.com, Inc.; 2000-. Available from: https://www.ncbi.nlm.nih.gov/books/NBK279052/"
+    "citation": "Umpierrez, G.E., Hellman, R., Korytkowski, M.T., et al. (2012). Management of Hyperglycemia in Hospitalized Patients in Non-critical Care Setting: An Endocrine Society Clinical Practice Guideline. J Clin Endocrinol Metab. 2012;97, 16-38"
   } ],
   "library": [ "http://ecqi.healthit.gov/ecqms/Library/HospitalHarmHyperglycemiainHospitalizedPatientsFHIR" ],
-  "disclaimer": "This measure and specifications are subject to further revisions. This performance measure is not a clinical guideline and does not establish a standard of medical care, and has not been tested for all potential applications.\n\nTHE MEASURES AND SPECIFICATIONS ARE PROVIDED \"AS IS\" WITHOUT WARRANTY OF ANY KIND.\n\nDue to technical limitations, registered trademarks are indicated by (R) or [R] and unregistered trademarks are indicated by (TM) or [TM].",
+  "disclaimer": "This performance measure is not a clinical guideline and does not establish a standard of medical care, and has not been tested for all potential applications.\n\nTHE MEASURES AND SPECIFICATIONS ARE PROVIDED \"AS IS\" WITHOUT WARRANTY OF ANY KIND.\n\nDue to technical limitations, registered trademarks are indicated by (R) or [R] and unregistered trademarks are indicated by (TM) or [TM].",
   "scoring": {
     "coding": [ {
       "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
@@ -703,8 +684,8 @@
       "code": "outcome"
     } ]
   } ],
-  "rationale": "Hyperglycemia, i.e., elevated blood glucose level, is common among hospitalized patients, especially those with preexisting diabetes (Swanson, et al., 2011; Umpierrez et al., 2012). Hyperglycemia can also affect individuals with no prior history of diabetes and may be induced by medications such as steroids, or parenteral (intravenous) or enteral (tube) feeding.\n\nSevere hyperglycemia, i.e., extremely elevated blood glucose level, is significantly associated with a range of harms, including increased in-hospital mortality, infection rates, and hospital length of stay (Pasquel, et al., 2010 and 2021; Rady, et al., 2005; Umpierrez, et al., 2002; Falciglia et al., 2009; Lee et al., 2012; King et al., 2011; Jackson et al., 2012; Umpierrez et al., 2012; Krinsley 2003). Lower rates of inpatient severe hyperglycemia may not only improve care for patients, but also reduce costs for healthcare payers (Krinsley 2003; Newton et al., 2006; Krinsley et al., 2016). The rate of hyperglycemia varies across hospitals, suggesting opportunities for improvement in inpatient glycemic management (Swanson et al., 2011; Cook et al., 2009; Matheny et al., 2008). The rate of inpatient hyperglycemia can be considered a marker for quality of hospital care, since inpatient hyperglycemia is largely avoidable with proper glycemic management. The use of evidence-based standardized protocols and insulin management protocols have been shown to improve glycemic control and safety (Maynard et al., 2015; Donihi et al., 2006).",
-  "clinicalRecommendationStatement": "It should be noted that this measure does not aim to measure overall glucose control in hospitalized patients; rather, our goal is to assess the occurrence and extent of severe hyperglycemia. This measure is also intended to be used in combination with its companion measure of hypoglycemia (Hospital Harm – Hypoglycemia) to reduce unintended consequences of measurement. \n\nMultiple guidelines address recommended levels of glycemic control, though these do not define severe hyperglycemia: \n\nFrom Section 15, Diabetes Care in the Hospital, in the Standards of Medical Care in Diabetes by the American Diabetes Association, (American Diabetes Association, 2020): \nInsulin therapy should be initiated for treatment of persistent hyperglycemia starting at a threshold >=180 mg/dL (10.0 mmol/L). Once insulin therapy is started, a target glucose range of 140–180 mg/dL (7.8–10.0 mmol/L) is recommended for the majority of critically ill patients and noncritically ill patients. More stringent goals, such as 110-140 mg/dL (6.1-7.8 mmol/L), may be appropriate for selected patients, as long as this can be achieved without significant hypoglycemia. \n\nFrom the Endocrine Society clinical practice guideline on the Management of Hyperglycemia in Hospitalized Patients in Non-critical Care Setting (Umpierrez et al., 2012):\n3.1. We recommend a pre-meal glucose target of less than 140 mg/dL (7.8 mmol/liter) and a random [blood glucose] of less than 180 mg/dL (10.0 mmol/liter) for the majority of hospitalized patients with non-critical illness.\n\nThere is no clinically accepted cutoff for severe hyperglycemia. Studies have used thresholds of >140, >180 , >300, and >350 mg/dL, among other values (American Diabetes Association, 2020; Umpierrez et al, 2012; Jamesen et al., 2015; Cook et al., 2009; Donihi et al., 2011; Weinberg et al, 2010; Mendez et al, 2015). Glycemic goals may also differ among hospitalized patients. For example, in an older patient with a prior history of severe hypoglycemia, some degree of hyperglycemia may be tolerated to maximize safety.\n\nFor patients who present with hyperglycemic crises, neurologic status must be monitored closely, with frequent re-examination. Care should be taken to prevent over-correction of hyperglycemia and hyperosmolarity following initial ﬂuid resuscitation of these patients to prevent cerebral edema, which carries a high mortality rate. (Gosmanov et al., 2021).",
+  "rationale": "Hyperglycemia, i.e., elevated blood glucose level, is common among hospitalized patients, especially those with preexisting diabetes (Umpierrez et al., 2012) and account for over 30% of noncritically ill hospitalized patients (Korytkowski, 2022). Hyperglycemia can also affect individuals with no prior history of diabetes and may be induced by medications such as steroids, or parenteral (intravenous) or enteral (tube) feeding.\n\nSevere hyperglycemia, i.e., extremely elevated blood glucose level, is significantly associated with a range of harms, including increased in-hospital mortality, infection rates, and hospital length of stay (Pasquel, et al., 2021; Umpierrez et al., 2012, 2015). Lower rates of inpatient severe hyperglycemia may not only improve care for patients, but also reduce costs for healthcare payers (Krinsley et al., 2016). The rate of hyperglycemia varies across hospitals, suggesting opportunities for improvement in inpatient glycemic management (Bersoux et al., 2013). The rate of inpatient hyperglycemia can be considered a marker for quality of hospital care, since inpatient hyperglycemia is largely avoidable with proper glycemic management. The use of evidence-based standardized protocols and insulin management protocols have been shown to improve glycemic control and safety (Leroy et al., 2020; Maynard et al., 2015).\n\nFrom the Endocrine Society clinical practice guideline on the Management of Hyperglycemia in Hospitalized Patients in Non-critical Care Setting, 2022:\nRecommendation 1.1\nIn adults with insulin-treated diabetes hospitalized for noncritical illness who are at high risk of hypoglycemia, we suggest the use of real-time continuous glucose monitoring (CGM) with confirmatory bedside point-of-care blood glucose (POC-BG) monitoring for adjustments in insulin dosing rather than point-of-care blood glucose (POC-BG) testing alone in hospital settings where resources and training are available.",
+  "clinicalRecommendationStatement": "It should be noted that this measure does not aim to measure overall glucose control in hospitalized patients; rather, our goal is to assess the occurrence and extent of severe hyperglycemia. This measure is also intended to be used in combination with its companion measure of hypoglycemia (Hospital Harm – Hypoglycemia) to reduce unintended consequences of measurement. \n\nMultiple guidelines address recommended levels of glycemic control, though these do not define severe hyperglycemia: \n\nFrom Section 16, Diabetes Care in the Hospital, in the Standards of Medical Care in Diabetes by the American Diabetes Association, (American Diabetes Association, 2022): \n\n16.4 Insulin therapy should be initiated for treatment of persistent hyperglycemia starting at a threshold ≥180 mg/dL (10.0 mmol/L) (checked on two occasions). Once insulin therapy is started, a target glucose range of 140–180 mg/dL (7.8–10.0 mmol/L) is recommended for the majority of critically ill and noncritically ill patients. A\n\n16.5 More stringent goals, such as 110–140 mg/dL (6.1–7.8 mmol/L), may be appropriate for selected patients if they can be achieved without significant hypoglycemia.\n\nFrom the Endocrine Society clinical practice guideline on the Management of Hyperglycemia in Hospitalized Patients in Non-critical Care Setting (2022): \n\nRecommendation 10.1\nIn adults with no prior history of diabetes hospitalized for noncritical illness with hyperglycemia [defined as blood glucose (BG) > 140 mg/dL (7.8 mmol/L)] during hospitalization, we suggest initial therapy with correctional insulin over scheduled insulin therapy (defined as basal or basal/bolus insulin) to maintain glucose targets in the range of 100 to 180 mg/dL (5.6 to 10.0 mmol/L). For patients with persistent hyperglycemia [≥2 point-of-care blood glucose (POC-BG) measurements ≥ 180 mg/dL (≥10.0 mmol/L) in a 24-hour period on correctional insulin alone], we suggest the addition of scheduled insulin therapy. \n\nRecommendation 10.2\nIn adults with diabetes treated with diet or noninsulin diabetes medications prior to admission, we suggest initial therapy with correctional insulin or scheduled insulin therapy to maintain glucose targets in the range of 100 to 180 mg/dL (5.6 to 10.0 mmol/L). For hospitalized adults started on correctional insulin alone and with persistent hyperglycemia [≥2 point-of-care blood glucose (POC-BG) measurements ≥ 180 mg/dL in a 24-hour period (≥10.0 mmol/L)], we suggest addition of scheduled insulin therapy. We suggest initiation of scheduled insulin therapy for patients with confirmed admission blood glucose (BG) ≥ 180 mg/dL (≥10.0 mmol/L). \n\nRecommendation 10.3\nIn adults with insulin-treated diabetes prior to admission who are hospitalized for noncritical illness, we recommend continuation of the scheduled insulin regimen modified for nutritional status and severity of illness to maintain glucose targets in the range of 100 to 180 mg/dL (5.6 to 10.0 mmol/L).\n\nRemarks\nReductions in the dose of basal insulin (by 10% to 20%) at time of hospitalization may be required for patients on basal heavy insulin regimens (defined as doses of basal insulin ≥ 0.6 to 1.0 units/kg/day), in which basal insulin is being used inappropriately to cover meal-related excursions in BG.\n\n\nThere is no clinically accepted cutoff for severe hyperglycemia. Studies have used thresholds of >140, >180 , >300, and >350 mg/dL, among other values (American Diabetes Association, 2020; Umpierrez et al, 2012, 2015); Jamesen et al., 2015; Donihi et al., 2011; Mendez et al, 2015). BGL <180 mg/dL is associated with lower rates of mortality and stroke compared with a target glucose <200 mg/dL (Sathya, et al., 2013). Glycemic goals may also differ among hospitalized patients. For example, in an older patient with a prior history of severe hypoglycemia, some degree of hyperglycemia may be tolerated to maximize safety. Intensive insulin therapy to target glucose of 100 and 140mg/dLin the ICU didn’t significantly reduce perioperative complications compared with target glucose of 141and180mg/dLafter coronary artery bypass surgery (Umpierrez, 2015).\n\nFor patients who present with hyperglycemic crises, neurologic status must be monitored closely, with frequent re-examination. Care should be taken to prevent over-correction of hyperglycemia and hyperosmolarity following initial ﬂuid resuscitation of these patients to prevent cerebral edema, which carries a high mortality rate. (Gosmanov et al., 2021).",
   "improvementNotation": {
     "coding": [ {
       "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
@@ -714,7 +695,7 @@
   "guidance": "The measure is using mg/dL as the unit of measurement for glucose results.\nTo determine the measure outcome, the total number of hyperglycemic days during the inpatient hospitalization is divided by the total number of eligible hospital days of the inpatient hospitalization.\n\nWhen evaluating for days with a blood glucose level >300 mg/dL, the first 24-hour period after admission to the hospital (including the emergency department or observation) is not evaluated to account for potentially poor glucose control outside of the hospital setting or that preceded the start of hospital care.\n\nThis measure evaluates the first 10 days of an eligible inpatient hospitalization in determining eligible days for the denominator and numerator (i.e., the length of stay is truncated to <=10 days when the length exceeds 10 days). Patients admitted for longer length of stays are more likely to have more complex medical conditions.  \n\nThe numerator returns the first eligible encounter that meets the qualifying criteria: an inpatient hospitalization with a hyperglycemic event. Only one numerator is counted per encounter. Note that the Numerator returns the encounters, not days, that meet the criteria.\n\nBlood glucose levels are determined by laboratory or point-of-care (POC) tests, including capillary/glucometer blood glucose tests.\n\nThis eCQM is an episode-based measure. An episode is defined as each inpatient hospitalization or encounter that ends during the measurement period.\n\nThis FHIR-based measure has been derived from the QDM-based measure: CMS871v2.0",
   "group": [ {
     "population": [ {
-      "id": "56C2CFFF-DB5D-4A44-8C03-8FA058355753",
+      "id": "CA2F9DBE-6EA4-4821-B4AE-EE1096E66C01",
       "code": {
         "coding": [ {
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
@@ -727,7 +708,7 @@
         "expression": "Initial Population"
       }
     }, {
-      "id": "71A920B9-2599-4F02-BB02-6A22AB5E96E8",
+      "id": "AD467BCB-8CE7-48B9-9E6F-707E32BB29FE",
       "code": {
         "coding": [ {
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
@@ -740,7 +721,7 @@
         "expression": "Denominator"
       }
     }, {
-      "id": "A5FCEA8B-F38C-44E7-BDB9-905D113680B6",
+      "id": "25BF9A32-6D45-462E-844B-1EA22B616861",
       "code": {
         "coding": [ {
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
@@ -753,7 +734,7 @@
         "expression": "Denominator Exclusions"
       }
     }, {
-      "id": "4C3EF209-E0DB-4697-B22E-95056B70A9EF",
+      "id": "F0983998-F81E-4600-88FB-80EE4B3241D3",
       "code": {
         "coding": [ {
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
@@ -766,7 +747,7 @@
         "expression": "Numerator"
       }
     }, {
-      "id": "AB15CF3B-3D82-4E19-A32C-A15275A0F14F",
+      "id": "8AFF78F2-EA57-48AE-AD67-8C71EB46880A",
       "extension": [ {
         "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-aggregateMethod",
         "valueCode": "sum"
@@ -783,7 +764,7 @@
         "expression": "Denominator Observations"
       }
     }, {
-      "id": "B4BE3DE4-FCB9-4796-9F50-026F08CC2D60",
+      "id": "417B91A9-D9B2-48B9-B0F9-54CD90A3FAE2",
       "extension": [ {
         "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-aggregateMethod",
         "valueCode": "sum"
