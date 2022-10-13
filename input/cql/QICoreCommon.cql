@@ -43,77 +43,122 @@ context Patient
 
 /* Candidates for FHIRCommon */
 
+/*
+@description: returns true if the given condition has the given category
+*/
 define function HasCategory(condition Condition, category Code):
   exists (condition.category C
     where C ~ category
   )
 
+/*
+@description: returns true if the given condition is a problem list item
+*/
 define function IsProblemListItem(condition Condition):
   exists (condition.category C
     where C ~ "problem-list-item"
   )
 
+/*
+@description: returns true if the given condition is an encounter diagnosis
+*/
 define function IsEncounterDiagnosis(condition Condition):
   exists (condition.category C
     where C ~ "encounter-diagnosis"
   )
 
+/*
+@description: returns true if the given condition is a health concern
+*/
 define function IsHealthConcern(condition Condition):
   exists (condition.category C
     where C ~ "health-concern"
   )
 
+/*
+@description: returns true if the given observation has the given category
+*/
 define function HasCategory(observation Observation, category Code):
   exists (observation.category C
     where C ~ category
   )
 
+/*
+@description: returns true if the given observation is a social history
+*/
 define function IsSocialHistory(observation Observation):
   exists (observation.category C
     where C ~ "social-history"
   )
 
+/*
+@description: returns true if the given observation is a vital-sign
+*/
 define function IsVitalSign(observation Observation):
   exists (observation.category C
     where C ~ "vital-signs"
   )
 
+/*
+@description: returns true if the given observation is an imaging observation
+*/
 define function IsImaging(observation Observation):
   exists (observation.category C
     where C ~ "imaging"
   )
 
+/*
+@description: returns true if the given observation is a laboratory observation
+*/
 define function IsLaboratory(observation Observation):
   exists (observation.category C
     where C ~ "laboratory"
   )
 
+/*
+@description: returns true if the given observation is a procedure observation
+*/
 define function IsProcedure(observation Observation):
   exists (observation.category C
     where C ~ "procedure"
   )
 
+/*
+@description: returns true if the given observation is a survey observation
+*/
 define function IsSurvey(observation Observation):
   exists (observation.category C
     where C ~ "survey"
   )
 
+/*
+@description: returns true if the given observation is an exam observation
+*/
 define function IsExam(observation Observation):
   exists (observation.category C
     where C ~ "exam"
   )
 
+/*
+@description: returns true if the given observation is a therapy observation
+*/
 define function IsTherapy(observation Observation):
   exists (observation.category C
     where C ~ "therapy"
   )
 
+/*
+@description: returns true if the given observation is an activity observation
+*/
 define function IsActivity(observation Observation):
   exists (observation.category C
     where C ~ "activity"
   )
 
-// NOTE: Introduced in USCore 5
+/*
+@description: returns true if the given observation is a clinical test
+@comment: Introduced in USCore 5
+*/
 define function IsClinicalTest(observation Observation):
   exists (observation.category C
     where C ~ "clinical-test"
