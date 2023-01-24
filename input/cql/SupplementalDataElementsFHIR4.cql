@@ -22,6 +22,9 @@ valueset "Race": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.83
 
 context Patient
 
+/*
+@description: returns the ethnicity for the patient in context as a FHIR CodeableConcept
+*/
 define "SDE Ethnicity":
   (QICore.Ethnicity(Patient)) E
     return FHIR.CodeableConcept {
@@ -29,6 +32,9 @@ define "SDE Ethnicity":
       text: E.text
     }
 
+/*
+@description: returns the payers and associated coverage period for each coverage record for the patient in context
+*/
 define "SDE Payer":
   [Coverage: type in "Payer"] Payer
     return {
@@ -36,6 +42,9 @@ define "SDE Payer":
       period: Payer.period
     }
 
+/*
+@description: returns the race for the patient in context as a FHIR CodeableConcept
+*/
 define "SDE Race":
   (QICore.Race(Patient)) R
     return FHIR.CodeableConcept {
@@ -43,6 +52,9 @@ define "SDE Race":
       text: R.text
     }
 
+/*
+@description: returns the administrative sex for the patient in context as a Code
+*/
 define "SDE Sex":
   case
       when Patient.gender = 'male' then Code { code: 'M', system: 'http://hl7.org/fhir/v3/AdministrativeGender', display: 'Male' }

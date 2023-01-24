@@ -57,13 +57,13 @@ define function "ToDateInterval"(period Interval<DateTime>):
   Interval[date from start of period, date from end of period]
 
 /*
-Calculates the difference in calendar days between the start and end of the given interval.
+@description: Calculates the difference in calendar days between the start and end of the given interval.
 */
 define function "LengthInDays"(Value Interval<DateTime> ):
   difference in days between start of Value and end of Value
 
 /*
-Returns the most recent emergency department visit, if any, that occurs 1 hour or less prior to the given encounter.
+@description: Returns the most recent emergency department visit, if any, that occurs 1 hour or less prior to the given encounter.
 */
 define function "ED Visit"(TheEncounter FHIR.Encounter ):
   Last(
@@ -74,7 +74,7 @@ define function "ED Visit"(TheEncounter FHIR.Encounter ):
     )
 
 /*
-Hospitalization returns the total interval for admission to discharge for the given encounter, or for the admission of any immediately prior emergency department visit to the discharge of the given encounter.
+@description: Hospitalization returns the total interval for admission to discharge for the given encounter, or for the admission of any immediately prior emergency department visit to the discharge of the given encounter.
 */
 define function "Hospitalization"(TheEncounter FHIR.Encounter ):
   ( "ED Visit"(TheEncounter) ) X
@@ -83,7 +83,7 @@ define function "Hospitalization"(TheEncounter FHIR.Encounter ):
         else Interval[start of FHIRHelpers.ToInterval(X.period), end of FHIRHelpers.ToInterval(TheEncounter.period)]
 
 /*
-Returns list of all locations within an encounter, including locations for immediately prior ED visit.
+@description: Returns list of all locations within an encounter, including locations for immediately prior ED visit.
 */
 define function "Hospitalization Locations"(TheEncounter FHIR.Encounter ):
   ( "ED Visit"(TheEncounter) ) EDEncounter
@@ -92,25 +92,25 @@ define function "Hospitalization Locations"(TheEncounter FHIR.Encounter ):
         else flatten { EDEncounter.location, TheEncounter.location }
 
 /*
-Returns the length of stay in days (i.e. the number of days between admission and discharge) for the given encounter, or from the admission of any immediately prior emergency department visit to the discharge of the encounter
+@description: Returns the length of stay in days (i.e. the number of days between admission and discharge) for the given encounter, or from the admission of any immediately prior emergency department visit to the discharge of the encounter
 */
 define function "Hospitalization Length of Stay"(TheEncounter FHIR.Encounter ):
   LengthInDays("Hospitalization"(TheEncounter))
 
 /*
-Returns admission time for an encounter or for immediately prior emergency department visit.
+@description: Returns admission time for an encounter or for immediately prior emergency department visit.
 */
 define function "Hospital Admission Time"(TheEncounter FHIR.Encounter ):
   start of "Hospitalization"(TheEncounter)
 
 /*
-Hospital Discharge Time returns the discharge time for an encounter
+@description: Hospital Discharge Time returns the discharge time for an encounter
 */
 define function "Hospital Discharge Time"(TheEncounter FHIR.Encounter ):
   end of FHIRHelpers.ToInterval(TheEncounter.period)
 
 /*
-Returns earliest arrival time for an encounter including any prior ED visit.
+@description: Returns earliest arrival time for an encounter including any prior ED visit.
 */
 define function "Hospital Arrival Time"(TheEncounter FHIR.Encounter ):
   start of FHIRHelpers.ToInterval(First(
@@ -119,7 +119,7 @@ define function "Hospital Arrival Time"(TheEncounter FHIR.Encounter ):
   	).period)
 
 /*
-Returns the latest departure time for encounter including any prior ED visit. 
+@description: Returns the latest departure time for encounter including any prior ED visit. 
 */
 define function "Hospital Departure Time"(TheEncounter FHIR.Encounter):
 	end of FHIRHelpers.ToInterval(Last(
@@ -136,7 +136,7 @@ define function "Emergency Department Arrival Time"(TheEncounter FHIR.Encounter)
 	).period)
 
 /*
-Hospitalization with Observation and Outpatient Surgery Service returns the total interval from the start of any immediately prior emergency department visit, outpatient surgery visit or observation visit to the discharge of the given encounter.
+@description: Hospitalization with Observation and Outpatient Surgery Service returns the total interval from the start of any immediately prior emergency department visit, outpatient surgery visit or observation visit to the discharge of the given encounter.
 */
 define function "HospitalizationWithObservationAndOutpatientSurgeryService"(TheEncounter "Encounter" ):
   TheEncounter Visit
@@ -159,7 +159,7 @@ define function "HospitalizationWithObservationAndOutpatientSurgeryService"(TheE
   	return Interval[Coalesce(start of OutpatientSurgeryVisit.period, VisitStartWithED), end of Visit.period]
 
 /*
-Hospitalization with Observation returns the total interval from the start of any immediately prior emergency department visit through the observation visit to the discharge of the given encounter
+@description: Hospitalization with Observation returns the total interval from the start of any immediately prior emergency department visit through the observation visit to the discharge of the given encounter
 */
 define function "HospitalizationWithObservation"(TheEncounter FHIR.Encounter ):
   TheEncounter Visit
@@ -177,13 +177,13 @@ define function "HospitalizationWithObservation"(TheEncounter FHIR.Encounter ):
   		return Interval[Coalesce(start of EDVisit.period, VisitStart), end of Visit.period]
 
 /*
-Hospitalization with Observation Length of Stay returns the length in days from the start of any immediately prior emergency department visit through the observation visit to the discharge of the given encounter
+@description: Hospitalization with Observation Length of Stay returns the length in days from the start of any immediately prior emergency department visit through the observation visit to the discharge of the given encounter
 */
 define function "HospitalizationWithObservationLengthofStay"(TheEncounter "Encounter" ):
   "LengthInDays"("HospitalizationWithObservation"(TheEncounter))
 
 /*
-First Inpatient Intensive Care Unit returns the first intensive care unit for the given encounter, without considering any immediately prior emergency department visit.
+@description: First Inpatient Intensive Care Unit returns the first intensive care unit for the given encounter, without considering any immediately prior emergency department visit.
 */
 define function "FirstInpatientIntensiveCareUnit"(Encounter FHIR.Encounter ):
   First((Encounter.location)HospitalLocation
@@ -192,39 +192,40 @@ define function "FirstInpatientIntensiveCareUnit"(Encounter FHIR.Encounter ):
   			sort by start of period
   	)
 
-/**
-* Normalizes the input argument to an interval representation.
-* The input can be provided as a dateTime, Period, Timing, instant, string, Age, or Range.
-* The intent of this function is to provide a clear and concise mechanism to treat single
-* elements that have multiple possible representations as intervals so that logic doesn't have to account
-* for the variability. More complex calculations (such as medication request period or dispense period
-* calculation) need specific guidance and consideration. That guidance may make use of this function, but
-* the focus of this function is on single element calculations where the semantics are unambiguous.
-* If the input is a dateTime, the result a DateTime Interval beginning and ending on that dateTime.
-* If the input is a Period, the result is a DateTime Interval.
-* If the input is a Timing, an error is raised indicating a single interval cannot be computed from a Timing.
-* If the input is an instant, the result is a DateTime Interval beginning and ending on that instant.
-* If the input is a string, an error is raised indicating a single interval cannot be computed from a string.
-* If the input is an Age, the result is a DateTime Interval beginning when the patient was the given Age,
+/*
+@description: Normalizes the input argument to an interval representation.
+@comment: The input can be provided as a dateTime, Period, Timing, instant, string, Age, or Range.
+The intent of this function is to provide a clear and concise mechanism to treat single
+elements that have multiple possible representations as intervals so that logic doesn't have to account
+for the variability. More complex calculations (such as medication request period or dispense period
+calculation) need specific guidance and consideration. That guidance may make use of this function, but
+the focus of this function is on single element calculations where the semantics are unambiguous.
+If the input is a dateTime, the result a DateTime Interval beginning and ending on that dateTime.
+If the input is a Period, the result is a DateTime Interval.
+If the input is a Timing, an error is raised indicating a single interval cannot be computed from a Timing.
+If the input is an instant, the result is a DateTime Interval beginning and ending on that instant.
+If the input is a string, an error is raised indicating a single interval cannot be computed from a string.
+If the input is an Age, the result is a DateTime Interval beginning when the patient was the given Age,
 and ending immediately prior to when the patient was the given Age plus one year.
-* If the input is a Range, the result is a DateTime Interval beginning when the patient was the Age given
+If the input is a Range, the result is a DateTime Interval beginning when the patient was the Age given
 by the low end of the Range, and ending immediately prior to when the patient was the Age given by the
-high end of the Range plus one year.*/
+high end of the Range plus one year.
+*/
 define function "Normalize Interval"(choice Choice<FHIR.dateTime, FHIR.Period, FHIR.Timing, FHIR.instant, FHIR.string, FHIR.Age, FHIR.Range> ):
   FHIRCommon.ToInterval(choice)
 
 /*
-Returns an interval representing the abatement of the given condition, if an
+@description: Returns an interval representing the abatement of the given condition, if an
 abatement element is present, null otherwise.
-This function uses the semantics of Normalize Interval to interpret the abatement
+@comment: This function uses the semantics of Normalize Interval to interpret the abatement
 element.
 */
 define function "Normalize Abatement"(condition Condition ):
   FHIRCommon.ToAbatementInterval(condition)
 
 /*
-Returns an interval representing the period during which the condition was prevalent (i.e. onset to abatement)
-If the condition is "active", then abatement being unknown
+@description: Returns an interval representing the period during which the condition was prevalent (i.e. onset to abatement)
+@comment: If the condition is "active", then abatement being unknown
 would indicate the condition is ongoing, and the ending boundary of the prevalence
 period is inclusive, otherwise, the abatement is considered unknown and the ending boundary
 of the prevalence period is exclusive.
@@ -236,33 +237,33 @@ define function "Prevalence Period"(condition Condition ):
   FHIRCommon.ToPrevalenceInterval(condition)
 
 /*
-Returns the tail of the given uri (i.e. everything after the last slash in the URI).
+@description: Returns the tail of the given uri (i.e. everything after the last slash in the URI).
 */
 define function "GetId"(uri String ):
   Last(Split(uri, '/'))
 
 /*
-Returns the Condition resources referenced by the diagnosis element of the Encounter
+@description: Returns the Condition resources referenced by the diagnosis element of the Encounter
 */
 define function "EncounterDiagnosis"(Encounter Encounter ):
   Encounter.diagnosis D
     return singleton from ([Condition] C where C.id = "GetId"(D.condition.reference))
 
 /*
-Returns the Condition resource for the given reference
+@description: Returns the Condition resource for the given reference
 */
 define function "GetCondition"(reference Reference):
   singleton from ([Condition] C where C.id = "GetId"(reference.reference))
 
 /*
-Returns the condition that is specified as the principal diagnosis for the encounter
+@description: Returns the condition that is specified as the principal diagnosis for the encounter
 */
 define function "PrincipalDiagnosis"(TheEncounter Encounter ):
   (singleton from (TheEncounter.diagnosis D where D.rank = 1)) PD
   		return singleton from ([Condition] C where C.id = "GetId"(PD.condition.reference))
 
 /*
-Returns the Location resource specified by the given reference
+@description: Returns the Location resource specified by the given reference
 */
 define function "GetLocation"(reference Reference ):
   singleton from (
@@ -270,7 +271,7 @@ define function "GetLocation"(reference Reference ):
   )
 
 /*
-Returns the medication code for the given MedicationRequest
+@description: Returns the medication code for the given MedicationRequest
 */
 define function "GetMedicationCode"(request MedicationRequest ):
   if request.medication is CodeableConcept then
@@ -279,7 +280,7 @@ define function "GetMedicationCode"(request MedicationRequest ):
   	  (singleton from ([Medication] M where M.id = GetId((request.medication as Reference).reference))).code
 
 /*
-Given an interval, return true if the interval has a starting boundary specified (i.e. the start of the interval is not null and not the minimum DateTime value)
+@description: Given an interval, return true if the interval has a starting boundary specified (i.e. the start of the interval is not null and not the minimum DateTime value)
 */
 define function "HasStart"(period Interval<DateTime> ):
   not ( start of period is null
@@ -287,7 +288,7 @@ define function "HasStart"(period Interval<DateTime> ):
   )
 
 /*
-Given an interval, return true if the interval has an ending boundary specified (i.e. the end of the interval is not null and not the maximum DateTime value)
+@description: Given an interval, return true if the interval has an ending boundary specified (i.e. the end of the interval is not null and not the maximum DateTime value)
 */
 define function "HasEnd"(period Interval<DateTime> ):
   not (
@@ -296,7 +297,7 @@ define function "HasEnd"(period Interval<DateTime> ):
   )
 
 /*
-Given an interval, return the ending point if the interval has an ending boundary specified, otherwise, return the starting point
+@description: Given an interval, return the ending point if the interval has an ending boundary specified, otherwise, return the starting point
 */
 define function "Latest"(choice Choice<FHIR.dateTime, FHIR.Period, FHIR.Timing, FHIR.instant, FHIR.string, FHIR.Age, FHIR.Range> ):
   ("Normalize Interval"(choice)) period
@@ -305,7 +306,7 @@ define function "Latest"(choice Choice<FHIR.dateTime, FHIR.Period, FHIR.Timing, 
       else start of period
 
 /*
-Given an interval, return the starting point if the interval has a starting boundary specified, otherwise, return the ending point
+@description: Given an interval, return the starting point if the interval has a starting boundary specified, otherwise, return the ending point
 */
 define function "Earliest"(choice Choice<FHIR.dateTime, FHIR.Period, FHIR.Timing, FHIR.instant, FHIR.string, FHIR.Age, FHIR.Range> ):
   ("Normalize Interval"(choice)) period
@@ -313,18 +314,18 @@ define function "Earliest"(choice Choice<FHIR.dateTime, FHIR.Period, FHIR.Timing
       if (HasStart(period)) then start of period
       else end of period
 
-/**
- * Creates a list of integers from 1 to how many days are in the interval. Note, this wont create an index for
- * the final day if it is less than 24 hours. This also includes the first 24 hour period.
- */
+/*
+@description: Creates a list of integers from 1 to how many days are in the interval. Note, this wont create an index for
+the final day if it is less than 24 hours. This also includes the first 24 hour period.
+*/
 define function "Interval To Day Numbers"(Period Interval<DateTime>):
   ( expand { Interval[1, duration in days between start of Period and end of Period]} ) DayNumber
     return end of DayNumber
 
-/**
- * Creates a list of 24 hour long intervals in an interval paired with the index (1 indexed) to which 24 hour interval it is.
- * Note that the result will include intervals that are closed at the beginning and open at the end
- */
+/*
+@description: Creates a list of 24 hour long intervals in an interval paired with the index (1 indexed) to which 24 hour interval it is.
+Note that the result will include intervals that are closed at the beginning and open at the end
+*/
 define function "Days In Period"(Period Interval<DateTime>):
   ( "Interval To Day Numbers"(Period)) DayIndex
     let startPeriod: start of Period + (24 hours * (DayIndex - 1)),
