@@ -2,11 +2,12 @@ library HospitalHarmHyperglycemiainHospitalizedPatientsFHIR version '0.0.011'
 
 using FHIR version '4.0.1'
 
-include FHIRHelpers version '4.0.001' called FHIRHelpers
-include SupplementalDataElementsFHIR4 version '2.0.000' called SDE
-include MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global
+include FHIRHelpers version '4.1.000' called FHIRHelpers
+include SupplementalDataElementsFHIR4 version '3.0.000' called SDE
+include MATGlobalCommonFunctionsFHIR4 version '7.0.000' called Global
 
 codesystem "LOINC": 'http://loinc.org' 
+codesystem "ConditionVerificationStatusCodes": 'http://terminology.hl7.org/CodeSystem/condition-ver-status'
 
 valueset "birth date": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.560.100.4' 
 valueset "Diabetes": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.103.12.1001' 
@@ -15,6 +16,7 @@ valueset "Glucose Lab Test Mass Per Volume": 'http://cts.nlm.nih.gov/fhir/ValueS
 valueset "Hypoglycemics Treatment Medications": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1196.394' 
 
 code "Birth date": '21112-8' from "LOINC" display 'Birth date'
+code "confirmed": 'confirmed' from ConditionVerificationStatusCodes
 
 parameter "Measurement Period" Interval<DateTime>
   default Interval[@2019-01-01T00:00:00.0, @2020-01-01T00:00:00.0)
@@ -92,7 +94,7 @@ define "Days With Hyperglycemic Events":
 define "Encounter With Existing Diabetes Diagnosis":
   "Encounter With Hospitalization Period" Hospitalization
     with ["Condition": "Diabetes"] Diabetes
-      such that Diabetes.verificationStatus ~ ToConcept(Global."confirmed")
+      such that Diabetes.verificationStatus ~ ToConcept("confirmed")
         and ( Global."Prevalence Period" ( Diabetes ) starts before 
           end of Hospitalization.hospitalizationPeriod
         )

@@ -3,7 +3,7 @@
   "id": "HospitalHarmOpioidRelatedAdverseEventsFHIR",
   "meta": {
     "versionId": "4",
-    "lastUpdated": "2022-05-10T10:07:04.000-06:00",
+    "lastUpdated": "2022-05-10T12:07:04.000-04:00",
     "source": "#5xiPTddXNwytmfWA",
     "profile": [ "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/proportion-measure-cqfm", "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/computable-measure-cqfm" ]
   },
@@ -21,7 +21,7 @@
         "valueString": "SDE Sex"
       }, {
         "url": "statement",
-        "valueString": "define \"SDE Sex\":\n  case\n      when Patient.gender = 'male' then Code { code: 'M', system: 'http://hl7.org/fhir/v3/AdministrativeGender', display: 'Male' }\n      when Patient.gender = 'female' then Code { code: 'F', system: 'http://hl7.org/fhir/v3/AdministrativeGender', display: 'Female' }\n      else null\n    end"
+        "valueString": "/*\n@description: returns the administrative sex for the patient in context as a Code\n*/\ndefine \"SDE Sex\":\n  case\n      when Patient.gender = 'male' then Code { code: 'M', system: 'http://hl7.org/fhir/v3/AdministrativeGender', display: 'Male' }\n      when Patient.gender = 'female' then Code { code: 'F', system: 'http://hl7.org/fhir/v3/AdministrativeGender', display: 'Female' }\n      else null\n    end"
       }, {
         "url": "displaySequence",
         "valueInteger": 0
@@ -186,7 +186,7 @@
         "valueString": "SDE Payer"
       }, {
         "url": "statement",
-        "valueString": "define \"SDE Payer\":\n  [Coverage: type in \"Payer\"] Payer\n    return {\n      code: Payer.type,\n      period: Payer.period\n    }"
+        "valueString": "/*\n@description: returns the payers and associated coverage period for each coverage record for the patient in context\n*/\ndefine \"SDE Payer\":\n  [Coverage: type in \"Payer\"] Payer\n    return {\n      code: Payer.type,\n      period: Payer.period\n    }"
       }, {
         "url": "displaySequence",
         "valueInteger": 11
@@ -216,7 +216,7 @@
         "valueString": "SDE Ethnicity"
       }, {
         "url": "statement",
-        "valueString": "define \"SDE Ethnicity\":\n  (QICore.Ethnicity(Patient)) E\n    return FHIR.CodeableConcept {\n      coding: { E.ombCategory } union E.detailed,\n      text: E.text\n    }"
+        "valueString": "/*\n@description: returns the ethnicity for the patient in context as a FHIR CodeableConcept\n*/\ndefine \"SDE Ethnicity\":\n  (QICore.Ethnicity(Patient)) E\n    return FHIR.CodeableConcept {\n      coding: { E.ombCategory } union E.detailed,\n      text: E.text\n    }"
       }, {
         "url": "displaySequence",
         "valueInteger": 13
@@ -246,7 +246,7 @@
         "valueString": "SDE Race"
       }, {
         "url": "statement",
-        "valueString": "define \"SDE Race\":\n  (QICore.Race(Patient)) R\n    return FHIR.CodeableConcept {\n      coding: R.ombCategory union R.detailed,\n      text: R.text\n    }"
+        "valueString": "/*\n@description: returns the race for the patient in context as a FHIR CodeableConcept\n*/\ndefine \"SDE Race\":\n  (QICore.Race(Patient)) R\n    return FHIR.CodeableConcept {\n      coding: R.ombCategory union R.detailed,\n      text: R.text\n    }"
       }, {
         "url": "displaySequence",
         "valueInteger": 15
@@ -493,7 +493,7 @@
   "title": "Hospital Harm - Opioid-Related Adverse EventsFHIR",
   "status": "draft",
   "experimental": false,
-  "date": "2022-09-14T13:33:01-06:00",
+  "date": "2023-03-06T12:33:57-06:00",
   "publisher": "Centers for Medicare & Medicaid Services (CMS)",
   "contact": [ {
     "telecom": [ {
