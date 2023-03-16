@@ -4569,7 +4569,7 @@ else
             </meta>
             <language value="en"/>
             <url value="http://ecqi.healthit.gov/ecqms/Library/FHIRHelpers"/>
-            <version value="4.0.001"/>
+            <version value="4.1.000"/>
             <name value="FHIRHelpers"/>
             <status value="active"/>
             <experimental value="false"/>
@@ -4613,7 +4613,7 @@ else
             </meta>
             <language value="en"/>
             <url value="http://ecqi.healthit.gov/ecqms/Library/SupplementalDataElementsFHIR4"/>
-            <version value="2.0.000"/>
+            <version value="3.0.000"/>
             <name value="SupplementalDataElementsFHIR4"/>
             <status value="active"/>
             <experimental value="false"/>
@@ -4684,7 +4684,7 @@ else
             </meta>
             <language value="en"/>
             <url value="http://ecqi.healthit.gov/ecqms/Library/MATGlobalCommonFunctionsFHIR4"/>
-            <version value="6.1.000"/>
+            <version value="7.0.000"/>
             <name value="MATGlobalCommonFunctionsFHIR4"/>
             <status value="active"/>
             <experimental value="false"/>

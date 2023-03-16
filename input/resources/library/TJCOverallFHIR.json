@@ -3,7 +3,7 @@
   "id": "TJCOverallFHIR",
   "meta": {
     "versionId": "2",
-    "lastUpdated": "2021-08-18T13:21:24.000-06:00",
+    "lastUpdated": "2021-08-18T15:21:24.000-04:00",
     "source": "#nqSdMCgv69RrJ49h",
     "profile": [ "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/computable-library-cqfm" ]
   },
@@ -36,11 +36,11 @@
   }, {
     "type": "depends-on",
     "display": "Library Global",
-    "resource": "http://ecqi.healthit.gov/ecqms/Library/MATGlobalCommonFunctionsFHIR4|6.1.000"
+    "resource": "http://ecqi.healthit.gov/ecqms/Library/MATGlobalCommonFunctionsFHIR4|7.0.000"
   }, {
     "type": "depends-on",
     "display": "Library FHIRHelpers",
-    "resource": "http://ecqi.healthit.gov/ecqms/Library/FHIRHelpers|4.0.001"
+    "resource": "http://ecqi.healthit.gov/ecqms/Library/FHIRHelpers|4.1.000"
   }, {
     "type": "depends-on",
     "display": "Code system LOINC",

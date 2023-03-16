@@ -2,10 +2,10 @@ library IntensiveCareUnitVenousThromboembolismProphylaxisFHIR version '0.0.017'
 
 using FHIR version '4.0.1'
 
-include FHIRHelpers version '4.0.001' called FHIRHelpers
-include SupplementalDataElementsFHIR4 version '2.0.000' called SDE
+include FHIRHelpers version '4.1.000' called FHIRHelpers
+include SupplementalDataElementsFHIR4 version '3.0.000' called SDE
 include VTEFHIR4 version '4.8.000' called VTE
-include MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global
+include MATGlobalCommonFunctionsFHIR4 version '7.0.000' called Global
 
 codesystem "LOINC": 'http://loinc.org' 
 
