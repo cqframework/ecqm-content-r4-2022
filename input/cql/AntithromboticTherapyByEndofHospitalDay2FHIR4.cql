@@ -5,7 +5,7 @@ using FHIR version '4.0.1'
 include MATGlobalCommonFunctionsFHIR4 version '7.0.000' called Global
 include FHIRHelpers version '4.1.000' called FHIRHelpers
 include FHIRCommon version '1.1.000' called FHIRCommon
-include TJCOverallFHIR4 version '5.2.000' called TJC
+include TJCOverallFHIR4 version '6.0.000' called TJC
 include SupplementalDataElementsFHIR4 version '3.0.000' called SDE
 
 valueset "Antithrombotic Therapy": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1110.62' 
